@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{2a37856e-6dce-42f4-92ef-64100d5497ee}">
+		<property name="assetPath">
+			<value>1kHz Sine -26 LUFS-16bit.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>20</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d65d8232-60fe-459c-9697-d15945726e34}</destination>
+		</relationship>
+	</object>
+</objects>

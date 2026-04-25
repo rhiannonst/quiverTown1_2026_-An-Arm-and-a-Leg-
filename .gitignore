@@ -136,3 +136,8 @@ fmod_editor.log
 **/[Bb]uild/Desktop/
 **/[Bb]uild/Mobile/
 **/[Bb]uild/Console/
+FMOD/AnArmAndALeg/.cache
+Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+FMOD/AnArmAndALeg/.cache
+FMOD/AnArmAndALeg/.unsaved
