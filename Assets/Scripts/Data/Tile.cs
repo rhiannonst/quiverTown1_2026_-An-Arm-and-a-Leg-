@@ -1,33 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tile", menuName = "ScriptableObjects/Tile")]
+[CreateAssetMenu(fileName = "Tile", menuName = "Scriptable Objects/Tile")]
 public class Tile : ScriptableObject
 {
-    public enum TileType
-    {
-        Head,
-        Arm,
-        Leg,
-        Torso,
-        Spine,
-        Heart
-    }
-
-    public enum Status
-    {
-        None,
-        Poison,
-        Reshuffle,
-    }
-
     [Header("Identity")]
-    public string tileName;
-    public TileType tileType;
-    public Status status;
-    public Sprite sprite;
+    public string Name;
+    public TileType Type;
+    public TileStatus Status;
+    public Sprite _Sprite;
 
     [Header("Combat Values")]
-    public float damage;
-    public float heal;
-    public float block;
+    public float Damage;
+    public float Heal;
+    public float Block;
 }

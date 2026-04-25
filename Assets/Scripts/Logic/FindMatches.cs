@@ -6,6 +6,7 @@ public class FindMatches : MonoBehaviour
 {
     private Board board;
     public List<GameObject> currentMatches = new List<GameObject>();
+    private bool isFinding = false;
 
     void Start()
     {
@@ -14,11 +15,15 @@ public class FindMatches : MonoBehaviour
 
     public void FindAllMatches()
     {
-        StartCoroutine(FindAllMatchesCo());
+        if (!isFinding)
+        {
+            StartCoroutine(FindAllMatchesCo());
+        }
     }
 
     private IEnumerator FindAllMatchesCo()
     {
+        isFinding = true;
         yield return new WaitForSeconds(.2f);
 
         for (int i = 0; i < board.width; i++)
@@ -30,6 +35,7 @@ public class FindMatches : MonoBehaviour
 
                 TileInstance currentTileInstance = currentTile.GetComponent<TileInstance>();
 
+                // Check horizontal match (left-center-right)
                 if (i > 0 && i < board.width - 1)
                 {
                     GameObject leftTile = board.allTileInstances[i - 1, j];
@@ -37,7 +43,8 @@ public class FindMatches : MonoBehaviour
 
                     if (leftTile != null && rightTile != null)
                     {
-                        if (SameTileType(leftTile, currentTileInstance) && SameTileType(rightTile, currentTileInstance))
+                        if (SameTileType(leftTile, currentTileInstance) &&
+                            SameTileType(rightTile, currentTileInstance))
                         {
                             AddToListAndMatch(leftTile);
                             AddToListAndMatch(currentTile);
@@ -46,28 +53,31 @@ public class FindMatches : MonoBehaviour
                     }
                 }
 
+                // Check vertical match (down-center-up)
                 if (j > 0 && j < board.height - 1)
                 {
-                    GameObject upTile = board.allTileInstances[i, j + 1];
                     GameObject downTile = board.allTileInstances[i, j - 1];
+                    GameObject upTile = board.allTileInstances[i, j + 1];
 
-                    if (upTile != null && downTile != null)
+                    if (downTile != null && upTile != null)
                     {
-                        if (SameTileType(upTile, currentTileInstance) && SameTileType(downTile, currentTileInstance))
+                        if (SameTileType(downTile, currentTileInstance) &&
+                            SameTileType(upTile, currentTileInstance))
                         {
-                            AddToListAndMatch(upTile);
-                            AddToListAndMatch(currentTile);
                             AddToListAndMatch(downTile);
+                            AddToListAndMatch(currentTile);
+                            AddToListAndMatch(upTile);
                         }
                     }
                 }
             }
         }
+        isFinding = false;
     }
 
     private bool SameTileType(GameObject tile, TileInstance otherTileInstance)
     {
-        return tile.GetComponent<TileInstance>().tileData.tileType == otherTileInstance.tileData.tileType;
+        return tile.GetComponent<TileInstance>().tileData.Type == otherTileInstance.tileData.Type;
     }
 
     private void AddToListAndMatch(GameObject tile)
