@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: BaseLegTile
   Type: 2
   Status: 0
-  _Sprite: {fileID: 21300000, guid: cf7af5b0e44366a4dae3066542c5c1ce, type: 3}
+  _Sprite: {fileID: -1622510500, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 2
   Heal: 0
   Block: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: BaseHeartTile
   Type: 5
   Status: 0
-  _Sprite: {fileID: 21300000, guid: 70ec79da06967a8499edfbd19b9f1ee7, type: 3}
+  _Sprite: {fileID: 1257162786, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 0
   Heal: 1
   Block: 0

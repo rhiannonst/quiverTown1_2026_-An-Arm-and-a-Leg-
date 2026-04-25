@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: BaseSpineTile
   Type: 4
   Status: 0
-  _Sprite: {fileID: 21300000, guid: b30b905532ff7ee4685e68554b94722f, type: 3}
+  _Sprite: {fileID: 290518818, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 0
   Heal: 0
   Block: 2
