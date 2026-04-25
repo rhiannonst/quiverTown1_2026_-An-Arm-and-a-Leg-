@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tile", menuName = "ScriptableObjects/Tile")]
+[CreateAssetMenu(fileName = "Tile", menuName = "Scriptable Objects/Tile")]
 public class Tile : ScriptableObject
 {
     [Header("Identity")]
