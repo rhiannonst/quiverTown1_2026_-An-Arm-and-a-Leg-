@@ -15,16 +15,16 @@ public class TileInstance : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
-    [Header("Swipe Stuff")]
-    public float swipeAngle = 0;
-    public float swipeResist = 1f;
+    [Header("Input")]
+    public float dragResist = 1f;
 
     private FindMatches findMatches;
     private Board board;
     private TileInstance otherTile;
-    private Vector2 firstTouchPosition;
-    private Vector2 finalTouchPosition;
+    private Vector2 firstClickPosition;
+    private Vector2 finalClickPosition;
     private Vector2 tempPosition;
+    private float dragAngle = 0;
 
     void Start()
     {
@@ -37,6 +37,7 @@ public class TileInstance : MonoBehaviour
         targetX = column;
         targetY = row;
 
+        // Lerp horizontal
         if (Mathf.Abs(targetX - transform.position.x) > .1f)
         {
             tempPosition = new Vector2(targetX, transform.position.y);
@@ -45,7 +46,6 @@ public class TileInstance : MonoBehaviour
             {
                 board.allTileInstances[column, row] = gameObject;
             }
-            findMatches.FindAllMatches();
         }
         else
         {
@@ -53,6 +53,7 @@ public class TileInstance : MonoBehaviour
             transform.position = tempPosition;
         }
 
+        // Lerp vertical
         if (Mathf.Abs(targetY - transform.position.y) > .1f)
         {
             tempPosition = new Vector2(transform.position.x, targetY);
@@ -61,7 +62,6 @@ public class TileInstance : MonoBehaviour
             {
                 board.allTileInstances[column, row] = gameObject;
             }
-            findMatches.FindAllMatches();
         }
         else
         {
@@ -74,7 +74,7 @@ public class TileInstance : MonoBehaviour
     {
         if (board.currentState == GameState.move)
         {
-            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            firstClickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
 
@@ -82,19 +82,19 @@ public class TileInstance : MonoBehaviour
     {
         if (board.currentState == GameState.move)
         {
-            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            finalClickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             CalculateAngle();
         }
     }
 
     void CalculateAngle()
     {
-        float dx = finalTouchPosition.x - firstTouchPosition.x;
-        float dy = finalTouchPosition.y - firstTouchPosition.y;
+        float dx = finalClickPosition.x - firstClickPosition.x;
+        float dy = finalClickPosition.y - firstClickPosition.y;
 
-        if (Mathf.Abs(dy) > swipeResist || Mathf.Abs(dx) > swipeResist)
+        if (Mathf.Abs(dy) > dragResist || Mathf.Abs(dx) > dragResist)
         {
-            swipeAngle = Mathf.Atan2(dy, dx) * 180 / Mathf.PI;
+            dragAngle = Mathf.Atan2(dy, dx) * 180 / Mathf.PI;
             if (MovePieces())
             {
                 board.currentState = GameState.wait;
@@ -118,25 +118,29 @@ public class TileInstance : MonoBehaviour
         previousColumn = column;
         otherTile = null;
 
-        if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
+        // Right
+        if (dragAngle > -45 && dragAngle <= 45 && column < board.width - 1)
         {
             otherTile = board.allTileInstances[column + 1, row].GetComponent<TileInstance>();
             otherTile.column -= 1;
             column += 1;
         }
-        else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
+        // Up
+        else if (dragAngle > 45 && dragAngle <= 135 && row < board.height - 1)
         {
             otherTile = board.allTileInstances[column, row + 1].GetComponent<TileInstance>();
             otherTile.row -= 1;
             row += 1;
         }
-        else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
+        // Left
+        else if ((dragAngle > 135 || dragAngle <= -135) && column > 0)
         {
             otherTile = board.allTileInstances[column - 1, row].GetComponent<TileInstance>();
             otherTile.column += 1;
             column -= 1;
         }
-        else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
+        // Down
+        else if (dragAngle < -45 && dragAngle >= -135 && row > 0)
         {
             otherTile = board.allTileInstances[column, row - 1].GetComponent<TileInstance>();
             otherTile.row += 1;
@@ -157,10 +161,15 @@ public class TileInstance : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
+        // Run match detection after tiles have settled
+        findMatches.FindAllMatches();
+        yield return new WaitForSeconds(.3f);
+
         if (otherTile != null)
         {
             if (!isMatched && !otherTile.isMatched)
             {
+                // No match — swap back
                 otherTile.row = row;
                 otherTile.column = column;
                 row = previousRow;
@@ -171,6 +180,7 @@ public class TileInstance : MonoBehaviour
             }
             else
             {
+                // Match found — destroy
                 board.DestroyMatches();
             }
         }
