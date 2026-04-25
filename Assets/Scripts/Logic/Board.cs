@@ -24,6 +24,8 @@ public class Board : MonoBehaviour
     private GameObject[,] backgroundTiles;
     private FindMatches findMatches;
 
+    
+
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
@@ -40,11 +42,13 @@ public class Board : MonoBehaviour
             {
                 Vector2 tempPosition = new Vector2(i, j + offSet);
 
+                // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
 
+                // Pick a random tile that doesn't create a match
                 int tileToUse = Random.Range(0, tilePrefabs.Length);
                 int maxIterations = 0;
                 while (MatchesAt(i, j, tilePrefabs[tileToUse]) && maxIterations < 100)
@@ -65,34 +69,30 @@ public class Board : MonoBehaviour
 
     private bool MatchesAt(int column, int row, GameObject tilePrefabToCheck)
     {
-        Tile.TileType tileType = tilePrefabToCheck.GetComponent<TileInstance>().tileData.tileType;
+        TileType tileType = tilePrefabToCheck.GetComponent<TileInstance>().tileData.Type;
 
-        if (column > 1 && row > 1)
+        // Check horizontal (two to the left)
+        if (column > 1)
         {
-            if (GetTileType(allTileInstances[column - 1, row]) == tileType && GetTileType(allTileInstances[column - 2, row]) == tileType)
-                return true;
-            if (GetTileType(allTileInstances[column, row - 1]) == tileType && GetTileType(allTileInstances[column, row - 2]) == tileType)
+            if (GetTileType(allTileInstances[column - 1, row]) == tileType &&
+                GetTileType(allTileInstances[column - 2, row]) == tileType)
                 return true;
         }
-        else if (column <= 1 || row <= 1)
+
+        // Check vertical (two below)
+        if (row > 1)
         {
-            if (row > 1)
-            {
-                if (GetTileType(allTileInstances[column, row - 1]) == tileType && GetTileType(allTileInstances[column, row - 2]) == tileType)
-                    return true;
-            }
-            if (column > 1)
-            {
-                if (GetTileType(allTileInstances[column - 1, row]) == tileType && GetTileType(allTileInstances[column - 2, row]) == tileType)
-                    return true;
-            }
+            if (GetTileType(allTileInstances[column, row - 1]) == tileType &&
+                GetTileType(allTileInstances[column, row - 2]) == tileType)
+                return true;
         }
+
         return false;
     }
 
-    private Tile.TileType GetTileType(GameObject tileInstance)
+    private TileType GetTileType(GameObject tileInstance)
     {
-        return tileInstance.GetComponent<TileInstance>().tileData.tileType;
+        return tileInstance.GetComponent<TileInstance>().tileData.Type;
     }
 
     private void DestroyMatchesAt(int column, int row)
@@ -103,6 +103,7 @@ public class Board : MonoBehaviour
                 allTileInstances[column, row].transform.position,
                 Quaternion.identity);
             Destroy(particle, .5f);
+
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
         }
@@ -126,9 +127,10 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo()
     {
-        int nullCount = 0;
+        // For each column, collapse tiles down into empty spaces
         for (int i = 0; i < width; i++)
         {
+            int nullCount = 0;
             for (int j = 0; j < height; j++)
             {
                 if (allTileInstances[i, j] == null)
@@ -137,11 +139,13 @@ public class Board : MonoBehaviour
                 }
                 else if (nullCount > 0)
                 {
-                    allTileInstances[i, j].GetComponent<TileInstance>().row -= nullCount;
+                    // Move this tile down by nullCount rows
+                    int newRow = j - nullCount;
+                    allTileInstances[i, j].GetComponent<TileInstance>().row = newRow;
+                    allTileInstances[i, newRow] = allTileInstances[i, j];
                     allTileInstances[i, j] = null;
                 }
             }
-            nullCount = 0;
         }
         yield return new WaitForSeconds(.4f);
         StartCoroutine(FillBoardCo());
@@ -158,9 +162,10 @@ public class Board : MonoBehaviour
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int tileToUse = Random.Range(0, tilePrefabs.Length);
                     GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
-                    allTileInstances[i, j] = tileInstance;
                     tileInstance.GetComponent<TileInstance>().row = j;
                     tileInstance.GetComponent<TileInstance>().column = i;
+                    tileInstance.transform.parent = this.transform;
+                    allTileInstances[i, j] = tileInstance;
                 }
             }
         }
@@ -187,6 +192,11 @@ public class Board : MonoBehaviour
         RefillBoard();
         yield return new WaitForSeconds(.5f);
 
+        // Detect matches on the newly filled board
+        findMatches.FindAllMatches();
+        yield return new WaitForSeconds(.3f);
+
+        // Cascade: keep destroying and refilling while matches exist
         while (MatchesOnBoard())
         {
             yield return new WaitForSeconds(.5f);
