@@ -1,4 +1,3 @@
-```
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class FindMatches : MonoBehaviour
 
     void Start()
     {
-        board = FindObjectOfType<Board>();
+        board = FindAnyObjectByType<Board>();
     }
 
     public void FindAllMatches()
@@ -26,39 +25,39 @@ public class FindMatches : MonoBehaviour
         {
             for (int j = 0; j < board.height; j++)
             {
-                GameObject currentDot = board.allDots[i, j];
-                if (currentDot == null) continue;
+                GameObject currentTile = board.allTileInstances[i, j];
+                if (currentTile == null) continue;
 
-                // Check horizontal match (left-current-right)
+                TileInstance currentTileInstance = currentTile.GetComponent<TileInstance>();
+
                 if (i > 0 && i < board.width - 1)
                 {
-                    GameObject leftDot = board.allDots[i - 1, j];
-                    GameObject rightDot = board.allDots[i + 1, j];
+                    GameObject leftTile = board.allTileInstances[i - 1, j];
+                    GameObject rightTile = board.allTileInstances[i + 1, j];
 
-                    if (leftDot != null && rightDot != null)
+                    if (leftTile != null && rightTile != null)
                     {
-                        if (leftDot.tag == currentDot.tag && rightDot.tag == currentDot.tag)
+                        if (SameTileType(leftTile, currentTileInstance) && SameTileType(rightTile, currentTileInstance))
                         {
-                            AddToListAndMatch(leftDot);
-                            AddToListAndMatch(currentDot);
-                            AddToListAndMatch(rightDot);
+                            AddToListAndMatch(leftTile);
+                            AddToListAndMatch(currentTile);
+                            AddToListAndMatch(rightTile);
                         }
                     }
                 }
 
-                // Check vertical match (up-current-down)
                 if (j > 0 && j < board.height - 1)
                 {
-                    GameObject upDot = board.allDots[i, j + 1];
-                    GameObject downDot = board.allDots[i, j - 1];
+                    GameObject upTile = board.allTileInstances[i, j + 1];
+                    GameObject downTile = board.allTileInstances[i, j - 1];
 
-                    if (upDot != null && downDot != null)
+                    if (upTile != null && downTile != null)
                     {
-                        if (upDot.tag == currentDot.tag && downDot.tag == currentDot.tag)
+                        if (SameTileType(upTile, currentTileInstance) && SameTileType(downTile, currentTileInstance))
                         {
-                            AddToListAndMatch(upDot);
-                            AddToListAndMatch(currentDot);
-                            AddToListAndMatch(downDot);
+                            AddToListAndMatch(upTile);
+                            AddToListAndMatch(currentTile);
+                            AddToListAndMatch(downTile);
                         }
                     }
                 }
@@ -66,13 +65,17 @@ public class FindMatches : MonoBehaviour
         }
     }
 
-    private void AddToListAndMatch(GameObject dot)
+    private bool SameTileType(GameObject tile, TileInstance otherTileInstance)
     {
-        if (!currentMatches.Contains(dot))
+        return tile.GetComponent<TileInstance>().tileData.tileType == otherTileInstance.tileData.tileType;
+    }
+
+    private void AddToListAndMatch(GameObject tile)
+    {
+        if (!currentMatches.Contains(tile))
         {
-            currentMatches.Add(dot);
+            currentMatches.Add(tile);
         }
-        dot.GetComponent<Dot>().isMatched = true;
+        tile.GetComponent<TileInstance>().isMatched = true;
     }
 }
-```

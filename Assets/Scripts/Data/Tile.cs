@@ -1,10 +1,9 @@
-using System.Dynamic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tile", menuName = "ScriptableObjects/Tile")]
 public class Tile : ScriptableObject
 {
-    public enum Type
+    public enum TileType
     {
         Head,
         Arm,
@@ -16,20 +15,19 @@ public class Tile : ScriptableObject
 
     public enum Status
     {
+        None,
         Poison,
         Reshuffle,
     }
-    
-    public string Name{get; private set;}
-    public float Damage{get; private set;}
-    public float Heal{get; private set;}
-    public float Block{get; private set;}
 
-    public Tile(string name, float damage, float heal, float block)
-    {
-        Name = name;
-        Damage = damage;
-        Heal = heal;
-        Block = block;
-    }
+    [Header("Identity")]
+    public string tileName;
+    public TileType tileType;
+    public Status status;
+    public Sprite sprite;
+
+    [Header("Combat Values")]
+    public float damage;
+    public float heal;
+    public float block;
 }

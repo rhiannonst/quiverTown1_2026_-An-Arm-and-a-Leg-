@@ -1,9 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileInstance : MonoBehaviour
 {
+    [Header("Tile Data")]
+    public Tile tileData;
+
     [Header("Board Variables")]
     public int column;
     public int row;
@@ -17,28 +19,17 @@ public class TileInstance : MonoBehaviour
     public float swipeAngle = 0;
     public float swipeResist = 1f;
 
-    [Header("Powerup Stuff")]
-    public bool isColorBomb;
-    public bool isColumnBomb;
-    public bool isRowBomb;
-    public GameObject rowArrow;
-    public GameObject columnArrow;
-    public GameObject colorBomb;
-
-    public GameObject otherDot;
-
     private FindMatches findMatches;
     private Board board;
+    private TileInstance otherTile;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
 
     void Start()
     {
-        isColumnBomb = false;
-        isRowBomb = false;
-        board = FindObjectOfType<Board>();
-        findMatches = FindObjectOfType<FindMatches>();
+        board = FindAnyObjectByType<Board>();
+        findMatches = FindAnyObjectByType<FindMatches>();
     }
 
     void Update()
@@ -46,14 +37,13 @@ public class TileInstance : MonoBehaviour
         targetX = column;
         targetY = row;
 
-        // Horizontal movement
         if (Mathf.Abs(targetX - transform.position.x) > .1f)
         {
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
-            if (board.allDots[column, row] != this.gameObject)
+            if (board.allTileInstances[column, row] != gameObject)
             {
-                board.allDots[column, row] = this.gameObject;
+                board.allTileInstances[column, row] = gameObject;
             }
             findMatches.FindAllMatches();
         }
@@ -63,14 +53,13 @@ public class TileInstance : MonoBehaviour
             transform.position = tempPosition;
         }
 
-        // Vertical movement
         if (Mathf.Abs(targetY - transform.position.y) > .1f)
         {
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
-            if (board.allDots[column, row] != this.gameObject)
+            if (board.allTileInstances[column, row] != gameObject)
             {
-                board.allDots[column, row] = this.gameObject;
+                board.allTileInstances[column, row] = gameObject;
             }
             findMatches.FindAllMatches();
         }
@@ -106,9 +95,16 @@ public class TileInstance : MonoBehaviour
         if (Mathf.Abs(dy) > swipeResist || Mathf.Abs(dx) > swipeResist)
         {
             swipeAngle = Mathf.Atan2(dy, dx) * 180 / Mathf.PI;
-            MovePieces();
-            board.currentState = GameState.wait;
-            board.currentDot = this;
+            if (MovePieces())
+            {
+                board.currentState = GameState.wait;
+                board.currentTile = this;
+                StartCoroutine(CheckMoveCo());
+            }
+            else
+            {
+                board.currentState = GameState.move;
+            }
         }
         else
         {
@@ -116,70 +112,61 @@ public class TileInstance : MonoBehaviour
         }
     }
 
-    void MovePieces()
+    bool MovePieces()
     {
         previousRow = row;
         previousColumn = column;
+        otherTile = null;
 
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
         {
-            // Right Swipe
-            otherDot = board.allDots[column + 1, row];
-            otherDot.GetComponent<TileInstance>().column -= 1;
+            otherTile = board.allTileInstances[column + 1, row].GetComponent<TileInstance>();
+            otherTile.column -= 1;
             column += 1;
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
-            // Up Swipe
-            otherDot = board.allDots[column, row + 1];
-            otherDot.GetComponent<TileInstance>().row -= 1;
+            otherTile = board.allTileInstances[column, row + 1].GetComponent<TileInstance>();
+            otherTile.row -= 1;
             row += 1;
         }
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
-            // Left Swipe
-            otherDot = board.allDots[column - 1, row];
-            otherDot.GetComponent<TileInstance>().column += 1;
+            otherTile = board.allTileInstances[column - 1, row].GetComponent<TileInstance>();
+            otherTile.column += 1;
             column -= 1;
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
-            // Down Swipe
-            otherDot = board.allDots[column, row - 1];
-            otherDot.GetComponent<TileInstance>().row += 1;
+            otherTile = board.allTileInstances[column, row - 1].GetComponent<TileInstance>();
+            otherTile.row += 1;
             row -= 1;
         }
 
-        StartCoroutine(CheckMoveCo());
+        return otherTile != null;
     }
 
-    public IEnumerator CheckMoveCo()
+    private IEnumerator CheckMoveCo()
     {
-        // Color bomb logic
-        if (isColorBomb)
+        if (otherTile == null)
         {
-            findMatches.MatchPiecesOfColor(otherDot.tag);
-            isMatched = true;
-        }
-        else if (otherDot.GetComponent<TileInstance>().isColorBomb)
-        {
-            findMatches.MatchPiecesOfColor(this.gameObject.tag);
-            otherDot.GetComponent<TileInstance>().isMatched = true;
+            board.currentTile = null;
+            board.currentState = GameState.move;
+            yield break;
         }
 
         yield return new WaitForSeconds(.5f);
 
-        if (otherDot != null)
+        if (otherTile != null)
         {
-            if (!isMatched && !otherDot.GetComponent<TileInstance>().isMatched)
+            if (!isMatched && !otherTile.isMatched)
             {
-                // No match — swap back
-                otherDot.GetComponent<TileInstance>().row = row;
-                otherDot.GetComponent<TileInstance>().column = column;
+                otherTile.row = row;
+                otherTile.column = column;
                 row = previousRow;
                 column = previousColumn;
                 yield return new WaitForSeconds(.5f);
-                board.currentDot = null;
+                board.currentTile = null;
                 board.currentState = GameState.move;
             }
             else
@@ -187,26 +174,5 @@ public class TileInstance : MonoBehaviour
                 board.DestroyMatches();
             }
         }
-    }
-
-    public void MakeRowBomb()
-    {
-        isRowBomb = true;
-        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = this.transform;
-    }
-
-    public void MakeColumnBomb()
-    {
-        isColumnBomb = true;
-        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = this.transform;
-    }
-
-    public void MakeColorBomb()
-    {
-        isColorBomb = true;
-        GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
-        color.transform.parent = this.transform;
     }
 }
