@@ -77,7 +77,7 @@ public class FindMatches : MonoBehaviour
 
     private bool SameTileType(GameObject tile, TileInstance otherTileInstance)
     {
-        return tile.GetComponent<TileInstance>().tileData.tileType == otherTileInstance.tileData.tileType;
+        return tile.GetComponent<TileInstance>().tileData.Type == otherTileInstance.tileData.Type;
     }
 
     private void AddToListAndMatch(GameObject tile)

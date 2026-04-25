@@ -5,7 +5,8 @@ public enum TileType
     Leg,
     Torso,
     Spine,
-    Heart
+    Heart,
+    Any
 }
 
 public enum TileStatus
