@@ -1,4 +1,5 @@
-
+using UnityEngine;
+using System;
 
 using System.Security.Cryptography.X509Certificates;
 
@@ -20,7 +21,7 @@ class PlayerBehaviour : MonoBehaviour
         
     // }
 
-    public float TakeDamage(PlayerBehaviour player)
+    public float TakeDamage(PlayerBehaviour player) //public event Action<float> OnTakeDamage
     {
         // publisher
         TakeDamage.Invoke();
