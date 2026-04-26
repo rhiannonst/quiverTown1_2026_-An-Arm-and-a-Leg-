@@ -32,7 +32,7 @@ public class Board : MonoBehaviour
 
     [SerializeField] private EventReference MatchSuccessSound;
 
-    
+    public PlayerBehaviour player;
 
     void Start()
     {
@@ -139,6 +139,8 @@ public class Board : MonoBehaviour
 
     public void DestroyMatches()
     {
+        player?.ReceiveMatchResults(findMatches.matchResults);
+
         RuntimeManager.PlayOneShot(MatchSuccessSound);
         for (int i = 0; i < width; i++)
         {
@@ -151,6 +153,7 @@ public class Board : MonoBehaviour
             }
         }
         findMatches.currentMatches.Clear();
+        findMatches.matchResults.Clear();
         StartCoroutine(DecreaseRowCo());
     }
 
@@ -243,12 +246,14 @@ public class Board : MonoBehaviour
 
             yield return new WaitForSeconds(.25f / speed);
 
+            player?.ReceiveMatchResults(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     if (allTileInstances[i, j] != null)
                         DestroyMatchesAt(i, j);
             findMatches.currentMatches.Clear();
+            findMatches.matchResults.Clear();
 
             CollapseColumns();
             yield return new WaitForSeconds(.2f / speed);
