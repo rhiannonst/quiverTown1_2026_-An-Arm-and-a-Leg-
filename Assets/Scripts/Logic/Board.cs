@@ -22,7 +22,6 @@ public class Board : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
-    public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
     public float sequenceSpeed = 1f;
@@ -40,8 +39,6 @@ public class Board : MonoBehaviour
 
     public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
-    [SerializeField] private EventReference SwapSound;
-    [SerializeField] private EventReference BoardFillSound;
 
     public Player player;
 
@@ -75,11 +72,6 @@ public class Board : MonoBehaviour
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
-        if (!tileBag.IsInitialized)
-        {
-            tileBag.Initialize(tilePrefabs);
-        }
-
         backgroundTiles = new GameObject[width, height];
         allTileInstances = new GameObject[width, height];
         SetUp();
@@ -90,9 +82,17 @@ public class Board : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void AddTilesToBag(GameObject tilePrefabToAdd, int count = 1)
+    private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
     {
-        tileBag.AddTile(tilePrefabToAdd, count);
+        if (damagePopup == null) return;
+        var turnResult = new TurnResult();
+        foreach (var r in results)
+        {
+            turnResult.TotalDamage += r.totalDamage;
+            turnResult.TotalBlock  += r.totalBlock;
+            turnResult.TotalHeal   += r.totalHeal;
+        }
+        damagePopup.AddResult(turnResult);
     }
 
     private void SetUp()
@@ -112,12 +112,13 @@ public class Board : MonoBehaviour
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
 
-                // Pick from the bag without creating a starting match.
-                GameObject tilePrefabToUse = tileBag.DrawAvoiding(candidate => MatchesAt(i, j, candidate));
-                if (tilePrefabToUse == null)
+                // Pick a random tile that doesn't create a match
+                int tileToUse = Random.Range(0, tilePrefabs.Length);
+                int maxIterations = 0;
+                while (MatchesAt(i, j, tilePrefabs[tileToUse]) && maxIterations < 100)
                 {
-                    UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
-                    return;
+                    tileToUse = Random.Range(0, tilePrefabs.Length);
+                    maxIterations++;
                 }
 
                 GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
@@ -173,8 +174,6 @@ public class Board : MonoBehaviour
                 return true;
         }
 
-        RuntimeManager.PlayOneShot(SwapSound);
-
         return false;
     }
 
@@ -195,6 +194,7 @@ public class Board : MonoBehaviour
     public void DestroyMatches()
     {
         player?.ReceiveMatchResults(findMatches.matchResults);
+        SpawnPopups(findMatches.matchResults);
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
 
@@ -244,7 +244,6 @@ public class Board : MonoBehaviour
 
     private void RefillBoard()
     {
-        RuntimeManager.PlayOneShot(BoardFillSound); 
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -306,6 +305,7 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.25f / speed);
 
             player?.ReceiveMatchResults(findMatches.matchResults);
+            SpawnPopups(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
 
             for (int i = 0; i < width; i++)
