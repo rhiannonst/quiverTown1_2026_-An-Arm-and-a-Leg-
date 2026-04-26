@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public class BattleNPC
 {
-    NPC npcSO;
+    NPC CurrentNPC;
 
     public string Name;
     public float MaxHealth;
@@ -43,5 +45,13 @@ public class BattleNPC
     public void ResetBlock()
     {
         CurrentBlock = 0;
+    }
+
+    public EnemyMove chooseMove()
+    {
+        EnemyMove chosenMove;
+        int randomInt = Random.Range(0,MoveList.Length-1);
+        chosenMove = MoveList[randomInt];
+        return chosenMove;
     }
 }
