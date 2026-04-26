@@ -9,4 +9,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GridTest");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }
