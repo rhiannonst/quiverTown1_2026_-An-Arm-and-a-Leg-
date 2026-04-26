@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class BattleScheduler : MonoBehaviour
 {
-    public BattlePlayer player;
+    //public BattlePlayer player;
     public BattleNPC enemy;
     public Board board;
 
@@ -56,12 +56,12 @@ public class BattleScheduler : MonoBehaviour
         Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
 
         if (result.TotalBlock > 0)
-            player.AddBlock(result.TotalBlock);
+            //player.AddBlock(result.TotalBlock);
 
         if (result.TotalDamage > 0)
             enemy.TakeDamage(result.TotalDamage);
 
-        if (result.TotalHeal > 0)
-            player.handleHeal(result.TotalHeal);
+        if (result.TotalHeal > 0) return;
+           // player.handleHeal(result.TotalHeal);
     }
 }

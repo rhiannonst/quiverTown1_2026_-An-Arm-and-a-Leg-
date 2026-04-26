@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RelicHandler : MonoBehaviour
 {
-    public (float multiplier, float flatAdd) GetRelicDamageMod(Player player, TileType tileType)
+    public (float multiplier, float flatAdd) GetRelicDamageMod(PlayerBehaviour player, TileType tileType)
     {
         float multiplier = 1f;
         float flatAdd = 0f;
