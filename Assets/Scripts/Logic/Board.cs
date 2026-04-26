@@ -236,7 +236,7 @@ public class Board : MonoBehaviour
         // creates an exponentially growing parallel chain each iteration.
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.3f);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
