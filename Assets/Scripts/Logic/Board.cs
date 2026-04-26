@@ -15,6 +15,7 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
+    public float scale = 0.15f;
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
@@ -36,6 +37,11 @@ public class Board : MonoBehaviour
     [SerializeField] private EventReference MatchSuccessSound;
 
     public PlayerBehaviour player;
+
+    public Vector2 GridOrigin => new Vector2(
+        transform.position.x - (width - 1) / 2f,
+        transform.position.y - (height - 1) / 2f
+    );
 
     // call this before destroying
     public TurnResult TallyMatches()
@@ -66,16 +72,17 @@ public class Board : MonoBehaviour
 
     private void SetUp()
     {
+        Vector2 origin = GridOrigin;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
+                Vector2 tempPosition = new Vector2(origin.x + i, origin.y + j + offSet);
 
                 // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
                 Vector3 bgScale = backgroundTile.transform.localScale;
-                backgroundTile.transform.localScale = new Vector3(bgScale.x * 0.5f, bgScale.y * 0.5f, bgScale.z);
+                backgroundTile.transform.localScale = new Vector3(bgScale.x * scale, bgScale.y * scale, bgScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
@@ -164,7 +171,6 @@ public class Board : MonoBehaviour
         player?.ReceiveMatchResults(findMatches.matchResults);
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
-        TurnResult waveResult = TallyMatches();
 
         for (int i = 0; i < width; i++)
         {
@@ -218,7 +224,7 @@ public class Board : MonoBehaviour
             {
                 if (allTileInstances[i, j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    Vector2 tempPosition = new Vector2(GridOrigin.x + i, GridOrigin.y + j + offSet);
                     int tileToUse = Random.Range(0, tilePrefabs.Length);
                     GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
                     Vector3 tileScale = tileInstance.transform.localScale;
@@ -272,9 +278,6 @@ public class Board : MonoBehaviour
 
             player?.ReceiveMatchResults(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
-            // handles tallying for the Board.
-            //TurnResult waveResult = TallyMatches();
-            //battleScheduler.AccumulateWave(waveResult);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -296,6 +299,7 @@ public class Board : MonoBehaviour
         sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
+        battleScheduler?.ResolveTurn();
         yield return new WaitForSeconds(.25f / sequenceSpeed);
         currentState = GameState.move;
     }

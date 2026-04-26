@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public Action<float> OnTakeDamage;
-
     public float MaxHealth;
     public float CurrentHealth;
     public string Name;
@@ -20,9 +18,7 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
 
         if (CurrentHealth <= 0)
-        {
             Debug.Log($"Player took {damageAmount} damage. They have now died.");
-        }
     }
 
     public void HandleTakeDamage(float damage)
@@ -33,10 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void ReceiveMatchResults(List<MatchResult> results)
     {
         foreach (MatchResult result in results)
-        {
             chainMatches.Add(result);
-            Debug.Log($"Match: {result.tileType} x{result.count}");
-        }
     }
 
     [System.Serializable]
@@ -44,11 +37,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         public TileType tileType;
         public int count;
+        public Tile tileData;
 
-        public MatchResult(TileType tileType, int count)
+        public MatchResult(TileType tileType, int count, Tile tileData)
         {
             this.tileType = tileType;
             this.count = count;
+            this.tileData = tileData;
         }
     }
 }

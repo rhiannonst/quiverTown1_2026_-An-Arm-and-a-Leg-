@@ -30,7 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 50, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6505829650226180450}
   m_Father: {fileID: 0}
@@ -56,6 +56,7 @@ MonoBehaviour:
   targetY: 0
   isMatched: 0
   dragResist: 1
+  hitboxScale: 1.3
 --- !u!212 &1731714172561042534
 SpriteRenderer:
   serializedVersion: 2

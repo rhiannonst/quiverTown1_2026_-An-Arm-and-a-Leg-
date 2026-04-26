@@ -1,118 +1,67 @@
 using UnityEngine;
-using System;
-using System.Security.Cryptography;
+using System.Collections.Generic;
 
 public class BattleScheduler : MonoBehaviour
 {
-    public event Action<float> OnTakeDamage;
     public BattlePlayer player;
     public BattleNPC enemy;
-
-    TurnResult currentTurnResult;
-    
     public Board board;
-    [SerializeField]
-    public BattleNPC[] enemyList;
-    public BattleNPC currentEnemy;
-    private int currentIndex = 0;
 
-    // helper function
-    public void cycleEnemyList()
+    public void ResolveTurn()
     {
-        currentIndex = (currentIndex + 1) % enemyList.Length;
-        currentEnemy = enemyList[currentIndex];
+        List<PlayerBehaviour.MatchResult> chainMatches = board.player.chainMatches;
+
+        TurnResult turnResult = new TurnResult();
+        foreach (PlayerBehaviour.MatchResult match in chainMatches)
+        {
+            Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
+            TurnResult matchResult = ResolveTile(match.tileData, match.count);
+            turnResult.Add(matchResult);
+        }
+
+        ApplyTurnResult(turnResult);
+        board.player.chainMatches.Clear();
     }
 
-    public void AccumulateWave(TurnResult waveResult)
+    private TurnResult ResolveTile(Tile tile, int count)
     {
-        currentTurnResult.Add(waveResult);
-        Debug.Log($"[Wave] +Dmg:{waveResult.TotalDamage} +Blk:{waveResult.TotalBlock} +Heal:{waveResult.TotalHeal}");
-    }
+        TurnResult result = new TurnResult();
 
-    // helper function 
-    public TurnResult ResolveTile(Tile tile, int chainValue)
-    {
-        TurnResult result = default;
+        // This is where we would apply any relic effects that modify the tile's behavior, e.g. "Head matches deal +1 damage per tile". For now we just calculate the base effect of the tile.  
 
+        // Determine tile actions here
         switch (tile.Type)
         {
             case TileType.Head:
             case TileType.Arm:
             case TileType.Leg:
-                result.TotalDamage = tile.Damage * chainValue;
+                result.TotalDamage = tile.Damage * count; 
                 break;
 
             case TileType.Torso:
             case TileType.Spine:
-                result.TotalBlock = tile.Block * chainValue;
+                result.TotalBlock = tile.Block * count;
                 break;
 
             case TileType.Heart:
-                result.TotalHeal = tile.Heal * chainValue;
+                result.TotalHeal = tile.Heal * count;
                 break;
         }
 
         return result;
     }
 
-    public void ResolveTurn()
+    private void ApplyTurnResult(TurnResult result)
     {
-        Debug.Log($"Turn resolved: Damage={currentTurnResult.TotalDamage} " +
-                $"Block={currentTurnResult.TotalBlock} Heal={currentTurnResult.TotalHeal}");
-        ApplyTurnResult(currentTurnResult);
-        currentTurnResult.Reset();
-    }
+        Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
 
-    public void ApplyTurnResult(TurnResult result)
-    {
-        // Order matters: block first, then deal damage, then heal
         if (result.TotalBlock > 0)
             player.AddBlock(result.TotalBlock);
 
         if (result.TotalDamage > 0)
-            currentEnemy.TakeDamage(result.TotalDamage);
+            enemy.TakeDamage(result.TotalDamage);
 
         if (result.TotalHeal > 0)
             player.handleHeal(result.TotalHeal);
     }
-    
-    // handle Battle
-    public void TriggerBattle()
-    {
-        //trigger first enemy
-        currentEnemy = enemyList[0];
-        board = new Board();
-        
-    }
-
-    public void Start()
-    {
-        // subscriber (catcher)
-        //playerBehaviour.TakeDamage += onDamageTaken;
-        
-        //playerBehaviour.TakeDamage(onDamageTaken());
-        //PlayerBehaviour.TakeDamage(playerBehaviour.OnTakeDamage());
-        //player.TakeDamage(damageAmount);
-    }
-
-    public void Update() //this is improper syntax psuedo code done by event mentor as example.
-    {
-        /* if (hits(player, enemy))
-        {
-            OnTakeDamage(enemy);
-        } */
-    }
-
-
-    //private void OnEnable()
-    //{
-    //    // Subscribe to the damage event
-    //    RegisterPlayer();
-    //}
-
-    //private void OnDisable()
-    //{
-    //    // Unsubscribe to prevent memory leaks
-    //    UnRegisterPlayer();
-    //}
 }

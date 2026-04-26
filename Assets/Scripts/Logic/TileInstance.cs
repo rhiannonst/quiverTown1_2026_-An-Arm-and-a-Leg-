@@ -11,8 +11,8 @@ public class TileInstance : MonoBehaviour
     public int row;
     public int previousColumn;
     public int previousRow;
-    public int targetX;
-    public int targetY;
+    public float targetX;
+    public float targetY;
     public bool isMatched = false;
 
     [Header("Input")]
@@ -39,8 +39,8 @@ public class TileInstance : MonoBehaviour
 
     void Update()
     {
-        targetX = column;
-        targetY = row;
+        targetX = board.GridOrigin.x + column;
+        targetY = board.GridOrigin.y + row;
 
         // Lerp horizontal
         if (Mathf.Abs(targetX - transform.position.x) > .1f)
