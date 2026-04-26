@@ -9,7 +9,7 @@ public class TileBag
     public int startingCopiesPerTile = 5;
 
     private readonly List<GameObject> drawPile = new List<GameObject>();
-    private readonly List<TileBagEntry> deck = new List<TileBagEntry>();
+    private readonly List<GameObject> deck = new List<GameObject>();
 
     public int Count => drawPile.Count;
 
@@ -94,39 +94,14 @@ public class TileBag
     private void Refill()
     {
         drawPile.Clear();
-
-        foreach (TileBagEntry entry in deck)
-        {
-            for (int i = 0; i < entry.count; i++)
-            {
-                drawPile.Add(entry.tilePrefab);
-            }
-        }
+        drawPile.AddRange(deck);
     }
 
     private void AddToDeck(GameObject tilePrefab, int count)
     {
-        foreach (TileBagEntry entry in deck)
+        for (int i = 0; i < count; i++)
         {
-            if (entry.tilePrefab == tilePrefab)
-            {
-                entry.count += count;
-                return;
-            }
+            deck.Add(tilePrefab);
         }
-
-        deck.Add(new TileBagEntry(tilePrefab, count));
-    }
-}
-
-public class TileBagEntry
-{
-    public GameObject tilePrefab;
-    public int count;
-
-    public TileBagEntry(GameObject tilePrefab, int count)
-    {
-        this.tilePrefab = tilePrefab;
-        this.count = count;
     }
 }
