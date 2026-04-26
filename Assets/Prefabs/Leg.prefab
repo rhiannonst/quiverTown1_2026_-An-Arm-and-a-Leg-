@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 704509208384455223}
   - component: {fileID: 7514666200512461934}
   m_Layer: 0
-  m_Name: Heart
+  m_Name: Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1655191791, guid: 7c08b3b13fec32f41b1af7b520643194, type: 3}
+  m_Sprite: {fileID: -38584043, guid: 7c08b3b13fec32f41b1af7b520643194, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
