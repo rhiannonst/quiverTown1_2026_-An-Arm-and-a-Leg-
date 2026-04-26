@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{b8180f83-2255-4229-87fa-45f346754e0e}">
 		<property name="name">
-			<value>MatchSuccess</value>
+			<value>MatchSuccess_sfx</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -56,7 +56,7 @@
 			<destination>{dad95f98-8584-47bc-84d3-0b0d6b2a403c}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{6283b879-b328-4b4c-90f3-1864eb589978}</destination>
+			<destination>{d643c65e-d4b3-4f8b-83e5-8daedce71018}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{5985cb8a-a9d4-482c-8f1a-78d7dc1b00c0}" />
