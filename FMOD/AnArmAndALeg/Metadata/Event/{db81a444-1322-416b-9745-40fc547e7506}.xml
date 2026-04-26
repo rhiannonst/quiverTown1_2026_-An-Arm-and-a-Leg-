@@ -95,6 +95,7 @@
 	<object class="MixerBusPanner" id="{5ad65483-25eb-480e-8959-647effc7cd94}" />
 	<object class="MixerBusEffectChain" id="{16c2240c-0fdb-414f-ad7e-76b3709c0a8a}">
 		<relationship name="effects">
+			<destination>{62ae7af3-0cc4-4f07-9616-319906605c03}</destination>
 			<destination>{207818a0-a3f9-488b-8bf7-28c4f3709cbb}</destination>
 		</relationship>
 	</object>
@@ -108,6 +109,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{8e455057-5a68-4a2f-9414-2b819a326efc}" />
+	<object class="DelayEffect" id="{62ae7af3-0cc4-4f07-9616-319906605c03}">
+		<property name="delay">
+			<value>82</value>
+		</property>
+		<property name="feedback">
+			<value>0</value>
+		</property>
+		<property name="dryLevel">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{207818a0-a3f9-488b-8bf7-28c4f3709cbb}" />
 	<object class="SingleSound" id="{b022538f-5c7b-4980-9a1d-1feb5749116f}">
 		<relationship name="audioFile">
