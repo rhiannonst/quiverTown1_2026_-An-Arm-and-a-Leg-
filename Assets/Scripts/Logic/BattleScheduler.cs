@@ -55,6 +55,10 @@ public class BattleScheduler : MonoBehaviour
         board.player.chainMatches.Clear();
 
         Enemy.ExecuteIntent(board.player);
+
+        board.player.ResetBlock();
+        Enemy.ResetBlock();
+
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
         EnemyTurn++;

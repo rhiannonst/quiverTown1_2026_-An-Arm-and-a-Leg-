@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using System.ComponentModel;
 
 public enum GameState
 {
@@ -15,11 +16,12 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
-    public float scale = 0.15f;
+    public Vector2 boardSize = new Vector2(7f, 7f);
+    [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
+    public float gemScale = 1f;
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
-    public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
     public float sequenceSpeed = 1f;
@@ -37,14 +39,15 @@ public class Board : MonoBehaviour
 
     public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
-    [SerializeField] private EventReference SwapSound;
-    [SerializeField] private EventReference BoardFillSound;
 
     public Player player;
 
-    public Vector2 GridOrigin => new Vector2(
-        transform.position.x - (width - 1) / 2f,
-        transform.position.y - (height - 1) / 2f
+    public Vector2 CellSize => new Vector2(boardSize.x / width, boardSize.y / height);
+
+    public Vector3 GridOrigin => new Vector3(
+        transform.position.x - boardSize.x / 2f + CellSize.x / 2f,
+        transform.position.y - boardSize.y / 2f + CellSize.y / 2f,
+        transform.position.z
     );
 
     // call this before destroying
@@ -69,11 +72,6 @@ public class Board : MonoBehaviour
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
-        if (!tileBag.IsInitialized)
-        {
-            tileBag.Initialize(tilePrefabs);
-        }
-
         backgroundTiles = new GameObject[width, height];
         allTileInstances = new GameObject[width, height];
         SetUp();
@@ -84,39 +82,48 @@ public class Board : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void AddTilesToBag(GameObject tilePrefabToAdd, int count = 1)
+    private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
     {
-        tileBag.AddTile(tilePrefabToAdd, count);
+        if (damagePopup == null) return;
+        var turnResult = new TurnResult();
+        foreach (var r in results)
+        {
+            turnResult.TotalDamage += r.totalDamage;
+            turnResult.TotalBlock  += r.totalBlock;
+            turnResult.TotalHeal   += r.totalHeal;
+        }
+        damagePopup.AddResult(turnResult);
     }
 
     private void SetUp()
     {
-        Vector2 origin = GridOrigin;
+        Vector3 origin = GridOrigin;
+        Vector2 cell = CellSize;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(origin.x + i, origin.y + j + offSet);
+                Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
 
                 // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
-                Vector3 bgScale = backgroundTile.transform.localScale;
-                backgroundTile.transform.localScale = new Vector3(bgScale.x * scale, bgScale.y * scale, bgScale.z);
+                backgroundTile.transform.localScale = new Vector3(cell.x, cell.y, backgroundTile.transform.localScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
 
-                // Pick from the bag without creating a starting match.
-                GameObject tilePrefabToUse = tileBag.DrawAvoiding(candidate => MatchesAt(i, j, candidate));
-                if (tilePrefabToUse == null)
+                // Pick a random tile that doesn't create a match
+                int tileToUse = Random.Range(0, tilePrefabs.Length);
+                int maxIterations = 0;
+                while (MatchesAt(i, j, tilePrefabs[tileToUse]) && maxIterations < 100)
                 {
-                    UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
-                    return;
+                    tileToUse = Random.Range(0, tilePrefabs.Length);
+                    maxIterations++;
                 }
 
-                GameObject tileInstance = Instantiate(tilePrefabToUse, tempPosition, Quaternion.identity);
-                Vector3 tileScale = tileInstance.transform.localScale;
-                tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                Vector3 prefabScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                 tileInstance.GetComponent<TileInstance>().row = j;
                 tileInstance.GetComponent<TileInstance>().column = i;
                 tileInstance.transform.parent = this.transform;
@@ -167,8 +174,6 @@ public class Board : MonoBehaviour
                 return true;
         }
 
-        RuntimeManager.PlayOneShot(SwapSound);
-
         return false;
     }
 
@@ -189,6 +194,7 @@ public class Board : MonoBehaviour
     public void DestroyMatches()
     {
         player?.ReceiveMatchResults(findMatches.matchResults);
+        SpawnPopups(findMatches.matchResults);
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
 
@@ -238,24 +244,19 @@ public class Board : MonoBehaviour
 
     private void RefillBoard()
     {
-        RuntimeManager.PlayOneShot(BoardFillSound); 
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 if (allTileInstances[i, j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(GridOrigin.x + i, GridOrigin.y + j + offSet);
-                    GameObject tilePrefabToUse = tileBag.Draw();
-                    if (tilePrefabToUse == null)
-                    {
-                        UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
-                        return;
-                    }
-
-                    GameObject tileInstance = Instantiate(tilePrefabToUse, tempPosition, Quaternion.identity);
-                    Vector3 tileScale = tileInstance.transform.localScale;
-                    tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                    Vector2 cell = CellSize;
+                    Vector3 origin = GridOrigin;
+                    Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+                    int tileToUse = Random.Range(0, tilePrefabs.Length);
+                    GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                    Vector3 prefabScale = tileInstance.transform.localScale;
+                    tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                     tileInstance.GetComponent<TileInstance>().row = j;
                     tileInstance.GetComponent<TileInstance>().column = i;
                     tileInstance.transform.parent = this.transform;
@@ -304,6 +305,7 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.25f / speed);
 
             player?.ReceiveMatchResults(findMatches.matchResults);
+            SpawnPopups(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
 
             for (int i = 0; i < width; i++)
