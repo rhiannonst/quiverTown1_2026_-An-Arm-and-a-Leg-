@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{2818b456-8ee4-4d0c-bdd2-07ce9fe65019}">
+		<property name="assetPath">
+			<value>SwapSound-002.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.95258503401360539</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d65d8232-60fe-459c-9697-d15945726e34}</destination>
+		</relationship>
+	</object>
+</objects>

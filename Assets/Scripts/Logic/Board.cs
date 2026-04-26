@@ -37,6 +37,8 @@ public class Board : MonoBehaviour
 
     public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
+    [SerializeField] private EventReference SwapSound;
+    [SerializeField] private EventReference BoardFillSound;
 
     public Player player;
 
@@ -165,6 +167,8 @@ public class Board : MonoBehaviour
                 return true;
         }
 
+        RuntimeManager.PlayOneShot(SwapSound);
+
         return false;
     }
 
@@ -234,6 +238,7 @@ public class Board : MonoBehaviour
 
     private void RefillBoard()
     {
+        RuntimeManager.PlayOneShot(BoardFillSound); 
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
