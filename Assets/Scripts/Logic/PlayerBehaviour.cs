@@ -1,31 +1,64 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic; // Required for List
 
 using System.Security.Cryptography.X509Certificates;
 
 class PlayerBehaviour : MonoBehaviour
 {
     private Player playerSO;
-    public event Action TakeDamage;
+    //public event Action TakeDamage;
 
+    // This is the event others will call
+    public Action<float> OnTakeDamage;
+
+    float MaxHealth;
+    float CurrentHealth;
+    string Name;
+    List<Relic> RelicList;
+    int BaseBlock; //dunno what this is meant to be... so it is a int.
+     
     //then a constructor for the data Layer
     public PlayerBehaviour(){
         MaxHealth = playerSO.MaxHealth;
+        CurrentHealth = playerSO.MaxHealth;
         Name = playerSO.name;    
         RelicList = new List<Relic>();
-        BaseBlock = baseBlock;
+        BaseBlock = 0;//baseBlock;
     }
 
 
     // public event Action<PlayerBehaviour> OnTakeDamage(Player){
         
     // }
-
-    public float TakeDamage(PlayerBehaviour player) //public event Action<float> OnTakeDamage
+    public void TakeDamage(float damageAmount)
     {
-        // publisher
-        TakeDamage.Invoke();
+        CurrentHealth -= damageAmount;
+        Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
+
+        if (CurrentHealth <= 0) 
+        {
+            // Handle death
+            Debug.Log($"Player took {damageAmount} damage. They have now died.");
+        }
     }
+
+    // public float HandletakeDamage(PlayerBehaviour player) //public event Action<float> OnTakeDamage
+    // {
+    //     // publisher
+    //    TakeDamage.Invoke();
+    //    return 0;
+    // }
+
+    public void HandleTakeDamage(float damage)
+    {
+        CurrentHealth -= damage;
+    }
+
+    // internal void OnTakeDamage()
+    // {
+    //     throw new NotImplementedException();
+    // }
 
     /*Most of the time these events take on the form of public event Action<[classtype], bool> [PropertyName]Changed; 
     or public event Action SomethingHappened;. 
