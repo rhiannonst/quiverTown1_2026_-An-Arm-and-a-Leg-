@@ -30,7 +30,9 @@ public class BattleScheduler : MonoBehaviour
 
         board.player.chainMatches.Clear();
 
-        Enemy.TakeTurn(board.player);
+        Enemy.ExecuteIntent(board.player);
+        Enemy.RollIntent();
+        enemyGenerator.RefreshIntentLabel();
 
         CheckDeaths();
     }

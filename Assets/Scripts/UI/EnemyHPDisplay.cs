@@ -8,7 +8,7 @@ public class EnemyHPDisplay : MonoBehaviour
 
     void Update()
     {
-        if (enemyGenerator == null || label == null) return;
+        if (enemyGenerator == null || label == null || this == null) return;
 
         BattleNPC enemy = enemyGenerator.CurrentEnemy;
         if (enemy == null)

@@ -70,6 +70,11 @@ public class Board : MonoBehaviour
         SetUp();
     }
 
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     private void SetUp()
     {
         Vector2 origin = GridOrigin;

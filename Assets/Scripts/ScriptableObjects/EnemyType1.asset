@@ -16,7 +16,7 @@ MonoBehaviour:
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
   MaxHealth: 12
   Block: 0
-  MinAttack: 1
+  MinAttack: 3
   MaxAttack: 3
   MinHeal: 1
   MaxHeal: 3

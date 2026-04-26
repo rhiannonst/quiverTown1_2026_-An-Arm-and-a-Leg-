@@ -8,7 +8,7 @@ public class PlayerHPDisplay : MonoBehaviour
 
     void Update()
     {
-        if (player == null || label == null) return;
+        if (player == null || label == null || this == null) return;
         label.text = $"Player HP: {player.CurrentHealth}/{player.MaxHealth}";
     }
 }

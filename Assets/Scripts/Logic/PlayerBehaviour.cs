@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public float CurrentBlock;
     public string Name;
     public List<Relic> RelicList;
+    public LevelHandler LevelHandler;
 
     public List<MatchResult> chainMatches = new List<MatchResult>();
 
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
     public void handleDeath()
     {
         Debug.Log("Player has died.");
+        LevelHandler.GameOver();
     }
 
     public void ReceiveMatchResults(List<MatchResult> results)

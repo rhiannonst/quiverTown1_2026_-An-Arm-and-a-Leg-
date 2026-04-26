@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class BattleNPC
 {
@@ -12,7 +13,25 @@ public class BattleNPC
     private readonly int minHeal;
     private readonly int maxHeal;
 
-    public enum EnemyAction { Attack, Heal, Block }
+    public enum EnemyAction { Attack, Block, Heal, Idle }
+
+    public EnemyAction IntentAction { get; private set; }
+    public int IntentValue { get; private set; }
+
+    public string IntentDescription
+    {
+        get
+        {
+            switch (IntentAction)
+            {
+                case EnemyAction.Attack: return $"{Name} will attack for {IntentValue}";
+                case EnemyAction.Block:  return $"{Name} will block for {IntentValue}";
+                case EnemyAction.Heal:   return $"{Name} will heal for {IntentValue}";
+                case EnemyAction.Idle:   return $"{Name} is idle";
+                default:                 return "";
+            }
+        }
+    }
 
     public BattleNPC(NPC npcSO)
     {
@@ -24,31 +43,51 @@ public class BattleNPC
         maxAttack = npcSO.MaxAttack;
         minHeal = npcSO.MinHeal;
         maxHeal = npcSO.MaxHeal;
+
+        RollIntent();
     }
 
-    public void TakeTurn(Player player)
+    public void RollIntent()
     {
-        EnemyAction action = (EnemyAction)Random.Range(0, 3);
+        IntentAction = (EnemyAction)Random.Range(0, 1);
 
-        switch (action)
+        switch (IntentAction)
         {
             case EnemyAction.Attack:
-                int dmg = Random.Range(minAttack, maxAttack + 1);
-                Debug.Log($"[Enemy] {Name} attacks for {dmg}");
-                player.TakeDamage(dmg);
+            case EnemyAction.Block:
+                IntentValue = Random.Range(minAttack, maxAttack + 1);
+                break;
+            case EnemyAction.Heal:
+                IntentValue = Random.Range(minHeal, maxHeal + 1);
+                break;
+            case EnemyAction.Idle:
+                IntentValue = 0;
+                break;
+        }
+    }
+
+    public void ExecuteIntent(Player player)
+    {
+        switch (IntentAction)
+        {
+            case EnemyAction.Attack:
+                Debug.Log($"[Enemy] {Name} attacks for {IntentValue}");
+                player.TakeDamage(IntentValue);
+                break;
+
+            case EnemyAction.Block:
+                CurrentBlock += IntentValue;
+                Debug.Log($"[Enemy] {Name} blocks for {IntentValue}");
                 break;
 
             case EnemyAction.Heal:
-                int healAmt = Random.Range(minHeal, maxHeal + 1);
-                float healed = Mathf.Min(healAmt, MaxHealth - CurrentHealth);
+                float healed = Mathf.Min(IntentValue, MaxHealth - CurrentHealth);
                 CurrentHealth += healed;
                 Debug.Log($"[Enemy] {Name} heals for {healed}");
                 break;
 
-            case EnemyAction.Block:
-                int blockAmt = Random.Range(minAttack, maxAttack + 1);
-                CurrentBlock += blockAmt;
-                Debug.Log($"[Enemy] {Name} blocks for {blockAmt}");
+            case EnemyAction.Idle:
+                Debug.Log($"[Enemy] {Name} is idle");
                 break;
         }
     }
