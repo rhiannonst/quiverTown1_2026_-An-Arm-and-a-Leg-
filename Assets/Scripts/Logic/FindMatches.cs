@@ -26,6 +26,14 @@ public class FindMatches : MonoBehaviour
         isFinding = true;
         yield return new WaitForSeconds(.2f);
 
+        // Clear stale flags before scanning — this method only sets true, never false,
+        // so without this reset any previously-matched tile that survived would keep
+        // MatchesOnBoard() returning true forever.
+        for (int i = 0; i < board.width; i++)
+            for (int j = 0; j < board.height; j++)
+                if (board.allTileInstances[i, j] != null)
+                    board.allTileInstances[i, j].GetComponent<TileInstance>().isMatched = false;
+
         for (int i = 0; i < board.width; i++)
         {
             for (int j = 0; j < board.height; j++)
