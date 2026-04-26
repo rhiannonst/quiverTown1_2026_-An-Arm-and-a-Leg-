@@ -21,7 +21,7 @@ public class BattleScheduler : MonoBehaviour
         foreach (Player.MatchResult match in chainMatches)
         {
             Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
-            TurnResult matchResult = ResolveTile(match.tileData, match.count);
+            TurnResult matchResult = ResolveMatch(match);
             ApplyTurnResult(matchResult);
 
             if (Enemy.IsDead())
@@ -64,33 +64,15 @@ public class BattleScheduler : MonoBehaviour
         }
     }
 
-    private TurnResult ResolveTile(Tile tile, int count)
+    private TurnResult ResolveMatch(Player.MatchResult match)
     {
-        TurnResult result = new TurnResult();
-
-        switch (tile.Type)
+        return new TurnResult
         {
-            case TileType.Head: // attack and block
-                result.TotalDamage = tile.Damage * count;
-                result.TotalBlock = tile.Block * count;
-                break;
-            case TileType.Arm:
-            case TileType.Leg: // attack only
-                result.TotalDamage = tile.Damage * count;
-                break;
-
-            case TileType.Torso: // block only
-                result.TotalBlock = tile.Block * count;
-                break;
-
-            case TileType.Heart: // heal
-                result.TotalHeal = tile.Heal * count;
-                break;
-            case TileType.Spine: // spine does nothing for now
-                break;
-        }
-
-        return result;
+            TotalDamage = match.totalDamage,
+            TotalBlock = match.totalBlock,
+            TotalHeal = match.totalHeal,
+            MatchCount = match.count
+        };
     }
 
     private void ApplyTurnResult(TurnResult result)

@@ -9,20 +9,20 @@ public class TileBag
     public int startingCopiesPerTile = 5;
 
     private readonly List<GameObject> drawPile = new List<GameObject>();
-    private readonly List<GameObject> baseTiles = new List<GameObject>();
+    private readonly List<TileBagEntry> deck = new List<TileBagEntry>();
 
     public int Count => drawPile.Count;
 
     public void Initialize(GameObject[] tilePrefabs)
     {
-        baseTiles.Clear();
+        deck.Clear();
         if (tilePrefabs != null)
         {
             foreach (GameObject tilePrefab in tilePrefabs)
             {
                 if (tilePrefab != null)
                 {
-                    baseTiles.Add(tilePrefab);
+                    AddToDeck(tilePrefab, startingCopiesPerTile);
                 }
             }
         }
@@ -74,6 +74,7 @@ public class TileBag
         return selectedTile ?? Draw();
     }
 
+    // Adds tiles to the bag
     public void AddTile(GameObject tilePrefab, int count = 1)
     {
         if (tilePrefab == null || count <= 0)
@@ -81,10 +82,7 @@ public class TileBag
             return;
         }
 
-        if (!baseTiles.Contains(tilePrefab))
-        {
-            baseTiles.Add(tilePrefab);
-        }
+        AddToDeck(tilePrefab, count);
 
         for (int i = 0; i < count; i++)
         {
@@ -92,16 +90,43 @@ public class TileBag
         }
     }
 
+    // Refills the bag when empty
     private void Refill()
     {
         drawPile.Clear();
 
-        foreach (GameObject tilePrefab in baseTiles)
+        foreach (TileBagEntry entry in deck)
         {
-            for (int i = 0; i < startingCopiesPerTile; i++)
+            for (int i = 0; i < entry.count; i++)
             {
-                drawPile.Add(tilePrefab);
+                drawPile.Add(entry.tilePrefab);
             }
         }
+    }
+
+    private void AddToDeck(GameObject tilePrefab, int count)
+    {
+        foreach (TileBagEntry entry in deck)
+        {
+            if (entry.tilePrefab == tilePrefab)
+            {
+                entry.count += count;
+                return;
+            }
+        }
+
+        deck.Add(new TileBagEntry(tilePrefab, count));
+    }
+}
+
+public class TileBagEntry
+{
+    public GameObject tilePrefab;
+    public int count;
+
+    public TileBagEntry(GameObject tilePrefab, int count)
+    {
+        this.tilePrefab = tilePrefab;
+        this.count = count;
     }
 }

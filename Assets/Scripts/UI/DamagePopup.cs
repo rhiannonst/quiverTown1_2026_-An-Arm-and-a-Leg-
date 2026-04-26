@@ -26,18 +26,18 @@ public class DamagePopup : MonoBehaviour
             switch (match.tileType)
             {
                 case TileType.Head:
-                    totalDamage += match.count;
-                    totalBlock += match.count;
+                    totalDamage += Mathf.RoundToInt(match.totalDamage);
+                    totalBlock += Mathf.RoundToInt(match.totalBlock);
                     break;
                 case TileType.Arm:
                 case TileType.Leg:
-                    totalDamage += match.count;
+                    totalDamage += Mathf.RoundToInt(match.totalDamage);
                     break;
                 case TileType.Torso:
-                    totalBlock += match.count;
+                    totalBlock += Mathf.RoundToInt(match.totalBlock);
                     break;
                 case TileType.Heart:
-                    totalHeal += match.count;
+                    totalHeal += Mathf.RoundToInt(match.totalHeal);
                     break;
                 case TileType.Spine:
                     break;
