@@ -26,16 +26,20 @@ public class DamagePopup : MonoBehaviour
             switch (match.tileType)
             {
                 case TileType.Head:
+                    totalDamage += match.count;
+                    totalBlock += match.count;
+                    break;
                 case TileType.Arm:
                 case TileType.Leg:
                     totalDamage += match.count;
                     break;
                 case TileType.Torso:
-                case TileType.Spine:
                     totalBlock += match.count;
                     break;
                 case TileType.Heart:
                     totalHeal += match.count;
+                    break;
+                case TileType.Spine:
                     break;
             }
         }

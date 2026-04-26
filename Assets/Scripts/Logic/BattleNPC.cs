@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class BattleNPC
 {
@@ -12,8 +11,7 @@ public class BattleNPC
     private readonly int maxAttack;
     private readonly int minHeal;
     private readonly int maxHeal;
-
-    public enum EnemyAction { Attack, Block, Heal, Idle }
+    private readonly EnemyAction[] actionPool;
 
     public EnemyAction IntentAction { get; private set; }
     public int IntentValue { get; private set; }
@@ -43,13 +41,16 @@ public class BattleNPC
         maxAttack = npcSO.MaxAttack;
         minHeal = npcSO.MinHeal;
         maxHeal = npcSO.MaxHeal;
+        actionPool = npcSO.actionPool != null && npcSO.actionPool.Length > 0
+            ? npcSO.actionPool
+            : new[] { EnemyAction.Attack, EnemyAction.Block, EnemyAction.Heal, EnemyAction.Idle };
 
         RollIntent();
     }
 
     public void RollIntent()
     {
-        IntentAction = (EnemyAction)Random.Range(0, 1);
+        IntentAction = actionPool[Random.Range(0, actionPool.Length)];
 
         switch (IntentAction)
         {

@@ -11,7 +11,8 @@ public class NPC : ScriptableObject
     public float MaxHealth = 30f;
     public float Block = 0f;
 
-    [Header("Attack")]
+    [Header("Actions")]
+    public EnemyAction[] actionPool = { EnemyAction.Attack, EnemyAction.Block, EnemyAction.Heal, EnemyAction.Idle };
     public int MinAttack = 1;
     public int MaxAttack = 4;
     public int MinHeal = 1;

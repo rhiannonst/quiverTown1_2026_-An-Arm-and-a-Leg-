@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class BattleScheduler : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class BattleScheduler : MonoBehaviour
     public Board board;
     public LevelHandler levelHandler;
     public DamagePopup damagePopup;
+    public TMP_Text turnLabel;
+
+    public int EnemyTurn { get; private set; } = 1;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
 
@@ -23,7 +27,9 @@ public class BattleScheduler : MonoBehaviour
             if (Enemy.IsDead())
             {
                 Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
-                enemyGenerator.SpawnNext();
+                enemyGenerator.AdvanceStage();
+                EnemyTurn = 1;
+                RefreshTurnLabel();
                 board.player.chainMatches.Clear();
                 if (damagePopup != null) damagePopup.Clear();
                 return;
@@ -35,10 +41,17 @@ public class BattleScheduler : MonoBehaviour
         Enemy.ExecuteIntent(board.player);
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
+        EnemyTurn++;
+        RefreshTurnLabel();
 
         if (damagePopup != null) damagePopup.Clear();
 
         CheckDeaths();
+    }
+
+    private void RefreshTurnLabel()
+    {
+        if (turnLabel != null) turnLabel.text = $"Turn {EnemyTurn}";
     }
 
     private void CheckDeaths()
@@ -57,19 +70,23 @@ public class BattleScheduler : MonoBehaviour
 
         switch (tile.Type)
         {
-            case TileType.Head:
+            case TileType.Head: // attack and block
+                result.TotalDamage = tile.Damage * count;
+                result.TotalBlock = tile.Block * count;
+                break;
             case TileType.Arm:
-            case TileType.Leg:
+            case TileType.Leg: // attack only
                 result.TotalDamage = tile.Damage * count;
                 break;
 
-            case TileType.Torso:
-            case TileType.Spine:
+            case TileType.Torso: // block only
                 result.TotalBlock = tile.Block * count;
                 break;
 
-            case TileType.Heart:
+            case TileType.Heart: // heal
                 result.TotalHeal = tile.Heal * count;
+                break;
+            case TileType.Spine: // spine does nothing for now
                 break;
         }
 

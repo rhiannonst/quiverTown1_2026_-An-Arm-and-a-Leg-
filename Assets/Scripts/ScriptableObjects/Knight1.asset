@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fffe1a9f24be4cd982868fc0c7a3c4c, type: 3}
-  m_Name: EnemyType1
+  m_Name: Knight1
   m_EditorClassIdentifier: Assembly-CSharp::NPC
-  Name: AxeKnight
+  Name: Lazy Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
-  MaxHealth: 12
+  MaxHealth: 20
   Block: 0
-  MinAttack: 3
-  MaxAttack: 3
+  actionPool: 0000000003000000
+  MinAttack: 5
+  MaxAttack: 1
   MinHeal: 1
   MaxHeal: 3
