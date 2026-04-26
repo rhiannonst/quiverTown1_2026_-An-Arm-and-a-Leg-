@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using FMOD;
+using FMODUnity;
 
 public enum GameState
 {
@@ -23,6 +25,8 @@ public class Board : MonoBehaviour
 
     private GameObject[,] backgroundTiles;
     private FindMatches findMatches;
+
+    [SerializeField] private EventReference MatchSuccessSound;
 
     
 
@@ -124,6 +128,7 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
+            RuntimeManager.PlayOneShot(MatchSuccessSound);
             GameObject particle = Instantiate(destroyParticle,
                 allTileInstances[column, row].transform.position,
                 Quaternion.identity);
