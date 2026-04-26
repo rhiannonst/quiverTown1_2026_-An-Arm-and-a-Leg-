@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639128095071888642
+  lastModified: 639128096213436662
   FileSizes:
   - Name: Desktop
     Value: 1214560
@@ -220,7 +220,7 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639128095071901733
+  lastModified: 639128096213453249
   FileSizes:
   - Name: Desktop
     Value: 1374
@@ -259,7 +259,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -56320374010738432}
   cacheVersion: 131859
-  cacheTime: 639128095071901733
+  cacheTime: 639128096213453249
   SerializableEventsDict:
   - key: event:/PlayerDie_sfx
     index: 0
