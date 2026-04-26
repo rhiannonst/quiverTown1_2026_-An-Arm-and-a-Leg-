@@ -3,7 +3,37 @@ guid: 60d8537138e2b3b4ea657585800db079
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoneHandle
+    second: {fileID: 2100000, guid: 0d2fe1cde80684af48156150f4dc5f6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door
+    second: {fileID: 2100000, guid: 544102e0925e444cba103a925bf221ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorPlate
+    second: {fileID: 2100000, guid: 2d022cd15f9db417e9b405162691ca1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pillars
+    second: {fileID: 2100000, guid: 4ea5ea391f432420f9e00df0ea37bfb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sconses
+    second: {fileID: 2100000, guid: 2d022cd15f9db417e9b405162691ca1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: d96285d06726a493287b176b09af48ba, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
