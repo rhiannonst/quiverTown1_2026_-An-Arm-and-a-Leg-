@@ -1,118 +1,109 @@
 using UnityEngine;
-using System;
-using System.Security.Cryptography;
+using System.Collections.Generic;
+using TMPro;
 
 public class BattleScheduler : MonoBehaviour
 {
-    public event Action<float> OnTakeDamage;
-    public BattlePlayer player;
-    public BattleNPC enemy;
-
-    TurnResult currentTurnResult;
-    
+    public EnemyGenerator enemyGenerator;
     public Board board;
-    [SerializeField]
-    public BattleNPC[] enemyList;
-    public BattleNPC currentEnemy;
-    private int currentIndex = 0;
+    public LevelHandler levelHandler;
+    public DamagePopup damagePopup;
+    public TMP_Text turnLabel;
 
-    // helper function
-    public void cycleEnemyList()
+    public int EnemyTurn { get; private set; } = 1;
+
+    private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
+
+    public void ResolveTurn()
     {
-        currentIndex = (currentIndex + 1) % enemyList.Length;
-        currentEnemy = enemyList[currentIndex];
+        List<Player.MatchResult> chainMatches = board.player.chainMatches;
+
+        foreach (Player.MatchResult match in chainMatches)
+        {
+            Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
+            TurnResult matchResult = ResolveTile(match.tileData, match.count);
+            ApplyTurnResult(matchResult);
+
+            if (Enemy.IsDead())
+            {
+                Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
+                enemyGenerator.AdvanceStage();
+                EnemyTurn = 1;
+                RefreshTurnLabel();
+                board.player.chainMatches.Clear();
+                if (damagePopup != null) damagePopup.Clear();
+                return;
+            }
+        }
+
+        board.player.chainMatches.Clear();
+
+        Enemy.ExecuteIntent(board.player);
+        Enemy.RollIntent();
+        enemyGenerator.RefreshIntentLabel();
+        EnemyTurn++;
+        RefreshTurnLabel();
+
+        if (damagePopup != null) damagePopup.Clear();
+
+        CheckDeaths();
     }
 
-    public void AccumulateWave(TurnResult waveResult)
+    private void RefreshTurnLabel()
     {
-        currentTurnResult.Add(waveResult);
-        Debug.Log($"[Wave] +Dmg:{waveResult.TotalDamage} +Blk:{waveResult.TotalBlock} +Heal:{waveResult.TotalHeal}");
+        if (turnLabel != null) turnLabel.text = $"Turn {EnemyTurn}";
     }
 
-    // helper function 
-    public TurnResult ResolveTile(Tile tile, int chainValue)
+    private void CheckDeaths()
     {
-        TurnResult result = default;
+        if (board.player.CurrentHealth <= 0)
+        {
+            Debug.Log("[BattleScheduler] Player has died.");
+            board.player.handleDeath();
+            if (levelHandler != null) levelHandler.GameOver();
+        }
+    }
+
+    private TurnResult ResolveTile(Tile tile, int count)
+    {
+        TurnResult result = new TurnResult();
 
         switch (tile.Type)
         {
-            case TileType.Head:
+            case TileType.Head: // attack and block
+                result.TotalDamage = tile.Damage * count;
+                result.TotalBlock = tile.Block * count;
+                break;
             case TileType.Arm:
-            case TileType.Leg:
-                result.TotalDamage = tile.Damage * chainValue;
+            case TileType.Leg: // attack only
+                result.TotalDamage = tile.Damage * count;
                 break;
 
-            case TileType.Torso:
-            case TileType.Spine:
-                result.TotalBlock = tile.Block * chainValue;
+            case TileType.Torso: // block only
+                result.TotalBlock = tile.Block * count;
                 break;
 
-            case TileType.Heart:
-                result.TotalHeal = tile.Heal * chainValue;
+            case TileType.Heart: // heal
+                result.TotalHeal = tile.Heal * count;
+                break;
+            case TileType.Spine: // spine does nothing for now
                 break;
         }
 
         return result;
     }
 
-    public void ResolveTurn()
+    private void ApplyTurnResult(TurnResult result)
     {
-        Debug.Log($"Turn resolved: Damage={currentTurnResult.TotalDamage} " +
-                $"Block={currentTurnResult.TotalBlock} Heal={currentTurnResult.TotalHeal}");
-        ApplyTurnResult(currentTurnResult);
-        currentTurnResult.Reset();
-    }
+        Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
 
-    public void ApplyTurnResult(TurnResult result)
-    {
-        // Order matters: block first, then deal damage, then heal
         if (result.TotalBlock > 0)
-            player.AddBlock(result.TotalBlock);
+            board.player.AddBlock(result.TotalBlock);
 
         if (result.TotalDamage > 0)
-            currentEnemy.TakeDamage(result.TotalDamage);
+            Enemy.TakeDamage(result.TotalDamage);
 
         if (result.TotalHeal > 0)
-            player.handleHeal(result.TotalHeal);
+            board.player.handleHeal(result.TotalHeal);
     }
-    
-    // handle Battle
-    public void TriggerBattle()
-    {
-        //trigger first enemy
-        currentEnemy = enemyList[0];
-        board = new Board();
-        
-    }
-
-    public void Start()
-    {
-        // subscriber (catcher)
-        //playerBehaviour.TakeDamage += onDamageTaken;
-        
-        //playerBehaviour.TakeDamage(onDamageTaken());
-        //PlayerBehaviour.TakeDamage(playerBehaviour.OnTakeDamage());
-        //player.TakeDamage(damageAmount);
-    }
-
-    public void Update() //this is improper syntax psuedo code done by event mentor as example.
-    {
-        /* if (hits(player, enemy))
-        {
-            OnTakeDamage(enemy);
-        } */
-    }
-
-
-    //private void OnEnable()
-    //{
-    //    // Subscribe to the damage event
-    //    RegisterPlayer();
-    //}
-
-    //private void OnDisable()
-    //{
-    //    // Unsubscribe to prevent memory leaks
-    //    UnRegisterPlayer();
-    //}
 }

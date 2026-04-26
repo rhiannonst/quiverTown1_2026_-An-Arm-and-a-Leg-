@@ -15,3 +15,11 @@ public enum TileStatus
     Poison,
     Reshuffle,
 }
+
+public enum EnemyAction
+{
+    Attack,
+    Block,
+    Heal,
+    Idle,
+}

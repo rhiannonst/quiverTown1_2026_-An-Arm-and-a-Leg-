@@ -1,42 +1,59 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 
-public class PlayerBehaviour : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public Action<float> OnTakeDamage;
-
     public float MaxHealth;
     public float CurrentHealth;
+    public float CurrentBlock;
     public string Name;
     public List<Relic> RelicList;
-    public int BaseBlock;
+    public LevelHandler LevelHandler;
 
     public List<MatchResult> chainMatches = new List<MatchResult>();
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damage)
     {
-        CurrentHealth -= damageAmount;
-        Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
-
-        if (CurrentHealth <= 0)
+        if (CurrentBlock >= damage)
         {
-            Debug.Log($"Player took {damageAmount} damage. They have now died.");
+            CurrentBlock -= damage;
+        }
+        else
+        {
+            damage -= CurrentBlock;
+            CurrentBlock = 0;
+            CurrentHealth -= damage;
+            Debug.Log($"Player took {damage} damage. Health is now {CurrentHealth}");
+            if (CurrentHealth <= 0)
+                handleDeath();
         }
     }
 
-    public void HandleTakeDamage(float damage)
+    public void AddBlock(float blockValue)
     {
-        CurrentHealth -= damage;
+        CurrentBlock += blockValue;
+    }
+
+    public void ResetBlock()
+    {
+        CurrentBlock = 0;
+    }
+
+    public void handleHeal(float healAmt)
+    {
+        CurrentHealth = Mathf.Min(CurrentHealth + healAmt, MaxHealth);
+    }
+
+    public void handleDeath()
+    {
+        Debug.Log("Player has died.");
+        LevelHandler.GameOver();
     }
 
     public void ReceiveMatchResults(List<MatchResult> results)
     {
         foreach (MatchResult result in results)
-        {
             chainMatches.Add(result);
-            Debug.Log($"Match: {result.tileType} x{result.count}");
-        }
     }
 
     [System.Serializable]
@@ -44,11 +61,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         public TileType tileType;
         public int count;
+        public Tile tileData;
 
-        public MatchResult(TileType tileType, int count)
+        public MatchResult(TileType tileType, int count, Tile tileData)
         {
             this.tileType = tileType;
             this.count = count;
+            this.tileData = tileData;
         }
     }
 }
