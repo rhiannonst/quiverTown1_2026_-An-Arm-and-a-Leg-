@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class TileBag
 {
+    private const int BaseTilePrefabCount = 6;
+
     [Min(1)]
     public int startingCopiesPerTile = 5;
 
@@ -18,8 +20,10 @@ public class TileBag
         deck.Clear();
         if (tilePrefabs != null)
         {
-            foreach (GameObject tilePrefab in tilePrefabs)
+            int baseTileCount = Mathf.Min(BaseTilePrefabCount, tilePrefabs.Length);
+            for (int i = 0; i < baseTileCount; i++)
             {
+                GameObject tilePrefab = tilePrefabs[i];
                 if (tilePrefab != null)
                 {
                     AddToDeck(tilePrefab, startingCopiesPerTile);
