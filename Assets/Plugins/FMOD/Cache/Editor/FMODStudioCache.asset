@@ -15,7 +15,11 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
+<<<<<<< Updated upstream
   lastModified: 639127295589467258
+=======
+  lastModified: 639127411564513746
+>>>>>>> Stashed changes
   FileSizes:
   - Name: Desktop
     Value: 770
@@ -43,7 +47,11 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -1464031517485322421}
   cacheVersion: 131859
+<<<<<<< Updated upstream
   cacheTime: 639127295602649885
+=======
+  cacheTime: 639127411564513746
+>>>>>>> Stashed changes
   SerializableEventsDict:
   - key: event:/New Event
     index: 0
@@ -89,7 +97,11 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
+<<<<<<< Updated upstream
   lastModified: 639127295602649885
+=======
+  lastModified: 639127411564505966
+>>>>>>> Stashed changes
   FileSizes:
   - Name: Desktop
     Value: 127168
