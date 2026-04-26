@@ -6,6 +6,7 @@ public class FindMatches : MonoBehaviour
 {
     private Board board;
     public List<GameObject> currentMatches = new List<GameObject>();
+    public List<PlayerBehaviour.MatchResult> matchResults = new List<PlayerBehaviour.MatchResult>();
     private bool isFinding = false;
 
     void Start()
@@ -24,7 +25,7 @@ public class FindMatches : MonoBehaviour
     private IEnumerator FindAllMatchesCo()
     {
         isFinding = true;
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.2f / board.sequenceSpeed);
 
         // Clear stale flags before scanning — this method only sets true, never false,
         // so without this reset any previously-matched tile that survived would keep
@@ -80,6 +81,19 @@ public class FindMatches : MonoBehaviour
                 }
             }
         }
+
+        // feed match results into player
+        matchResults.Clear();
+        Dictionary<TileType, int> typeCounts = new Dictionary<TileType, int>();
+        foreach (GameObject tile in currentMatches)
+        {
+            TileType t = tile.GetComponent<TileInstance>().tileData.Type;
+            if (!typeCounts.ContainsKey(t)) typeCounts[t] = 0;
+            typeCounts[t]++;
+        }
+        foreach (var kvp in typeCounts)
+            matchResults.Add(new PlayerBehaviour.MatchResult(kvp.Key, kvp.Value));
+
         isFinding = false;
     }
 
