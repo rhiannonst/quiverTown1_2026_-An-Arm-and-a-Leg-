@@ -1183,6 +1183,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerator
   enemyPool:
   - {fileID: 11400000, guid: f2e20209a964bcd48b548060bbfd17b6, type: 2}
+  - {fileID: 11400000, guid: 987b09f28ca4d224ea276b58781f7929, type: 2}
+  - {fileID: 11400000, guid: 7c0d719883603814b99786c3a0830a60, type: 2}
+  - {fileID: 11400000, guid: fc4cc334ad3ee6f4ab1c0c3071f30e6e, type: 2}
+  - {fileID: 11400000, guid: 8c00cc5eb043dce45940fe2c16cfd03a, type: 2}
   enemyPrefab: {fileID: 4885546523299587100, guid: 7a5f84755e4f15f46bbc9752c27ca2de, type: 3}
   spawnPoint: {fileID: 333682767}
   intentLabel: {fileID: 581600647}
