@@ -23,25 +23,9 @@ public class DamagePopup : MonoBehaviour
         foreach (Player.MatchResult match in results)
         {
             this.gameObject.SetActive(true);
-            switch (match.tileType)
-            {
-                case TileType.Head:
-                    totalDamage += match.count;
-                    totalBlock += match.count;
-                    break;
-                case TileType.Arm:
-                case TileType.Leg:
-                    totalDamage += match.count;
-                    break;
-                case TileType.Torso:
-                    totalBlock += match.count;
-                    break;
-                case TileType.Heart:
-                    totalHeal += match.count;
-                    break;
-                case TileType.Spine:
-                    break;
-            }
+            totalDamage += Mathf.RoundToInt(match.totalDamage);
+            totalBlock += Mathf.RoundToInt(match.totalBlock);
+            totalHeal += Mathf.RoundToInt(match.totalHeal);
         }
         transform.localScale += Vector3.one * scaleIncrement;
         Refresh();
@@ -56,7 +40,7 @@ public class DamagePopup : MonoBehaviour
     private IEnumerator FadeOut()
     {
         float elapsed = 0f;
-        float fadeDuration = 0.75f;
+        float fadeDuration = 0.2f;
 
         while (elapsed < fadeDuration)
         {

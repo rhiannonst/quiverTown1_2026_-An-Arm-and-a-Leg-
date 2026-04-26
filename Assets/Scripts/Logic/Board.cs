@@ -19,6 +19,7 @@ public class Board : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
+    public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
     public float sequenceSpeed = 1f;
@@ -66,6 +67,11 @@ public class Board : MonoBehaviour
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
+        if (!tileBag.IsInitialized)
+        {
+            tileBag.Initialize(tilePrefabs);
+        }
+
         backgroundTiles = new GameObject[width, height];
         allTileInstances = new GameObject[width, height];
         SetUp();
@@ -74,6 +80,11 @@ public class Board : MonoBehaviour
     void OnDestroy()
     {
         StopAllCoroutines();
+    }
+
+    public void AddTilesToBag(GameObject tilePrefabToAdd, int count = 1)
+    {
+        tileBag.AddTile(tilePrefabToAdd, count);
     }
 
     private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
@@ -99,16 +110,15 @@ public class Board : MonoBehaviour
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
 
-                // Pick a random tile that doesn't create a match
-                int tileToUse = Random.Range(0, tilePrefabs.Length);
-                int maxIterations = 0;
-                while (MatchesAt(i, j, tilePrefabs[tileToUse]) && maxIterations < 100)
+                // Pick from the bag without creating a starting match.
+                GameObject tilePrefabToUse = tileBag.DrawAvoiding(candidate => MatchesAt(i, j, candidate));
+                if (tilePrefabToUse == null)
                 {
-                    tileToUse = Random.Range(0, tilePrefabs.Length);
-                    maxIterations++;
+                    UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
+                    return;
                 }
 
-                GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                GameObject tileInstance = Instantiate(tilePrefabToUse, tempPosition, Quaternion.identity);
                 Vector3 tileScale = tileInstance.transform.localScale;
                 tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
                 tileInstance.GetComponent<TileInstance>().row = j;
@@ -238,8 +248,14 @@ public class Board : MonoBehaviour
                 if (allTileInstances[i, j] == null)
                 {
                     Vector2 tempPosition = new Vector2(GridOrigin.x + i, GridOrigin.y + j + offSet);
-                    int tileToUse = Random.Range(0, tilePrefabs.Length);
-                    GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                    GameObject tilePrefabToUse = tileBag.Draw();
+                    if (tilePrefabToUse == null)
+                    {
+                        UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
+                        return;
+                    }
+
+                    GameObject tileInstance = Instantiate(tilePrefabToUse, tempPosition, Quaternion.identity);
                     Vector3 tileScale = tileInstance.transform.localScale;
                     tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
                     tileInstance.GetComponent<TileInstance>().row = j;
