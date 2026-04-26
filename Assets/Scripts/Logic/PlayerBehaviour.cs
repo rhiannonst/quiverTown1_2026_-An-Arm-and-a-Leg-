@@ -61,13 +61,13 @@ public class Player : MonoBehaviour
     {
         public TileType tileType;
         public int count;
-        public Tile tileData;
+        public float totalDamage;
+        public float totalBlock;
+        public float totalHeal;
 
-        public MatchResult(TileType tileType, int count, Tile tileData)
+        public MatchResult(TileType tileType)
         {
             this.tileType = tileType;
-            this.count = count;
-            this.tileData = tileData;
         }
     }
 }

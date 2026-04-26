@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="PlayerHealthBarContainer" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/Sprites/HPbackdrop.png?fileID=2800000&amp;guid=d00d9111c668d40598c00521c7fb9bb2&amp;type=3#HPbackdrop&quot;); height: 73px; width: 422px; top: 962px; left: 231px;">
+        <ui:VisualElement name="playerHealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/HPFill.png?fileID=2800000&amp;guid=a8fb463db78154bfab37cb4ddb29307c&amp;type=3#HPFill&quot;); background-size: 90% 60%;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="EnemyHealthBarContainer" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/EnemyHP_BG.png?fileID=2800000&amp;guid=0d58adbe5168f4367926881e2e95fa79&amp;type=3#EnemyHP_BG&quot;); position: absolute; height: 77px; width: 358px; top: 98px; left: 254px;">
+        <ui:VisualElement name="enemyHealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/EnemyHP_Fill.png?fileID=2800000&amp;guid=c40188833034a4b88896096ffd27240a&amp;type=3#EnemyHP_Fill&quot;); width: 321px; height: 36px; position: absolute; top: 20px; left: 19px;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="playerBlockContainer" style="flex-grow: 1; position: absolute; height: 147px; width: 375px; top: 802px; left: 258px;">
+        <ui:Image source="project://database/Assets/Sprites/ShieldIcon.png?fileID=2800000&amp;guid=9356bb9164d5b4522897ca7cb1506553&amp;type=3#ShieldIcon" name="playerBlockIcon" style="width: 379px; height: 150px; position: absolute; top: 105px; left: -317px;">
+            <ui:Label text="0" name="playerBlockText" style="font-size: 46px; position: absolute; top: 41px; left: 172px; height: 51px; width: 55px; color: rgb(253, 245, 230);"/>
+        </ui:Image>
+    </ui:VisualElement>
+    <ui:Image name="enemyBlockIcon" style="height: 103px; width: 327px;"/>
+    <ui:VisualElement name="EnemyBlockContainer" style="flex-grow: 1; position: absolute; height: 157px; width: 274px; top: 79px; left: 28px;">
+        <ui:Image name="enemyBlockIcon" style="position: absolute; width: 135px; height: 138px; top: 9px; left: 95px; background-image: url(&quot;project://database/Assets/Sprites/HeroShieldIcon.png?fileID=2800000&amp;guid=30ce369f39e0d49b6b4e85b169b468a3&amp;type=3#HeroShieldIcon&quot;);">
+            <ui:Label text="0" name="enemyBlockText" style="font-size: 46px; position: absolute; top: 39px; left: 48px; height: 76px; width: 92px; color: rgb(253, 245, 230);"/>
+        </ui:Image>
+    </ui:VisualElement>
+</ui:UXML>

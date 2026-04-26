@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: TorsoData
   Type: 3
   Status: 0
-  _Sprite: {fileID: 21300000, guid: 508cefe741874224ab04250e51102374, type: 3}
+  _Sprite: {fileID: -8651642, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 0
   Heal: 0
-  Block: 2
+  Block: 1

@@ -5,6 +5,7 @@ public class Relic : ScriptableObject
 {
     [Header("Display")]
     [TextArea]
+    public string Name;
     public string description;
     public Sprite icon;
 

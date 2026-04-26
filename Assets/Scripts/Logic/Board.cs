@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using System.ComponentModel;
 
 public enum GameState
 {
@@ -15,7 +16,9 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
-    public float scale = 0.15f;
+    public Vector2 boardSize = new Vector2(7f, 7f);
+    [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
+    public float gemScale = 1f;
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
@@ -39,9 +42,12 @@ public class Board : MonoBehaviour
 
     public Player player;
 
-    public Vector2 GridOrigin => new Vector2(
-        transform.position.x - (width - 1) / 2f,
-        transform.position.y - (height - 1) / 2f
+    public Vector2 CellSize => new Vector2(boardSize.x / width, boardSize.y / height);
+
+    public Vector3 GridOrigin => new Vector3(
+        transform.position.x - boardSize.x / 2f + CellSize.x / 2f,
+        transform.position.y - boardSize.y / 2f + CellSize.y / 2f,
+        transform.position.z
     );
 
     // call this before destroying
@@ -79,22 +85,29 @@ public class Board : MonoBehaviour
     private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
     {
         if (damagePopup == null) return;
-        damagePopup.AddResults(results);
+        var turnResult = new TurnResult();
+        foreach (var r in results)
+        {
+            turnResult.TotalDamage += r.totalDamage;
+            turnResult.TotalBlock  += r.totalBlock;
+            turnResult.TotalHeal   += r.totalHeal;
+        }
+        damagePopup.AddResult(turnResult);
     }
 
     private void SetUp()
     {
-        Vector2 origin = GridOrigin;
+        Vector3 origin = GridOrigin;
+        Vector2 cell = CellSize;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(origin.x + i, origin.y + j + offSet);
+                Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
 
                 // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
-                Vector3 bgScale = backgroundTile.transform.localScale;
-                backgroundTile.transform.localScale = new Vector3(bgScale.x * scale, bgScale.y * scale, bgScale.z);
+                backgroundTile.transform.localScale = new Vector3(cell.x, cell.y, backgroundTile.transform.localScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
@@ -109,8 +122,8 @@ public class Board : MonoBehaviour
                 }
 
                 GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
-                Vector3 tileScale = tileInstance.transform.localScale;
-                tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                Vector3 prefabScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                 tileInstance.GetComponent<TileInstance>().row = j;
                 tileInstance.GetComponent<TileInstance>().column = i;
                 tileInstance.transform.parent = this.transform;
@@ -237,11 +250,13 @@ public class Board : MonoBehaviour
             {
                 if (allTileInstances[i, j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(GridOrigin.x + i, GridOrigin.y + j + offSet);
+                    Vector2 cell = CellSize;
+                    Vector3 origin = GridOrigin;
+                    Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
                     int tileToUse = Random.Range(0, tilePrefabs.Length);
                     GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
-                    Vector3 tileScale = tileInstance.transform.localScale;
-                    tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                    Vector3 prefabScale = tileInstance.transform.localScale;
+                    tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                     tileInstance.GetComponent<TileInstance>().row = j;
                     tileInstance.GetComponent<TileInstance>().column = i;
                     tileInstance.transform.parent = this.transform;
