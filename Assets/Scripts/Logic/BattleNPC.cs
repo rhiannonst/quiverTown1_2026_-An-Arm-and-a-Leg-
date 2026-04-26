@@ -2,56 +2,72 @@ using UnityEngine;
 
 public class BattleNPC
 {
-    NPC CurrentNPC;
-
     public string Name;
     public float MaxHealth;
     public float CurrentHealth;
-    public EnemyMove[] MoveList;
     public float CurrentBlock;
+
+    private readonly int minAttack;
+    private readonly int maxAttack;
+    private readonly int minHeal;
+    private readonly int maxHeal;
+
+    public enum EnemyAction { Attack, Heal, Block }
 
     public BattleNPC(NPC npcSO)
     {
         Name = npcSO.Name;
         MaxHealth = npcSO.MaxHealth;
         CurrentHealth = npcSO.MaxHealth;
-        MoveList = npcSO.MoveList;
         CurrentBlock = npcSO.Block;
+        minAttack = npcSO.MinAttack;
+        maxAttack = npcSO.MaxAttack;
+        minHeal = npcSO.MinHeal;
+        maxHeal = npcSO.MaxHeal;
+    }
+
+    public void TakeTurn(Player player)
+    {
+        EnemyAction action = (EnemyAction)Random.Range(0, 3);
+
+        switch (action)
+        {
+            case EnemyAction.Attack:
+                int dmg = Random.Range(minAttack, maxAttack + 1);
+                Debug.Log($"[Enemy] {Name} attacks for {dmg}");
+                player.TakeDamage(dmg);
+                break;
+
+            case EnemyAction.Heal:
+                int healAmt = Random.Range(minHeal, maxHeal + 1);
+                float healed = Mathf.Min(healAmt, MaxHealth - CurrentHealth);
+                CurrentHealth += healed;
+                Debug.Log($"[Enemy] {Name} heals for {healed}");
+                break;
+
+            case EnemyAction.Block:
+                int blockAmt = Random.Range(minAttack, maxAttack + 1);
+                CurrentBlock += blockAmt;
+                Debug.Log($"[Enemy] {Name} blocks for {blockAmt}");
+                break;
+        }
     }
 
     public void TakeDamage(float damage)
     {
-        // case 1: block > damage
-        if (CurrentBlock > 0 && CurrentBlock > damage)
-            {
-                CurrentBlock -= damage;
-            }
-        else // case 2: block is < damage 
+        if (CurrentBlock >= damage)
+        {
+            CurrentBlock -= damage;
+        }
+        else
         {
             damage -= CurrentBlock;
             CurrentBlock = 0;
-            if (damage > 0)
-            {
-                CurrentHealth = CurrentHealth-damage;
-            }
+            CurrentHealth -= damage;
         }
     }
 
-    public void AddBlock(float blockValue)
-    {
-        CurrentBlock += blockValue;
-    }
-
-    public void ResetBlock()
-    {
-        CurrentBlock = 0;
-    }
-
-    public EnemyMove chooseMove()
-    {
-        EnemyMove chosenMove;
-        int randomInt = Random.Range(0,MoveList.Length-1);
-        chosenMove = MoveList[randomInt];
-        return chosenMove;
-    }
+    public void AddBlock(float blockValue) => CurrentBlock += blockValue;
+    public void ResetBlock() => CurrentBlock = 0;
+    public bool IsDead() => CurrentHealth <= 0;
 }

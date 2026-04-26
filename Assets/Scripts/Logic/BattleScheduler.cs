@@ -3,30 +3,52 @@ using System.Collections.Generic;
 
 public class BattleScheduler : MonoBehaviour
 {
-    public BattleNPC enemy;
+    public EnemyGenerator enemyGenerator;
     public Board board;
+    public LevelHandler levelHandler;
+
+    private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
 
     public void ResolveTurn()
     {
         List<Player.MatchResult> chainMatches = board.player.chainMatches;
 
-        TurnResult turnResult = new TurnResult();
         foreach (Player.MatchResult match in chainMatches)
         {
             Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
             TurnResult matchResult = ResolveTile(match.tileData, match.count);
-            turnResult.Add(matchResult);
+            ApplyTurnResult(matchResult);
+
+            if (Enemy.IsDead())
+            {
+                Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
+                enemyGenerator.SpawnNext();
+                board.player.chainMatches.Clear();
+                return;
+            }
         }
 
-        ApplyTurnResult(turnResult);
         board.player.chainMatches.Clear();
+
+        Enemy.TakeTurn(board.player);
+
+        CheckDeaths();
+    }
+
+    private void CheckDeaths()
+    {
+        if (board.player.CurrentHealth <= 0)
+        {
+            Debug.Log("[BattleScheduler] Player has died.");
+            board.player.handleDeath();
+            if (levelHandler != null) levelHandler.GameOver();
+        }
     }
 
     private TurnResult ResolveTile(Tile tile, int count)
     {
         TurnResult result = new TurnResult();
 
-        // This is where we would apply any relic effects that modify the tile's behavior.
         switch (tile.Type)
         {
             case TileType.Head:
@@ -56,7 +78,7 @@ public class BattleScheduler : MonoBehaviour
             board.player.AddBlock(result.TotalBlock);
 
         if (result.TotalDamage > 0)
-            enemy.TakeDamage(result.TotalDamage);
+            Enemy.TakeDamage(result.TotalDamage);
 
         if (result.TotalHeal > 0)
             board.player.handleHeal(result.TotalHeal);

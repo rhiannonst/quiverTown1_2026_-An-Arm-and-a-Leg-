@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class LevelHandler : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject gameOverOverlay;
+
     void Start()
     {
-        
+        if (gameOverOverlay != null)
+            gameOverOverlay.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GameOver()
     {
-        
+        Debug.Log("[LevelHandler] Game Over.");
+        if (gameOverOverlay != null)
+            gameOverOverlay.SetActive(true);
     }
 }

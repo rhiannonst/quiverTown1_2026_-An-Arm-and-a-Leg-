@@ -3,11 +3,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPC", menuName = "Scriptable Objects/NPC")]
 public class NPC : ScriptableObject
 {
-    public string Name{get; private set;}
+    [Header("Identity")]
+    public string Name;
+    public Sprite Portrait;
 
-    public float MaxHealth{get; private set;}
+    [Header("Stats")]
+    public float MaxHealth = 30f;
+    public float Block = 0f;
 
-    public EnemyMove[] MoveList{get; private set;}
-
-    public float Block{get; private set;}
+    [Header("Attack")]
+    public int MinAttack = 1;
+    public int MaxAttack = 4;
+    public int MinHeal = 1;
+    public int MaxHeal = 3;
 }
