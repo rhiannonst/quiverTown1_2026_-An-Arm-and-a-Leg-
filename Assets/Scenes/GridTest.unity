@@ -2976,6 +2976,20 @@ MonoBehaviour:
   levelHandler: {fileID: 744677830}
   damagePopup: {fileID: 821097697}
   turnLabel: {fileID: 263041238}
+  EnemyDie_sfx:
+    Guid:
+      Data1: 1419616823
+      Data2: 1325611613
+      Data3: -327834746
+      Data4: -232775441
+    Path: event:/EnemyDie_sfx
+  PlayerDie_sfx:
+    Guid:
+      Data1: -1246807545
+      Data2: 1094777987
+      Data3: 646496650
+      Data4: -270167330
+    Path: event:/PlayerDie_sfx
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -3463,6 +3477,8 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
+  tileBag:
+    startingCopiesPerTile: 5
   sequenceSpeed: 1
   chainSpeedIncrement: 0.5
   currentTile: {fileID: 0}
@@ -3474,7 +3490,21 @@ MonoBehaviour:
       Data2: 1109992021
       Data3: -213517689
       Data4: 240022854
-    Path: event:/MatchSuccess
+    Path: event:/MatchSuccess_sfx
+  SwapSound:
+    Guid:
+      Data1: 390234120
+      Data2: 1190304573
+      Data3: -1273439320
+      Data4: 1919447464
+    Path: event:/Swap_sfx
+  BoardFillSound:
+    Guid:
+      Data1: 805454858
+      Data2: 1112756942
+      Data3: 65345673
+      Data4: -1298125986
+    Path: event:/BoardRefill_sfx
   player: {fileID: 2115350403}
 --- !u!4 &2128798149
 Transform:
