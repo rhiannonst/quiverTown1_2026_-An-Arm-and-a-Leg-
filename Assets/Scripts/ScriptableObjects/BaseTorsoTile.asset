@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a7e51ae078440dcb839d11f7675747, type: 3}
   m_Name: BaseTorsoTile
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Name: BaseTorsoTile
+  Name: TorsoData
   Type: 3
   Status: 0
   _Sprite: {fileID: -8651642, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}

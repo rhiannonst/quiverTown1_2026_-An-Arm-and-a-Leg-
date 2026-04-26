@@ -11,12 +11,13 @@ public class TileInstance : MonoBehaviour
     public int row;
     public int previousColumn;
     public int previousRow;
-    public int targetX;
-    public int targetY;
+    public float targetX;
+    public float targetY;
     public bool isMatched = false;
 
     [Header("Input")]
     public float dragResist = 1f;
+    public float hitboxScale = 1.3f;
 
     private FindMatches findMatches;
     private Board board;
@@ -30,12 +31,16 @@ public class TileInstance : MonoBehaviour
     {
         board = FindAnyObjectByType<Board>();
         findMatches = FindAnyObjectByType<FindMatches>();
+
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+            col.size *= hitboxScale;
     }
 
     void Update()
     {
-        targetX = column;
-        targetY = row;
+        targetX = board.GridOrigin.x + column;
+        targetY = board.GridOrigin.y + row;
 
         // Lerp horizontal
         if (Mathf.Abs(targetX - transform.position.x) > .1f)
@@ -161,11 +166,11 @@ public class TileInstance : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f / board.sequenceSpeed);
 
         // Run match detection after tiles have settled
         findMatches.FindAllMatches();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.3f / board.sequenceSpeed);
 
         if (otherTile != null)
         {
@@ -176,7 +181,7 @@ public class TileInstance : MonoBehaviour
                 otherTile.column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.5f / board.sequenceSpeed);
                 board.currentTile = null;
                 board.currentState = GameState.move;
             }

@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2311892786451840071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MatchSuccess
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MatchSuccess
+  Guid:
+    Data1: -1206382717
+    Data2: 1109992021
+    Data3: -213517689
+    Data4: 240022854
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1464031517485322421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +42,10 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639127295589467258
+  lastModified: 639127411564513746
   FileSizes:
   - Name: Desktop
-    Value: 770
+    Value: 924
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -37,16 +64,51 @@ MonoBehaviour:
   - {fileID: 4366945149442671104}
   EditorEvents:
   - {fileID: 723016877149955258}
-  EditorParameters: []
+  - {fileID: 24996990581693334}
+  - {fileID: -2311892786451840071}
+  EditorParameters:
+  - {fileID: 3424271901022941936}
   MasterBanks:
   - {fileID: 4366945149442671104}
   StringsBanks:
   - {fileID: -1464031517485322421}
   cacheVersion: 131859
-  cacheTime: 639127295602649885
+  cacheTime: 639127411564513746
   SerializableEventsDict:
   - key: event:/New Event
     index: 0
+  - key: event:/Music
+    index: 1
+  - key: event:/MatchSuccess
+    index: 2
+--- !u!114 &24996990581693334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Music
+  Guid:
+    Data1: -682249624
+    Data2: 1294043114
+    Data3: -107454791
+    Data4: -253053614
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 5403328967087633512}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 83076
 --- !u!114 &723016877149955258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +136,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 20000
+--- !u!114 &3424271901022941936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/GameState
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: GameState
+  StudioPath: parameter:/GameState
+  Min: 0
+  Max: 4
+  Default: 0
+  ID:
+    data1: 17606480
+    data2: 2520589138
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Menu
+  - Battle
+  - BattleLowHP
+  - Win
+  - DeathLose
+  Exists: 1
 --- !u!114 &4366945149442671104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,8 +180,37 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639127295602649885
+  lastModified: 639127411564505966
   FileSizes:
   - Name: Desktop
-    Value: 127168
+    Value: 989088
+  Exists: 1
+--- !u!114 &5403328967087633512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/GameState
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: GameState
+  StudioPath: 
+  Min: 0
+  Max: 4
+  Default: 0
+  ID:
+    data1: 17606480
+    data2: 2520589138
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Menu
+  - Battle
+  - BattleLowHP
+  - Win
+  - DeathLose
   Exists: 1
