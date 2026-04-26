@@ -40,7 +40,7 @@ public class DamagePopup : MonoBehaviour
     private IEnumerator FadeOut()
     {
         float elapsed = 0f;
-        float fadeDuration = 0.75f;
+        float fadeDuration = 0.2f;
 
         while (elapsed < fadeDuration)
         {

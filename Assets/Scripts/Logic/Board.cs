@@ -67,7 +67,11 @@ public class Board : MonoBehaviour
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
-        tileBag.Initialize(tilePrefabs);
+        if (!tileBag.IsInitialized)
+        {
+            tileBag.Initialize(tilePrefabs);
+        }
+
         backgroundTiles = new GameObject[width, height];
         allTileInstances = new GameObject[width, height];
         SetUp();

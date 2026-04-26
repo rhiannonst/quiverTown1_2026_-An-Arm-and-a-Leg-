@@ -13,6 +13,7 @@ public class TileBag
     private readonly List<GameObject> drawPile = new List<GameObject>();
     private readonly List<GameObject> deck = new List<GameObject>();
 
+    public bool IsInitialized { get; private set; }
     public int Count => drawPile.Count;
 
     public void Initialize(GameObject[] tilePrefabs)
@@ -32,6 +33,7 @@ public class TileBag
         }
 
         Refill();
+        IsInitialized = true;
     }
 
     public GameObject Draw()
