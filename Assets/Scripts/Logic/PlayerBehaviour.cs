@@ -4,7 +4,7 @@ using System.Collections.Generic; // Required for List
 
 using System.Security.Cryptography.X509Certificates;
 
-class PlayerBehaviour : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     private Player playerSO;
     //public event Action TakeDamage;
@@ -12,10 +12,10 @@ class PlayerBehaviour : MonoBehaviour
     // This is the event others will call
     public Action<float> OnTakeDamage;
 
-    float MaxHealth;
-    float CurrentHealth;
-    string Name;
-    List<Relic> RelicList;
+    public float MaxHealth;
+    public float CurrentHealth;
+    public string Name;
+    public List<Relic> RelicList;
     int BaseBlock; //dunno what this is meant to be... so it is a int.
      
     //then a constructor for the data Layer
@@ -24,6 +24,7 @@ class PlayerBehaviour : MonoBehaviour
         CurrentHealth = playerSO.MaxHealth;
         Name = playerSO.name;    
         RelicList = new List<Relic>();
+        ComboHistory = new List<ComboAction>();
         BaseBlock = 0;//baseBlock;
     }
 
@@ -31,12 +32,26 @@ class PlayerBehaviour : MonoBehaviour
     // public event Action<PlayerBehaviour> OnTakeDamage(Player){
         
     // }
+    public struct ComboAction
+    {
+        public TileType TileType;
+        public float Value;
+
+        public ComboAction(TileType tileType, float value)
+        {
+            TileType = tileType;
+            Value = value;
+        }
+    }
+
+    public List<ComboAction> ComboHistory;
+
     public void TakeDamage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
         Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
 
-        if (CurrentHealth <= 0) 
+        if (CurrentHealth <= 0)
         {
             // Handle death
             Debug.Log($"Player took {damageAmount} damage. They have now died.");

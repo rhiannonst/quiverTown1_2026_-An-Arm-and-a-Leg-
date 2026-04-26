@@ -57,6 +57,7 @@ public class FindMatches : MonoBehaviour
                             AddToListAndMatch(leftTile);
                             AddToListAndMatch(currentTile);
                             AddToListAndMatch(rightTile);
+                            Debug.Log($"[FindMatches] Horizontal match — Type: {currentTileInstance.tileData.Type}, Chain: {currentMatches.Count} tiles");
                         }
                     }
                 }
@@ -75,6 +76,7 @@ public class FindMatches : MonoBehaviour
                             AddToListAndMatch(downTile);
                             AddToListAndMatch(currentTile);
                             AddToListAndMatch(upTile);
+                            Debug.Log($"[FindMatches] Vertical match — Type: {currentTileInstance.tileData.Type}, Chain: {currentMatches.Count} tiles");
                         }
                     }
                 }

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90551053c37d043eb8cb670fd9323bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileInstance
-  tileData: {fileID: 11400000, guid: 011f7c83a6a792b438de7e26b11728dd, type: 2}
+  tileData: {fileID: 11400000, guid: 6a307b7232076f9429ec81ee406ac2dc, type: 2}
   column: 0
   row: 0
   previousColumn: 0

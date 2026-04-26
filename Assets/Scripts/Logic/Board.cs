@@ -26,6 +26,8 @@ public class Board : MonoBehaviour
     private GameObject[,] backgroundTiles;
     private FindMatches findMatches;
 
+    public PlayerBehaviour player;
+
     [SerializeField] private EventReference MatchSuccessSound;
 
     
