@@ -1,4 +1,9 @@
 # ==========================================
+# Claude Code
+# ==========================================
+.claude/settings.local.json
+
+# ==========================================
 # Operating System Files
 # ==========================================
 .DS_Store
@@ -118,7 +123,7 @@ InitTestScene*.unity*
 !/[Aa]ssets/Editor Default Resources/FMOD/*
 
 # Ignore the Cache folder since it is updated locally.
-/[Aa]ssets/Plugins/FMOD/Cache/*
+/[Aa]ssets/Plugins/FMOD/Cache/**
 
 # Log files can be ignored.
 fmod_editor.log
@@ -138,7 +143,5 @@ fmod_editor.log
 **/[Bb]uild/Mobile/
 **/[Bb]uild/Console/
 FMOD/AnArmAndALeg/.cache
-Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
-Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
 FMOD/AnArmAndALeg/.cache
 FMOD/AnArmAndALeg/.unsaved

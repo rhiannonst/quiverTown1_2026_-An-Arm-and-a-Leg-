@@ -501,8 +501,12 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 1304892045067851634, guid: 13f6c4ed256e645669d934fc730f8edd, type: 3}
+  - {fileID: 538679292038326795, guid: 546be3210135a7b43ab290bbf3e405de, type: 3}
+  - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
-  destroyParticle: {fileID: 896558056}
+  - {fileID: 6515215803095509999, guid: 431d1fbbf251b1a4fa6a86ec7692cb53, type: 3}
+  sequenceSpeed: 1
+  chainSpeedIncrement: 0.5
   currentTile: {fileID: 0}
   MatchSuccessSound:
     Guid:

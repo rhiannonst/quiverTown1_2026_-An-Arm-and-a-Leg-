@@ -18,7 +18,11 @@ public class Board : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
-    public GameObject destroyParticle;
+
+    [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
+    public float sequenceSpeed = 1f;
+    [Tooltip("Added to sequenceSpeed with each cascade chain.")]
+    public float chainSpeedIncrement = 0.5f;
 
     public GameObject[,] allTileInstances;
     public TileInstance currentTile;
@@ -128,12 +132,6 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
-            RuntimeManager.PlayOneShot(MatchSuccessSound);
-            GameObject particle = Instantiate(destroyParticle,
-                allTileInstances[column, row].transform.position,
-                Quaternion.identity);
-            Destroy(particle, .5f);
-
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
         }
@@ -141,6 +139,7 @@ public class Board : MonoBehaviour
 
     public void DestroyMatches()
     {
+        RuntimeManager.PlayOneShot(MatchSuccessSound);
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -180,7 +179,7 @@ public class Board : MonoBehaviour
     private IEnumerator DecreaseRowCo()
     {
         CollapseColumns();
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.4f / sequenceSpeed);
         StartCoroutine(FillBoardCo());
     }
 
@@ -224,20 +223,27 @@ public class Board : MonoBehaviour
 
     private IEnumerator FillBoardCo()
     {
+        float startSpeed = sequenceSpeed;
+        float speed = sequenceSpeed;
+
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f / speed);
 
         // Detect matches on the newly filled board
         findMatches.FindAllMatches();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.25f / speed); // must exceed FindAllMatchesCo's internal .2f / speed
 
         // Cascade: handle destroy → collapse → refill → re-detect inline.
         // Never call DestroyMatches() here — it spawns new coroutines and
         // creates an exponentially growing parallel chain each iteration.
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            speed += chainSpeedIncrement;
+            sequenceSpeed = speed; // keep in sync so FindMatches reads the updated value
 
+            yield return new WaitForSeconds(.25f / speed);
+
+            RuntimeManager.PlayOneShot(MatchSuccessSound);
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     if (allTileInstances[i, j] != null)
@@ -245,18 +251,19 @@ public class Board : MonoBehaviour
             findMatches.currentMatches.Clear();
 
             CollapseColumns();
-            yield return new WaitForSeconds(.4f);
+            yield return new WaitForSeconds(.2f / speed);
 
             RefillBoard();
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.25f / speed);
 
             findMatches.FindAllMatches();
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.25f / speed); // must exceed FindAllMatchesCo's internal .2f / speed
         }
 
+        sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.25f / sequenceSpeed);
         currentState = GameState.move;
     }
 }

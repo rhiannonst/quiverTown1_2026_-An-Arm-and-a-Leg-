@@ -24,7 +24,7 @@ public class FindMatches : MonoBehaviour
     private IEnumerator FindAllMatchesCo()
     {
         isFinding = true;
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.2f / board.sequenceSpeed);
 
         // Clear stale flags before scanning — this method only sets true, never false,
         // so without this reset any previously-matched tile that survived would keep
