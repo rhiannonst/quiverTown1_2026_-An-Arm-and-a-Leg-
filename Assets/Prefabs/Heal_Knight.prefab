@@ -67,27 +67,27 @@ PrefabInstance:
     - target: {fileID: -4510106138846756319, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 035e3cd08f68b3244814da7bbbf0d208, type: 2}
+      objectReference: {fileID: 2100000, guid: 0d2fe1cde80684af48156150f4dc5f6a, type: 2}
     - target: {fileID: -2217056771488100433, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 035e3cd08f68b3244814da7bbbf0d208, type: 2}
+      objectReference: {fileID: 2100000, guid: b92e744fff07048f1be29638a21df662, type: 2}
     - target: {fileID: -584681089529670413, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 035e3cd08f68b3244814da7bbbf0d208, type: 2}
+      objectReference: {fileID: 2100000, guid: 0d2fe1cde80684af48156150f4dc5f6a, type: 2}
     - target: {fileID: 919132149155446097, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: m_Name
-      value: AxeKnight_002
+      value: Heal_Knight
       objectReference: {fileID: 0}
     - target: {fileID: 1376396193984236124, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 97835ec24a493c24781ac41a693d50a3, type: 2}
+      objectReference: {fileID: 2100000, guid: b92e744fff07048f1be29638a21df662, type: 2}
     - target: {fileID: 1799528298215347416, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 035e3cd08f68b3244814da7bbbf0d208, type: 2}
+      objectReference: {fileID: 2100000, guid: 774baa7573bfe4ce3b9e5976cc61594c, type: 2}
     - target: {fileID: 1799528298215347416, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -95,15 +95,23 @@ PrefabInstance:
     - target: {fileID: 8042288899073468884, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c523a48ae1d94e644a9a368be0824db4, type: 2}
+      objectReference: {fileID: 2100000, guid: 6976f9245d9cc4dabbe6deac2fc8ce93, type: 2}
     - target: {fileID: 8042288899073468884, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: c523a48ae1d94e644a9a368be0824db4, type: 2}
+      objectReference: {fileID: 2100000, guid: 7815137ad8b444779a4266e1ba76c2a0, type: 2}
     - target: {fileID: 8042288899073468884, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
-      objectReference: {fileID: 2100000, guid: 035e3cd08f68b3244814da7bbbf0d208, type: 2}
+      objectReference: {fileID: 2100000, guid: 774baa7573bfe4ce3b9e5976cc61594c, type: 2}
+    - target: {fileID: 8042288899073468884, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 58b1cdbc8470b4cdbaae08ec6ec81f75, type: 2}
+    - target: {fileID: 8042288899073468884, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f029b43ba37e04a7591d22d14f32fae7, type: 2}
     - target: {fileID: 8138643720171686315, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.86
