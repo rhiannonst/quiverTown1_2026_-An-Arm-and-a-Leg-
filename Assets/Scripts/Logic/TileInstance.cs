@@ -42,7 +42,9 @@ public class TileInstance : MonoBehaviour
         {
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
-            if (board.allTileInstances[column, row] != gameObject)
+            // Guard: matched tiles are about to be destroyed — don't overwrite the null
+            // that DestroyMatchesAt just set, since Unity defers Destroy() to end-of-frame.
+            if (!isMatched && board.allTileInstances[column, row] != gameObject)
             {
                 board.allTileInstances[column, row] = gameObject;
             }
@@ -58,7 +60,7 @@ public class TileInstance : MonoBehaviour
         {
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
-            if (board.allTileInstances[column, row] != gameObject)
+            if (!isMatched && board.allTileInstances[column, row] != gameObject)
             {
                 board.allTileInstances[column, row] = gameObject;
             }
