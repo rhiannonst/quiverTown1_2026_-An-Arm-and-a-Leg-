@@ -17,6 +17,7 @@ public class TileInstance : MonoBehaviour
 
     [Header("Input")]
     public float dragResist = 1f;
+    public float hitboxScale = 1.3f;
 
     private FindMatches findMatches;
     private Board board;
@@ -30,6 +31,10 @@ public class TileInstance : MonoBehaviour
     {
         board = FindAnyObjectByType<Board>();
         findMatches = FindAnyObjectByType<FindMatches>();
+
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+            col.size *= hitboxScale;
     }
 
     void Update()
@@ -161,11 +166,11 @@ public class TileInstance : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f / board.sequenceSpeed);
 
         // Run match detection after tiles have settled
         findMatches.FindAllMatches();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.3f / board.sequenceSpeed);
 
         if (otherTile != null)
         {
@@ -176,7 +181,7 @@ public class TileInstance : MonoBehaviour
                 otherTile.column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.5f / board.sequenceSpeed);
                 board.currentTile = null;
                 board.currentState = GameState.move;
             }
