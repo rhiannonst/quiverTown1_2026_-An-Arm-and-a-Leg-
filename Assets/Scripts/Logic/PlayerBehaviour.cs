@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private Player playerSO;
-
     public Action<float> OnTakeDamage;
 
     public float MaxHealth;
@@ -15,15 +13,6 @@ public class PlayerBehaviour : MonoBehaviour
     public int BaseBlock;
 
     public List<MatchResult> chainMatches = new List<MatchResult>();
-
-    public PlayerBehaviour()
-    {
-        MaxHealth = playerSO.MaxHealth;
-        CurrentHealth = playerSO.MaxHealth;
-        Name = playerSO.name;
-        RelicList = new List<Relic>();
-        BaseBlock = 0;
-    }
 
     public void TakeDamage(float damageAmount)
     {

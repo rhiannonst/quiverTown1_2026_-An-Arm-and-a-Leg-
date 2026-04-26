@@ -49,8 +49,6 @@ public class Board : MonoBehaviour
                 if (go != null && go.GetComponent<TileInstance>().isMatched)
                 {
                     Tile tileData = go.GetComponent<TileInstance>().tileData;
-                    // BattleScheduler resolves what the tile means
-                    result.Add(battleScheduler.ResolveTile(tileData, 1));
                 }
             }
         }
@@ -154,22 +152,10 @@ public class Board : MonoBehaviour
 
     private void DestroyMatchesAt(int column, int row)
     {
-        
-        
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
-            RuntimeManager.PlayOneShot(MatchSuccessSound);
-            GameObject particle = Instantiate(destroyParticle,
-                allTileInstances[column, row].transform.position,
-                Quaternion.identity);
-            
-
-
-            Destroy(particle, .5f);
-
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
-            
         }
     }
 
@@ -179,8 +165,7 @@ public class Board : MonoBehaviour
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
         TurnResult waveResult = TallyMatches();
-        battleScheduler.AccumulateWave(waveResult);
-        
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -288,8 +273,8 @@ public class Board : MonoBehaviour
             player?.ReceiveMatchResults(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
             // handles tallying for the Board.
-            TurnResult waveResult = TallyMatches();
-            battleScheduler.AccumulateWave(waveResult);
+            //TurnResult waveResult = TallyMatches();
+            //battleScheduler.AccumulateWave(waveResult);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -307,7 +292,6 @@ public class Board : MonoBehaviour
             findMatches.FindAllMatches();
             yield return new WaitForSeconds(.25f / speed); // must exceed FindAllMatchesCo's internal .2f / speed
         }
-        battleScheduler.ResolveTurn();
 
         sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();

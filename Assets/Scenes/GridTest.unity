@@ -491,8 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52589f6bfb1564541bd9f4a71169c2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
-  MaxHealth: 0
-  CurrentHealth: 0
+  MaxHealth: 1
+  CurrentHealth: 1
   Name: 
   RelicList: []
   BaseBlock: 0
@@ -558,6 +558,7 @@ MonoBehaviour:
   sequenceSpeed: 1
   chainSpeedIncrement: 0.5
   currentTile: {fileID: 0}
+  battleScheduler: {fileID: 0}
   MatchSuccessSound:
     Guid:
       Data1: -1206382717
