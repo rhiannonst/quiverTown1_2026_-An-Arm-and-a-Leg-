@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: ArmData
   Type: 1
   Status: 0
-  _Sprite: {fileID: 21300000, guid: 410f3f116d5c1c44a9f64ee3d269517c, type: 3}
+  _Sprite: {fileID: -1552175095, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 2
   Heal: 0
   Block: 0
