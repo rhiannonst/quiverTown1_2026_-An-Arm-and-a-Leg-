@@ -97,7 +97,7 @@ public class TileBag
     }
 
     // Refills the bag when empty
-    private void Refill()
+    public void Refill()
     {
         drawPile.Clear();
         drawPile.AddRange(deck);

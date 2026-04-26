@@ -87,10 +87,18 @@ public class Board : MonoBehaviour
         tileBag.AddTile(tilePrefabToAdd, count);
     }
 
-    private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
+    public void Reshuffle()
     {
-        if (damagePopup == null) return;
-        damagePopup.AddResults(results);
+        StopAllCoroutines();
+        currentState = GameState.wait;
+        currentTile = null;
+
+        ClearMatchState();
+        ClearTileInstances();
+        tileBag.Refill();
+        RedrawTilesAvoidingMatches();
+
+        currentState = GameState.move;
     }
 
     private void SetUp()
@@ -129,6 +137,58 @@ public class Board : MonoBehaviour
             }
         }
         LogBoard();
+    }
+
+    private void ClearMatchState()
+    {
+        if (findMatches != null)
+        {
+            findMatches.currentMatches.Clear();
+            findMatches.matchResults.Clear();
+        }
+    }
+
+    private void ClearTileInstances()
+    {
+        if (allTileInstances == null) return;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allTileInstances[i, j] != null)
+                {
+                    Destroy(allTileInstances[i, j]);
+                    allTileInstances[i, j] = null;
+                }
+            }
+        }
+    }
+
+    private void RedrawTilesAvoidingMatches()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector2 tempPosition = new Vector2(GridOrigin.x + i, GridOrigin.y + j);
+                GameObject tilePrefabToUse = tileBag.DrawAvoiding(candidate => MatchesAt(i, j, candidate));
+                if (tilePrefabToUse == null)
+                {
+                    UnityEngine.Debug.LogError("Board has no tile prefabs available to draw from.", this);
+                    return;
+                }
+
+                GameObject tileInstance = Instantiate(tilePrefabToUse, tempPosition, Quaternion.identity);
+                Vector3 tileScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                tileInstance.GetComponent<TileInstance>().row = j;
+                tileInstance.GetComponent<TileInstance>().column = i;
+                tileInstance.transform.parent = transform;
+                tileInstance.name = "(" + i + ", " + j + ")";
+                allTileInstances[i, j] = tileInstance;
+            }
+        }
     }
 
     private void LogBoard()
@@ -191,7 +251,6 @@ public class Board : MonoBehaviour
     public void DestroyMatches()
     {
         player?.ReceiveMatchResults(findMatches.matchResults);
-        SpawnPopups(findMatches.matchResults);
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
 
@@ -306,7 +365,6 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.25f / speed);
 
             player?.ReceiveMatchResults(findMatches.matchResults);
-            SpawnPopups(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
 
             for (int i = 0; i < width; i++)
