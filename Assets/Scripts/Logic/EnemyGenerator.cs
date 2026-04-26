@@ -38,7 +38,8 @@ public class EnemyGenerator : MonoBehaviour
         CurrentEnemy = new BattleNPC(npc);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");
 
-        if (enemyPrefab != null)
+        GameObject prefabToSpawn = npc.Prefab != null ? npc.Prefab : enemyPrefab;
+        if (prefabToSpawn != null)
         {
             Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
             Quaternion baseRot = spawnPoint != null ? spawnPoint.rotation : Quaternion.identity;
@@ -47,7 +48,7 @@ public class EnemyGenerator : MonoBehaviour
                 Random.Range(-angleRange, angleRange),
                 Random.Range(-angleRange, angleRange)
             );
-            currentEnemyInstance = Instantiate(enemyPrefab, pos, baseRot * tilt);
+            currentEnemyInstance = Instantiate(prefabToSpawn, pos, baseRot * tilt);
 
             Rigidbody newRb = currentEnemyInstance.GetComponent<Rigidbody>();
             if (newRb != null)

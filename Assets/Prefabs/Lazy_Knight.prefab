@@ -72,6 +72,30 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e8b5d8b4c2fab4225b001e9038349609, type: 2}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27522
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.27522
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.27522
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.000049677
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71811
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454441721234969776, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.015087
+      objectReference: {fileID: 0}
     - target: {fileID: -584681089529670413, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -138,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f029b43ba37e04a7591d22d14f32fae7, type: 2}
     - target: {fileID: 8138643720171686315, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.86
+      value: 0.247
       objectReference: {fileID: 0}
     - target: {fileID: 8138643720171686315, guid: 92b4c207aca4a6540bc96548692a147d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -210,7 +234,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.2
+  m_Radius: 0.1
+  m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
