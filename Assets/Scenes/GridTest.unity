@@ -119,6 +119,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &345015362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 345015364}
+  - component: {fileID: 345015363}
+  m_Layer: 0
+  m_Name: MusicStateSetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &345015363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345015362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e04e2572f9a940a47465f6f3c2f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioGlobalParameterTrigger
+  CollisionTag: 
+  Parameter: GameState
+  TriggerEvent: 1
+  Value: 1
+--- !u!4 &345015364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345015362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &896558056
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +504,13 @@ MonoBehaviour:
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
   destroyParticle: {fileID: 896558056}
   currentTile: {fileID: 0}
+  MatchSuccessSound:
+    Guid:
+      Data1: -1206382717
+      Data2: 1109992021
+      Data3: -213517689
+      Data4: 240022854
+    Path: event:/MatchSuccess
 --- !u!212 &2128798148
 SpriteRenderer:
   serializedVersion: 2
@@ -609,3 +664,4 @@ SceneRoots:
   - {fileID: 8432941485134995497}
   - {fileID: 2128798149}
   - {fileID: 896558057}
+  - {fileID: 345015364}
