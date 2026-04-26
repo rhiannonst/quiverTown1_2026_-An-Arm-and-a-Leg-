@@ -6,6 +6,7 @@ public class BattleScheduler : MonoBehaviour
     public EnemyGenerator enemyGenerator;
     public Board board;
     public LevelHandler levelHandler;
+    public DamagePopup damagePopup;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
 
@@ -24,6 +25,7 @@ public class BattleScheduler : MonoBehaviour
                 Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
                 enemyGenerator.SpawnNext();
                 board.player.chainMatches.Clear();
+                if (damagePopup != null) damagePopup.Clear();
                 return;
             }
         }
@@ -33,6 +35,8 @@ public class BattleScheduler : MonoBehaviour
         Enemy.ExecuteIntent(board.player);
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
+
+        if (damagePopup != null) damagePopup.Clear();
 
         CheckDeaths();
     }
