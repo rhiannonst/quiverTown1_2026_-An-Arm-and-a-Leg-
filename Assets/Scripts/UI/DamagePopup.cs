@@ -18,15 +18,17 @@ public class DamagePopup : MonoBehaviour
         baseScale = transform.localScale;
     }
 
-    public void AddResults(List<Player.MatchResult> results)
+    public void AddResult(TurnResult result)
     {
-        foreach (Player.MatchResult match in results)
-        {
-            this.gameObject.SetActive(true);
-            totalDamage += Mathf.RoundToInt(match.totalDamage);
-            totalBlock += Mathf.RoundToInt(match.totalBlock);
-            totalHeal += Mathf.RoundToInt(match.totalHeal);
-        }
+        AddTotals(result.TotalDamage, result.TotalBlock, result.TotalHeal);
+    }
+
+    private void AddTotals(float damage, float block, float heal)
+    {
+        gameObject.SetActive(true);
+        totalDamage += Mathf.RoundToInt(damage);
+        totalBlock += Mathf.RoundToInt(block);
+        totalHeal += Mathf.RoundToInt(heal);
         transform.localScale += Vector3.one * scaleIncrement;
         Refresh();
     }

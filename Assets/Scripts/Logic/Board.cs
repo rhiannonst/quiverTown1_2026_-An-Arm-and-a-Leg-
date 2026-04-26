@@ -87,12 +87,6 @@ public class Board : MonoBehaviour
         tileBag.AddTile(tilePrefabToAdd, count);
     }
 
-    private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
-    {
-        if (damagePopup == null) return;
-        damagePopup.AddResults(results);
-    }
-
     private void SetUp()
     {
         Vector2 origin = GridOrigin;
@@ -191,7 +185,6 @@ public class Board : MonoBehaviour
     public void DestroyMatches()
     {
         player?.ReceiveMatchResults(findMatches.matchResults);
-        SpawnPopups(findMatches.matchResults);
 
         RuntimeManager.PlayOneShot(MatchSuccessSound);
 
@@ -306,7 +299,6 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.25f / speed);
 
             player?.ReceiveMatchResults(findMatches.matchResults);
-            SpawnPopups(findMatches.matchResults);
             RuntimeManager.PlayOneShot(MatchSuccessSound);
 
             for (int i = 0; i < width; i++)

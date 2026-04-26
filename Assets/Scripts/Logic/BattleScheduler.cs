@@ -8,11 +8,20 @@ public class BattleScheduler : MonoBehaviour
     public Board board;
     public LevelHandler levelHandler;
     public DamagePopup damagePopup;
+    public RelicHandler relicHandler;
     public TMP_Text turnLabel;
 
     public int EnemyTurn { get; private set; } = 1;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
+
+    void Awake()
+    {
+        if (relicHandler == null)
+        {
+            relicHandler = FindAnyObjectByType<RelicHandler>();
+        }
+    }
 
     public void ResolveTurn()
     {
@@ -23,6 +32,7 @@ public class BattleScheduler : MonoBehaviour
             Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
             TurnResult matchResult = ResolveMatch(match);
             ApplyTurnResult(matchResult);
+            damagePopup?.AddResult(matchResult);
 
             if (Enemy.IsDead())
             {
@@ -68,11 +78,22 @@ public class BattleScheduler : MonoBehaviour
     {
         return new TurnResult
         {
-            TotalDamage = match.totalDamage,
-            TotalBlock = match.totalBlock,
-            TotalHeal = match.totalHeal,
+            TotalDamage = ApplyRelicsToOutput(match.totalDamage, match.tileType),
+            TotalBlock = ApplyRelicsToOutput(match.totalBlock, match.tileType),
+            TotalHeal = ApplyRelicsToOutput(match.totalHeal, match.tileType),
             MatchCount = match.count
         };
+    }
+
+    private float ApplyRelicsToOutput(float baseValue, TileType tileType)
+    {
+        if (baseValue <= 0 || relicHandler == null || board == null || board.player == null)
+        {
+            return baseValue;
+        }
+
+        var relicMod = relicHandler.GetRelicOutputMod(board.player.RelicList, tileType);
+        return Mathf.Round((baseValue * relicMod.multiplier) + relicMod.flatAdd);
     }
 
     private void ApplyTurnResult(TurnResult result)
