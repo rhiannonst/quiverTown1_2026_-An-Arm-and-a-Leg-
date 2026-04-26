@@ -36,7 +36,7 @@ public class Board : MonoBehaviour
     public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
 
-    public PlayerBehaviour player;
+    public Player player;
 
     public Vector2 GridOrigin => new Vector2(
         transform.position.x - (width - 1) / 2f,

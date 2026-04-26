@@ -6,7 +6,7 @@ public class FindMatches : MonoBehaviour
 {
     private Board board;
     public List<GameObject> currentMatches = new List<GameObject>();
-    public List<PlayerBehaviour.MatchResult> matchResults = new List<PlayerBehaviour.MatchResult>();
+    public List<Player.MatchResult> matchResults = new List<Player.MatchResult>();
     private bool isFinding = false;
 
     void Start()
@@ -94,7 +94,7 @@ public class FindMatches : MonoBehaviour
             typeCounts[t] = (entry.count + 1, entry.tile);
         }
         foreach (var kvp in typeCounts)
-            matchResults.Add(new PlayerBehaviour.MatchResult(kvp.Key, kvp.Value.count, kvp.Value.tile));
+            matchResults.Add(new Player.MatchResult(kvp.Key, kvp.Value.count, kvp.Value.tile));
 
         isFinding = false;
     }

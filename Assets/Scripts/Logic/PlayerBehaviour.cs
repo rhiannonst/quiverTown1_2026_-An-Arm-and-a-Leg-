@@ -1,29 +1,51 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 
-public class PlayerBehaviour : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float MaxHealth;
     public float CurrentHealth;
+    public float CurrentBlock;
     public string Name;
     public List<Relic> RelicList;
-    public int BaseBlock;
 
     public List<MatchResult> chainMatches = new List<MatchResult>();
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damage)
     {
-        CurrentHealth -= damageAmount;
-        Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
-
-        if (CurrentHealth <= 0)
-            Debug.Log($"Player took {damageAmount} damage. They have now died.");
+        if (CurrentBlock >= damage)
+        {
+            CurrentBlock -= damage;
+        }
+        else
+        {
+            damage -= CurrentBlock;
+            CurrentBlock = 0;
+            CurrentHealth -= damage;
+            Debug.Log($"Player took {damage} damage. Health is now {CurrentHealth}");
+            if (CurrentHealth <= 0)
+                handleDeath();
+        }
     }
 
-    public void HandleTakeDamage(float damage)
+    public void AddBlock(float blockValue)
     {
-        CurrentHealth -= damage;
+        CurrentBlock += blockValue;
+    }
+
+    public void ResetBlock()
+    {
+        CurrentBlock = 0;
+    }
+
+    public void handleHeal(float healAmt)
+    {
+        CurrentHealth = Mathf.Min(CurrentHealth + healAmt, MaxHealth);
+    }
+
+    public void handleDeath()
+    {
+        Debug.Log("Player has died.");
     }
 
     public void ReceiveMatchResults(List<MatchResult> results)
