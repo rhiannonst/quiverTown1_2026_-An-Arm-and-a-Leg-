@@ -24,8 +24,31 @@ public class Board : MonoBehaviour
     private GameObject[,] backgroundTiles;
     private FindMatches findMatches;
 
-    
+    public BattleScheduler battleScheduler;
 
+    public TurnResult turnResult;
+
+    // call this before destroying
+    public TurnResult TallyMatches()
+    {
+        TurnResult result = default;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                var go = allTileInstances[i, j];
+                if (go != null && go.GetComponent<TileInstance>().isMatched)
+                {
+                    Tile tileData = go.GetComponent<TileInstance>().tileData;
+                    // BattleScheduler resolves what the tile means
+                    result.Add(battleScheduler.ResolveTile(tileData, 1));
+                }
+            }
+        }
+        return result;
+    }
+
+    
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
@@ -122,20 +145,29 @@ public class Board : MonoBehaviour
 
     private void DestroyMatchesAt(int column, int row)
     {
+        
+        
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
             GameObject particle = Instantiate(destroyParticle,
                 allTileInstances[column, row].transform.position,
                 Quaternion.identity);
+            
+
+
             Destroy(particle, .5f);
 
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
+            
         }
     }
 
     public void DestroyMatches()
     {
+        TurnResult waveResult = TallyMatches();
+        battleScheduler.AccumulateWave(waveResult);
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -233,6 +265,10 @@ public class Board : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
 
+            // handles tallying for the Board.
+            TurnResult waveResult = TallyMatches();
+            battleScheduler.AccumulateWave(waveResult);
+
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     if (allTileInstances[i, j] != null)
@@ -248,6 +284,7 @@ public class Board : MonoBehaviour
             findMatches.FindAllMatches();
             yield return new WaitForSeconds(.3f);
         }
+        battleScheduler.ResolveTurn();
 
         findMatches.currentMatches.Clear();
         currentTile = null;
