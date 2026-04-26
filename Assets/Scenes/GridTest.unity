@@ -3074,6 +3074,7 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   levelHandler: {fileID: 744677830}
   damagePopup: {fileID: 821097697}
+  relicHandler: {fileID: 0}
   turnLabel: {fileID: 263041238}
   EnemyDie_sfx:
     Guid:
@@ -3577,9 +3578,7 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
-  tileBag:
-    startingCopiesPerTile: 5
-  sequenceSpeed: 1
+  sequenceSpeed: 0.5
   chainSpeedIncrement: 0.5
   currentTile: {fileID: 0}
   battleScheduler: {fileID: 1849751033}
@@ -3591,20 +3590,6 @@ MonoBehaviour:
       Data3: -213517689
       Data4: 240022854
     Path: event:/MatchSuccess_sfx
-  SwapSound:
-    Guid:
-      Data1: 390234120
-      Data2: 1190304573
-      Data3: -1273439320
-      Data4: 1919447464
-    Path: event:/Swap_sfx
-  BoardFillSound:
-    Guid:
-      Data1: 805454858
-      Data2: 1112756942
-      Data3: 65345673
-      Data4: -1298125986
-    Path: event:/BoardRefill_sfx
   player: {fileID: 2115350403}
 --- !u!4 &2128798149
 Transform:
@@ -4079,3 +4064,5 @@ SceneRoots:
   - {fileID: 200284576}
   - {fileID: 1522144166}
   - {fileID: 1809923778}
+  - {fileID: 841502854}
+  - {fileID: 1017110617}
