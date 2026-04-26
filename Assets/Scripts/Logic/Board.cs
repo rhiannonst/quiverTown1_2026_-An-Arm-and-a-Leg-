@@ -44,6 +44,8 @@ public class Board : MonoBehaviour
 
                 // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                Vector3 bgScale = backgroundTile.transform.localScale;
+                backgroundTile.transform.localScale = new Vector3(bgScale.x * 0.5f, bgScale.y * 0.5f, bgScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
@@ -58,6 +60,8 @@ public class Board : MonoBehaviour
                 }
 
                 GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                Vector3 tileScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
                 tileInstance.GetComponent<TileInstance>().row = j;
                 tileInstance.GetComponent<TileInstance>().column = i;
                 tileInstance.transform.parent = this.transform;
@@ -85,10 +89,7 @@ public class Board : MonoBehaviour
             }
             row.Append(']');
             sb.AppendLine(row.ToString());
-            Debug.Log(sb.GetType());
-        }
-
-        
+        }      
     }
 
     private bool MatchesAt(int column, int row, GameObject tilePrefabToCheck)
@@ -189,6 +190,8 @@ public class Board : MonoBehaviour
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int tileToUse = Random.Range(0, tilePrefabs.Length);
                     GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
+                    Vector3 tileScale = tileInstance.transform.localScale;
+                    tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
                     tileInstance.GetComponent<TileInstance>().row = j;
                     tileInstance.GetComponent<TileInstance>().column = i;
                     tileInstance.transform.parent = this.transform;
