@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
+  m_Name: Heart Multiplier
+  m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Heart Multiplier
+  description: Increase heart damage multiplier by 0.5x.
+  icon: {fileID: 21300000, guid: cede22e1db7b4a64ab3bd86990715c18, type: 3}
+  associatedTileType: 5
+  multiplier: 0.5
+  flatAdd: 0

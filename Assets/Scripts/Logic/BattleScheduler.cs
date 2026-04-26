@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using FMOD;
+using FMODUnity;
 
 public class BattleScheduler : MonoBehaviour
 {
@@ -8,11 +10,23 @@ public class BattleScheduler : MonoBehaviour
     public Board board;
     public LevelHandler levelHandler;
     public DamagePopup damagePopup;
+    public RelicHandler relicHandler;
     public TMP_Text turnLabel;
+
+    [SerializeField] public EventReference EnemyDie_sfx;
+    [SerializeField] public EventReference PlayerDie_sfx;
 
     public int EnemyTurn { get; private set; } = 1;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
+
+    void Awake()
+    {
+        if (relicHandler == null)
+        {
+            relicHandler = FindAnyObjectByType<RelicHandler>();
+        }
+    }
 
     public void ResolveTurn()
     {
@@ -20,13 +34,15 @@ public class BattleScheduler : MonoBehaviour
 
         foreach (Player.MatchResult match in chainMatches)
         {
-            Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
-            TurnResult matchResult = ResolveTile(match.tileData, match.count);
+            UnityEngine.Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
+            TurnResult matchResult = ResolveMatch(match);
             ApplyTurnResult(matchResult);
+            damagePopup?.AddResult(matchResult);
 
             if (Enemy.IsDead())
             {
-                Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
+                RuntimeManager.PlayOneShot(EnemyDie_sfx);
+                UnityEngine.Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
                 enemyGenerator.AdvanceStage();
                 EnemyTurn = 1;
                 RefreshTurnLabel();
@@ -58,44 +74,38 @@ public class BattleScheduler : MonoBehaviour
     {
         if (board.player.CurrentHealth <= 0)
         {
-            Debug.Log("[BattleScheduler] Player has died.");
+            UnityEngine.Debug.Log("[BattleScheduler] Player has died.");
+            RuntimeManager.PlayOneShot(PlayerDie_sfx);
             board.player.handleDeath();
             if (levelHandler != null) levelHandler.GameOver();
         }
     }
 
-    private TurnResult ResolveTile(Tile tile, int count)
+    private TurnResult ResolveMatch(Player.MatchResult match)
     {
-        TurnResult result = new TurnResult();
-
-        switch (tile.Type)
+        return new TurnResult
         {
-            case TileType.Head: // attack and block
-                result.TotalDamage = tile.Damage * count;
-                result.TotalBlock = tile.Block * count;
-                break;
-            case TileType.Arm:
-            case TileType.Leg: // attack only
-                result.TotalDamage = tile.Damage * count;
-                break;
+            TotalDamage = ApplyRelicsToOutput(match.totalDamage, match.tileType),
+            TotalBlock = ApplyRelicsToOutput(match.totalBlock, match.tileType),
+            TotalHeal = ApplyRelicsToOutput(match.totalHeal, match.tileType),
+            MatchCount = match.count
+        };
+    }
 
-            case TileType.Torso: // block only
-                result.TotalBlock = tile.Block * count;
-                break;
-
-            case TileType.Heart: // heal
-                result.TotalHeal = tile.Heal * count;
-                break;
-            case TileType.Spine: // spine does nothing for now
-                break;
+    private float ApplyRelicsToOutput(float baseValue, TileType tileType)
+    {
+        if (baseValue <= 0 || relicHandler == null || board == null || board.player == null)
+        {
+            return baseValue;
         }
 
-        return result;
+        var relicMod = relicHandler.GetRelicOutputMod(board.player.RelicList, tileType);
+        return Mathf.Round((baseValue * relicMod.multiplier) + relicMod.flatAdd);
     }
 
     private void ApplyTurnResult(TurnResult result)
     {
-        Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
+        UnityEngine.Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
 
         if (result.TotalBlock > 0)
             board.player.AddBlock(result.TotalBlock);

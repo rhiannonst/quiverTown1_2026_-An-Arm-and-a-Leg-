@@ -83,18 +83,27 @@ public class FindMatches : MonoBehaviour
         }
 
         matchResults.Clear();
-        var typeCounts = new Dictionary<TileType, (int count, Tile tile)>();
+        var typeResults = new Dictionary<TileType, Player.MatchResult>();
         foreach (GameObject tileObj in currentMatches)
         {
             TileInstance ti = tileObj.GetComponent<TileInstance>();
-            TileType t = ti.tileData.Type;
-            if (!typeCounts.ContainsKey(t))
-                typeCounts[t] = (0, ti.tileData);
-            var entry = typeCounts[t];
-            typeCounts[t] = (entry.count + 1, entry.tile);
+            if (ti.tileData == null) continue;
+
+            Tile tileData = ti.tileData;
+            TileType tileType = tileData.Type;
+
+            if (!typeResults.ContainsKey(tileType))
+                typeResults[tileType] = new Player.MatchResult(tileType);
+
+            Player.MatchResult result = typeResults[tileType];
+            result.count++;
+            result.totalDamage += tileData.Damage;
+            result.totalBlock += tileData.Block;
+            result.totalHeal += tileData.Heal;
         }
-        foreach (var kvp in typeCounts)
-            matchResults.Add(new Player.MatchResult(kvp.Key, kvp.Value.count, kvp.Value.tile));
+
+        foreach (var kvp in typeResults)
+            matchResults.Add(kvp.Value);
 
         isFinding = false;
     }
