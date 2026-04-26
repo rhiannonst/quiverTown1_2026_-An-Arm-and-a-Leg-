@@ -65,6 +65,30 @@ public class Board : MonoBehaviour
                 allTileInstances[i, j] = tileInstance;
             }
         }
+        LogBoard();
+    }
+
+    private void LogBoard()
+    {
+        System.Text.StringBuilder sb = new();
+        for (int j = height - 1; j >= 0; j--)
+        {
+            System.Text.StringBuilder row = new();
+            row.Append('[');
+            for (int i = 0; i < width; i++)
+            {
+                string label = allTileInstances[i, j] != null
+                    ? allTileInstances[i, j].GetComponent<TileInstance>().tileData.Type.ToString()
+                    : "null";
+                row.Append(label);
+                if (i < width - 1) row.Append(", ");
+            }
+            row.Append(']');
+            sb.AppendLine(row.ToString());
+            Debug.Log(sb.GetType());
+        }
+
+        
     }
 
     private bool MatchesAt(int column, int row, GameObject tilePrefabToCheck)
@@ -125,9 +149,8 @@ public class Board : MonoBehaviour
         StartCoroutine(DecreaseRowCo());
     }
 
-    private IEnumerator DecreaseRowCo()
+    private void CollapseColumns()
     {
-        // For each column, collapse tiles down into empty spaces
         for (int i = 0; i < width; i++)
         {
             int nullCount = 0;
@@ -139,7 +162,6 @@ public class Board : MonoBehaviour
                 }
                 else if (nullCount > 0)
                 {
-                    // Move this tile down by nullCount rows
                     int newRow = j - nullCount;
                     allTileInstances[i, j].GetComponent<TileInstance>().row = newRow;
                     allTileInstances[i, newRow] = allTileInstances[i, j];
@@ -147,6 +169,11 @@ public class Board : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator DecreaseRowCo()
+    {
+        CollapseColumns();
         yield return new WaitForSeconds(.4f);
         StartCoroutine(FillBoardCo());
     }
@@ -196,11 +223,27 @@ public class Board : MonoBehaviour
         findMatches.FindAllMatches();
         yield return new WaitForSeconds(.3f);
 
-        // Cascade: keep destroying and refilling while matches exist
+        // Cascade: handle destroy → collapse → refill → re-detect inline.
+        // Never call DestroyMatches() here — it spawns new coroutines and
+        // creates an exponentially growing parallel chain each iteration.
         while (MatchesOnBoard())
         {
             yield return new WaitForSeconds(.5f);
-            DestroyMatches();
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    if (allTileInstances[i, j] != null)
+                        DestroyMatchesAt(i, j);
+            findMatches.currentMatches.Clear();
+
+            CollapseColumns();
+            yield return new WaitForSeconds(.4f);
+
+            RefillBoard();
+            yield return new WaitForSeconds(.5f);
+
+            findMatches.FindAllMatches();
+            yield return new WaitForSeconds(.3f);
         }
 
         findMatches.currentMatches.Clear();
