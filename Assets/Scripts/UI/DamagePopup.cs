@@ -23,25 +23,9 @@ public class DamagePopup : MonoBehaviour
         foreach (Player.MatchResult match in results)
         {
             this.gameObject.SetActive(true);
-            switch (match.tileType)
-            {
-                case TileType.Head:
-                    totalDamage += Mathf.RoundToInt(match.totalDamage);
-                    totalBlock += Mathf.RoundToInt(match.totalBlock);
-                    break;
-                case TileType.Arm:
-                case TileType.Leg:
-                    totalDamage += Mathf.RoundToInt(match.totalDamage);
-                    break;
-                case TileType.Torso:
-                    totalBlock += Mathf.RoundToInt(match.totalBlock);
-                    break;
-                case TileType.Heart:
-                    totalHeal += Mathf.RoundToInt(match.totalHeal);
-                    break;
-                case TileType.Spine:
-                    break;
-            }
+            totalDamage += Mathf.RoundToInt(match.totalDamage);
+            totalBlock += Mathf.RoundToInt(match.totalBlock);
+            totalHeal += Mathf.RoundToInt(match.totalHeal);
         }
         transform.localScale += Vector3.one * scaleIncrement;
         Refresh();
