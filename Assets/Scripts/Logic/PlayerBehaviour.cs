@@ -1,68 +1,73 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic; // Required for List
+using System.Collections.Generic;
 
-using System.Security.Cryptography.X509Certificates;
-
-class PlayerBehaviour : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    private Player playerSO;
-    //public event Action TakeDamage;
+    public float MaxHealth;
+    public float CurrentHealth;
+    public float CurrentBlock;
+    public string Name;
+    public List<Relic> RelicList;
+    public LevelHandler LevelHandler;
 
-    // This is the event others will call
-    public Action<float> OnTakeDamage;
+    public List<MatchResult> chainMatches = new List<MatchResult>();
 
-    float MaxHealth;
-    float CurrentHealth;
-    string Name;
-    List<Relic> RelicList;
-    int BaseBlock; //dunno what this is meant to be... so it is a int.
-     
-    //then a constructor for the data Layer
-    public PlayerBehaviour(){
-        MaxHealth = playerSO.MaxHealth;
-        CurrentHealth = playerSO.MaxHealth;
-        Name = playerSO.name;    
-        RelicList = new List<Relic>();
-        BaseBlock = 0;//baseBlock;
-    }
-
-
-    // public event Action<PlayerBehaviour> OnTakeDamage(Player){
-        
-    // }
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damage)
     {
-        CurrentHealth -= damageAmount;
-        Debug.Log($"Player took {damageAmount} damage. Health is now {CurrentHealth}");
-
-        if (CurrentHealth <= 0) 
+        if (CurrentBlock >= damage)
         {
-            // Handle death
-            Debug.Log($"Player took {damageAmount} damage. They have now died.");
+            CurrentBlock -= damage;
+        }
+        else
+        {
+            damage -= CurrentBlock;
+            CurrentBlock = 0;
+            CurrentHealth -= damage;
+            Debug.Log($"Player took {damage} damage. Health is now {CurrentHealth}");
+            if (CurrentHealth <= 0)
+                handleDeath();
         }
     }
 
-    // public float HandletakeDamage(PlayerBehaviour player) //public event Action<float> OnTakeDamage
-    // {
-    //     // publisher
-    //    TakeDamage.Invoke();
-    //    return 0;
-    // }
-
-    public void HandleTakeDamage(float damage)
+    public void AddBlock(float blockValue)
     {
-        CurrentHealth -= damage;
+        CurrentBlock += blockValue;
     }
 
-    // internal void OnTakeDamage()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public void ResetBlock()
+    {
+        CurrentBlock = 0;
+    }
 
-    /*Most of the time these events take on the form of public event Action<[classtype], bool> [PropertyName]Changed; 
-    or public event Action SomethingHappened;. 
-    In these cases, there are two benefits. 
-    First, I get a type for the issuing class. If MyClass declares and is the only class firing the event, I get an explicit instance of MyClass to work with in the event handler. 
-    Secondly, for simple events such as property change events, the meaning of the parameters is obvious and stated in the name of the event handler and I don't have to create a myriad of classes for these kinds of events.*/
+    public void handleHeal(float healAmt)
+    {
+        CurrentHealth = Mathf.Min(CurrentHealth + healAmt, MaxHealth);
+    }
+
+    public void handleDeath()
+    {
+        Debug.Log("Player has died.");
+        LevelHandler.GameOver();
+    }
+
+    public void ReceiveMatchResults(List<MatchResult> results)
+    {
+        foreach (MatchResult result in results)
+            chainMatches.Add(result);
+    }
+
+    [System.Serializable]
+    public class MatchResult
+    {
+        public TileType tileType;
+        public int count;
+        public float totalDamage;
+        public float totalBlock;
+        public float totalHeal;
+
+        public MatchResult(TileType tileType)
+        {
+            this.tileType = tileType;
+        }
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using System.ComponentModel;
 
 public enum GameState
 {
@@ -15,10 +16,17 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
+    public Vector2 boardSize = new Vector2(7f, 7f);
+    [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
+    public float gemScale = 1f;
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
-    public GameObject destroyParticle;
+
+    [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
+    public float sequenceSpeed = 1f;
+    [Tooltip("Added to sequenceSpeed with each cascade chain.")]
+    public float chainSpeedIncrement = 0.5f;
 
     public GameObject[,] allTileInstances;
     public TileInstance currentTile;
@@ -26,10 +34,41 @@ public class Board : MonoBehaviour
     private GameObject[,] backgroundTiles;
     private FindMatches findMatches;
 
+    public BattleScheduler battleScheduler;
+    public DamagePopup damagePopup;
+
+    public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
 
-    
+    public Player player;
 
+    public Vector2 CellSize => new Vector2(boardSize.x / width, boardSize.y / height);
+
+    public Vector3 GridOrigin => new Vector3(
+        transform.position.x - boardSize.x / 2f + CellSize.x / 2f,
+        transform.position.y - boardSize.y / 2f + CellSize.y / 2f,
+        transform.position.z
+    );
+
+    // call this before destroying
+    public TurnResult TallyMatches()
+    {
+        TurnResult result = default;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                var go = allTileInstances[i, j];
+                if (go != null && go.GetComponent<TileInstance>().isMatched)
+                {
+                    Tile tileData = go.GetComponent<TileInstance>().tileData;
+                }
+            }
+        }
+        return result;
+    }
+
+    
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
@@ -38,18 +77,37 @@ public class Board : MonoBehaviour
         SetUp();
     }
 
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
+    {
+        if (damagePopup == null) return;
+        var turnResult = new TurnResult();
+        foreach (var r in results)
+        {
+            turnResult.TotalDamage += r.totalDamage;
+            turnResult.TotalBlock  += r.totalBlock;
+            turnResult.TotalHeal   += r.totalHeal;
+        }
+        damagePopup.AddResult(turnResult);
+    }
+
     private void SetUp()
     {
+        Vector3 origin = GridOrigin;
+        Vector2 cell = CellSize;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
+                Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
 
                 // Background tile
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
-                Vector3 bgScale = backgroundTile.transform.localScale;
-                backgroundTile.transform.localScale = new Vector3(bgScale.x * 0.5f, bgScale.y * 0.5f, bgScale.z);
+                backgroundTile.transform.localScale = new Vector3(cell.x, cell.y, backgroundTile.transform.localScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
                 backgroundTiles[i, j] = backgroundTile;
@@ -64,8 +122,8 @@ public class Board : MonoBehaviour
                 }
 
                 GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
-                Vector3 tileScale = tileInstance.transform.localScale;
-                tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                Vector3 prefabScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                 tileInstance.GetComponent<TileInstance>().row = j;
                 tileInstance.GetComponent<TileInstance>().column = i;
                 tileInstance.transform.parent = this.transform;
@@ -128,12 +186,6 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
-            RuntimeManager.PlayOneShot(MatchSuccessSound);
-            GameObject particle = Instantiate(destroyParticle,
-                allTileInstances[column, row].transform.position,
-                Quaternion.identity);
-            Destroy(particle, .5f);
-
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
         }
@@ -141,6 +193,11 @@ public class Board : MonoBehaviour
 
     public void DestroyMatches()
     {
+        player?.ReceiveMatchResults(findMatches.matchResults);
+        SpawnPopups(findMatches.matchResults);
+
+        RuntimeManager.PlayOneShot(MatchSuccessSound);
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -152,6 +209,7 @@ public class Board : MonoBehaviour
             }
         }
         findMatches.currentMatches.Clear();
+        findMatches.matchResults.Clear();
         StartCoroutine(DecreaseRowCo());
     }
 
@@ -180,7 +238,7 @@ public class Board : MonoBehaviour
     private IEnumerator DecreaseRowCo()
     {
         CollapseColumns();
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.4f / sequenceSpeed);
         StartCoroutine(FillBoardCo());
     }
 
@@ -192,11 +250,13 @@ public class Board : MonoBehaviour
             {
                 if (allTileInstances[i, j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    Vector2 cell = CellSize;
+                    Vector3 origin = GridOrigin;
+                    Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
                     int tileToUse = Random.Range(0, tilePrefabs.Length);
                     GameObject tileInstance = Instantiate(tilePrefabs[tileToUse], tempPosition, Quaternion.identity);
-                    Vector3 tileScale = tileInstance.transform.localScale;
-                    tileInstance.transform.localScale = new Vector3(tileScale.x * 0.35f, tileScale.y * 0.35f, tileScale.z);
+                    Vector3 prefabScale = tileInstance.transform.localScale;
+                    tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
                     tileInstance.GetComponent<TileInstance>().row = j;
                     tileInstance.GetComponent<TileInstance>().column = i;
                     tileInstance.transform.parent = this.transform;
@@ -224,39 +284,52 @@ public class Board : MonoBehaviour
 
     private IEnumerator FillBoardCo()
     {
+        float startSpeed = sequenceSpeed;
+        float speed = sequenceSpeed;
+
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f / speed);
 
         // Detect matches on the newly filled board
         findMatches.FindAllMatches();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.25f / speed); // must exceed FindAllMatchesCo's internal .2f / speed
 
         // Cascade: handle destroy → collapse → refill → re-detect inline.
         // Never call DestroyMatches() here — it spawns new coroutines and
         // creates an exponentially growing parallel chain each iteration.
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.3f);
+            speed += chainSpeedIncrement;
+            sequenceSpeed = speed; // keep in sync so FindMatches reads the updated value
+
+            yield return new WaitForSeconds(.25f / speed);
+
+            player?.ReceiveMatchResults(findMatches.matchResults);
+            SpawnPopups(findMatches.matchResults);
+            RuntimeManager.PlayOneShot(MatchSuccessSound);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     if (allTileInstances[i, j] != null)
                         DestroyMatchesAt(i, j);
             findMatches.currentMatches.Clear();
+            findMatches.matchResults.Clear();
 
             CollapseColumns();
-            yield return new WaitForSeconds(.4f);
+            yield return new WaitForSeconds(.2f / speed);
 
             RefillBoard();
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.25f / speed);
 
             findMatches.FindAllMatches();
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.25f / speed); // must exceed FindAllMatchesCo's internal .2f / speed
         }
 
+        sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
-        yield return new WaitForSeconds(.5f);
+        battleScheduler?.ResolveTurn();
+        yield return new WaitForSeconds(.25f / sequenceSpeed);
         currentState = GameState.move;
     }
 }

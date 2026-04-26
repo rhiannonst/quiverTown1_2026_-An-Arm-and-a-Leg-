@@ -11,37 +11,43 @@ public class TileInstance : MonoBehaviour
     public int row;
     public int previousColumn;
     public int previousRow;
-    public int targetX;
-    public int targetY;
+    public float targetX;
+    public float targetY;
     public bool isMatched = false;
 
     [Header("Input")]
     public float dragResist = 1f;
+    public float hitboxScale = 1.3f;
 
     private FindMatches findMatches;
     private Board board;
     private TileInstance otherTile;
     private Vector2 firstClickPosition;
     private Vector2 finalClickPosition;
-    private Vector2 tempPosition;
+    private Vector3 tempPosition;
     private float dragAngle = 0;
 
     void Start()
     {
         board = FindAnyObjectByType<Board>();
         findMatches = FindAnyObjectByType<FindMatches>();
+
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+            col.size *= hitboxScale;
     }
 
     void Update()
     {
-        targetX = column;
-        targetY = row;
+        targetX = board.GridOrigin.x + column * board.CellSize.x;
+        targetY = board.GridOrigin.y + row * board.CellSize.y;
+        float targetZ = board.GridOrigin.z;
 
         // Lerp horizontal
         if (Mathf.Abs(targetX - transform.position.x) > .1f)
         {
-            tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            tempPosition = new Vector3(targetX, transform.position.y, targetZ);
+            transform.position = Vector3.Lerp(transform.position, tempPosition, .6f);
             // Guard: matched tiles are about to be destroyed — don't overwrite the null
             // that DestroyMatchesAt just set, since Unity defers Destroy() to end-of-frame.
             if (!isMatched && board.allTileInstances[column, row] != gameObject)
@@ -51,15 +57,14 @@ public class TileInstance : MonoBehaviour
         }
         else
         {
-            tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = tempPosition;
+            transform.position = new Vector3(targetX, transform.position.y, targetZ);
         }
 
         // Lerp vertical
         if (Mathf.Abs(targetY - transform.position.y) > .1f)
         {
-            tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            tempPosition = new Vector3(transform.position.x, targetY, targetZ);
+            transform.position = Vector3.Lerp(transform.position, tempPosition, .6f);
             if (!isMatched && board.allTileInstances[column, row] != gameObject)
             {
                 board.allTileInstances[column, row] = gameObject;
@@ -67,8 +72,7 @@ public class TileInstance : MonoBehaviour
         }
         else
         {
-            tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = tempPosition;
+            transform.position = new Vector3(transform.position.x, targetY, targetZ);
         }
     }
 
@@ -76,7 +80,7 @@ public class TileInstance : MonoBehaviour
     {
         if (board.currentState == GameState.move)
         {
-            firstClickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            firstClickPosition = Input.mousePosition;
         }
     }
 
@@ -84,7 +88,7 @@ public class TileInstance : MonoBehaviour
     {
         if (board.currentState == GameState.move)
         {
-            finalClickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            finalClickPosition = Input.mousePosition;
             CalculateAngle();
         }
     }
@@ -161,11 +165,11 @@ public class TileInstance : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f / board.sequenceSpeed);
 
         // Run match detection after tiles have settled
         findMatches.FindAllMatches();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.3f / board.sequenceSpeed);
 
         if (otherTile != null)
         {
@@ -176,7 +180,7 @@ public class TileInstance : MonoBehaviour
                 otherTile.column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.5f / board.sequenceSpeed);
                 board.currentTile = null;
                 board.currentState = GameState.move;
             }
