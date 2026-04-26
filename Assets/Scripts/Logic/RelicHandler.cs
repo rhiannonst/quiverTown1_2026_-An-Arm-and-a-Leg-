@@ -1,20 +1,21 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RelicHandler : MonoBehaviour
 {
-    public (float multiplier, float flatAdd) GetRelicDamageMod(Player player, TileType tileType)
+    public (float multiplier, float flatAdd) GetRelicOutputMod(IEnumerable<Relic> relics, TileType tileType)
     {
         float multiplier = 1f;
         float flatAdd = 0f;
 
-        if (player == null || player.RelicList == null)
+        if (relics == null)
         {
             return (multiplier, flatAdd);
         }
 
-        foreach (Relic relic in player.RelicList)
+        foreach (Relic relic in relics)
         {
-            if (CanModifyDamage(relic, tileType))
+            if (CanModifyOutput(relic, tileType))
             {
                 multiplier += relic.multiplier;
                 flatAdd += relic.flatAdd;
@@ -24,7 +25,7 @@ public class RelicHandler : MonoBehaviour
         return (multiplier, flatAdd);
     }
 
-    private bool CanModifyDamage(Relic relic, TileType tileType)
+    private bool CanModifyOutput(Relic relic, TileType tileType)
     {
         return relic != null
             && (relic.associatedTileType == TileType.Any
