@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
   m_Name: Leg Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Leg Adder
   description: Increase leg damage by 2.
   icon: {fileID: 21300000, guid: 6060e1da4d72cb841b8f2a7ff08b3fc7, type: 3}
   associatedTileType: 2

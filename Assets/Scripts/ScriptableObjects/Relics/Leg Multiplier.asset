@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
   m_Name: Leg Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Leg Multiplier
   description: Increase leg damage multiplier by 0.5x.
   icon: {fileID: 21300000, guid: 620b886e3d1b4984fa09df3dd80335a9, type: 3}
   associatedTileType: 2

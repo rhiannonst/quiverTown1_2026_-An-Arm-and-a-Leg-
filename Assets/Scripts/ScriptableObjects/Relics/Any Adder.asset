@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
   m_Name: Any Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Any Adder
   description: Increase all damage by 2.
   icon: {fileID: 21300000, guid: af3a4b1094af5574cbd2de9713ddf718, type: 3}
   associatedTileType: 6

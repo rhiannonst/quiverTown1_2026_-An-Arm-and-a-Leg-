@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
   m_Name: Arm Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Arm Adder
   description: Increase arm damage by 2.
   icon: {fileID: 21300000, guid: a884d8777f8b1814e937019961be797d, type: 3}
   associatedTileType: 1

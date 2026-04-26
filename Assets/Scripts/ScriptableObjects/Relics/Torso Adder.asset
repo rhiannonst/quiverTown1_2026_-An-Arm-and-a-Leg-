@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d163d64dcccf54609a9b1ab71193173c, type: 3}
   m_Name: Torso Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
+  Name: Torso Adder
   description: Increase torso block by 2.
   icon: {fileID: 21300000, guid: ef59f698ebb868048b992a0121d01694, type: 3}
   associatedTileType: 3
