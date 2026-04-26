@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileRewardOverlay : MonoBehaviour
 {
     public TileRewardCard[] cards = new TileRewardCard[3];
+
+    void Awake()
+    {
+        EnsureSingleEventSystem();
+    }
 
     void Start()
     {
@@ -24,6 +30,30 @@ public class TileRewardOverlay : MonoBehaviour
             else
             {
                 cards[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void EnsureSingleEventSystem()
+    {
+        EventSystem[] eventSystems = FindObjectsByType<EventSystem>();
+        if (eventSystems.Length <= 1) return;
+
+        EventSystem eventSystemToKeep = eventSystems[0];
+        foreach (EventSystem eventSystem in eventSystems)
+        {
+            if (eventSystem.gameObject.scene != gameObject.scene)
+            {
+                eventSystemToKeep = eventSystem;
+                break;
+            }
+        }
+
+        foreach (EventSystem eventSystem in eventSystems)
+        {
+            if (eventSystem != eventSystemToKeep)
+            {
+                Destroy(eventSystem.gameObject);
             }
         }
     }

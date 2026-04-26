@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ public class TileRewardManager : MonoBehaviour
     public KeyCode debugRewardKey = KeyCode.T;
 
     private bool isOfferingReward;
+    private Action onRewardComplete;
 
     void Awake()
     {
@@ -36,22 +38,29 @@ public class TileRewardManager : MonoBehaviour
 
     public void OfferTileReward()
     {
-        if (isOfferingReward) return;
+        OfferTileReward(null);
+    }
+
+    public bool OfferTileReward(Action rewardCompleteCallback)
+    {
+        if (isOfferingReward) return false;
 
         if (board == null)
         {
             UnityEngine.Debug.LogWarning("Tile reward cannot open because no Board is assigned.", this);
-            return;
+            return false;
         }
 
         GameObject[] choices = ChooseRewardTiles();
         if (choices.Length == 0)
         {
             UnityEngine.Debug.LogWarning("Tile reward cannot open because no reward tile prefabs are assigned.", this);
-            return;
+            return false;
         }
 
+        onRewardComplete = rewardCompleteCallback;
         StartCoroutine(OfferTileRewardCo(choices));
+        return true;
     }
 
     private IEnumerator OfferTileRewardCo(GameObject[] choices)
@@ -68,6 +77,7 @@ public class TileRewardManager : MonoBehaviour
             TileRewardSession.Clear();
             board.RedrawFromCurrentDeckAvoidingMatches();
             isOfferingReward = false;
+            CompleteReward();
             yield break;
         }
 
@@ -98,6 +108,14 @@ public class TileRewardManager : MonoBehaviour
         board.RedrawFromCurrentDeckAvoidingMatches();
         TileRewardSession.Clear();
         isOfferingReward = false;
+        CompleteReward();
+    }
+
+    private void CompleteReward()
+    {
+        Action callback = onRewardComplete;
+        onRewardComplete = null;
+        callback?.Invoke();
     }
 
     private GameObject[] ChooseRewardTiles()
@@ -119,7 +137,7 @@ public class TileRewardManager : MonoBehaviour
 
         for (int i = 0; i < numberOfChoices; i++)
         {
-            int index = Random.Range(0, availableTiles.Count);
+            int index = UnityEngine.Random.Range(0, availableTiles.Count);
             choices.Add(availableTiles[index]);
             availableTiles.RemoveAt(index);
         }
