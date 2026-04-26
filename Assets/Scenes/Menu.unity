@@ -766,6 +766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929075945}
   - component: {fileID: 929075944}
+  - component: {fileID: 929075946}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -788,11 +789,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -948266587
-      Data2: 1235690753
-      Data3: -2047741557
-      Data4: 1516343400
-    Path: event:/New Event
+      Data1: -682249624
+      Data2: 1294043114
+      Data3: -107454791
+      Data4: -253053614
+    Path: event:/Music
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 0
@@ -819,6 +820,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &929075946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929075943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e04e2572f9a940a47465f6f3c2f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioGlobalParameterTrigger
+  CollisionTag: 
+  Parameter: GameState
+  TriggerEvent: 1
+  Value: 0
 --- !u!1 &1004783610
 GameObject:
   m_ObjectHideFlags: 0
