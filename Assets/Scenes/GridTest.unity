@@ -1161,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileRewardManager
   board: {fileID: 2128798147}
+  enemyGenerator: {fileID: 0}
   overlaySceneName: PickTileOverlay
   rewardTilePrefabs:
   - {fileID: 538679292038326795, guid: 8474e28d047137340a3f4cf85aaf4935, type: 3}
@@ -1176,6 +1177,7 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
   - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
   choiceCount: 3
+  fullRewardPoolStartsAtStage: 3
   enableDebugHotkey: 1
   debugRewardKey: 116
 --- !u!4 &735286891
@@ -3153,6 +3155,41 @@ MonoBehaviour:
       Data3: 646496650
       Data4: -270167330
     Path: event:/PlayerDie_sfx
+  PlayerAttack_sfx:
+    Guid:
+      Data1: -612260796
+      Data2: 1097536290
+      Data3: -62896745
+      Data4: 108363348
+    Path: event:/Attack_sfx
+  PlayerHeal_sfx:
+    Guid:
+      Data1: -1816170048
+      Data2: 1167028937
+      Data3: -2007401321
+      Data4: -1594981147
+    Path: event:/Heal_sfx
+  PlayerArmored_sfx:
+    Guid:
+      Data1: -1652437622
+      Data2: 1283541771
+      Data3: 982984625
+      Data4: -1493819809
+    Path: event:/ArmorUp_sfx
+  DamageBlocked_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  PlayerHit_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -3581,6 +3618,20 @@ MonoBehaviour:
   RelicList: []
   LevelHandler: {fileID: 744677830}
   chainMatches: []
+  PlayerHit_sfx:
+    Guid:
+      Data1: 406958918
+      Data2: 1149003980
+      Data3: 2132388771
+      Data4: 1836282064
+    Path: event:/PlayerTakeDamage_sfx
+  LoseShield_sfx:
+    Guid:
+      Data1: 1472910732
+      Data2: 1209546564
+      Data3: 1472610484
+      Data4: -17399791
+    Path: event:/LoseArmor_sfx
 --- !u!4 &2115350404
 Transform:
   m_ObjectHideFlags: 0
