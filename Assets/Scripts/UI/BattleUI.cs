@@ -18,6 +18,8 @@ public class BattleUI : MonoBehaviour
 
     Button bagButton;
 
+    Button helperButton;
+
     public Player player;
 
     public BattleNPC npc;
@@ -27,6 +29,8 @@ public class BattleUI : MonoBehaviour
     public List<Relic> relicList;
 
     public VisualElement relicInventoryContainer;
+
+    public VisualElement helperContainer;
     
     public VisualElement container;
 
@@ -127,6 +131,18 @@ public class BattleUI : MonoBehaviour
         }
     }
 
+    public void handleHelperButtonClick()
+    {
+        if(helperContainer.style.display == DisplayStyle.Flex)
+        {
+            helperContainer.style.display = DisplayStyle.None;
+        }
+        else
+        {
+            helperContainer.style.display = DisplayStyle.Flex;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -139,9 +155,13 @@ public class BattleUI : MonoBehaviour
         bagButton = root.Q<Button>("bagButton");
         relicInventoryContainer = root.Q<VisualElement>("relicInventoryContainer");
         container = root.Q<VisualElement>("container");
+        helperButton = root.Q<Button>("helperButton");
+        helperContainer = root.Q<VisualElement>("helperContainer");
 
         relicList = player.RelicList;
         bagButton.clicked += handleBagButtonClick;
+        helperButton.clicked += handleHelperButtonClick;
+
     }
 
     // Update is called once per frame
@@ -151,10 +171,7 @@ public class BattleUI : MonoBehaviour
         UpdateHealthBar(player,enemyGenerator.CurrentEnemy);
         UpdateBlockText(player,enemyGenerator.CurrentEnemy);
 
-        Debug.Log($"Relics: {relicList.Count}, Container: {container != null}");
-        Debug.Log($"{player.Name}");
-
-        //handle relicList
+        //handle relicList display
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if(relicInventoryContainer.style.display == DisplayStyle.Flex)
@@ -167,5 +184,20 @@ public class BattleUI : MonoBehaviour
                 PopulateRelics();
             }
         }
+
+        //handle helper display
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(helperContainer.style.display == DisplayStyle.Flex)
+            {
+                helperContainer.style.display = DisplayStyle.None;
+            }
+            else
+            {
+                helperContainer.style.display = DisplayStyle.Flex;
+                PopulateRelics();
+            }
+        }
+
     }
 }
