@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPC
   Name: Lazy Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
+  Prefab: {fileID: 4885546523299587100, guid: 5dae579653d204a9682c0900ec438c0f, type: 3}
   MaxHealth: 20
   Block: 0
   actionPool: 0000000003000000

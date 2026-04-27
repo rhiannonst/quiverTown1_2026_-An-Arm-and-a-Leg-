@@ -6,6 +6,7 @@ public class NPC : ScriptableObject
     [Header("Identity")]
     public string Name;
     public Sprite Portrait;
+    public GameObject Prefab;
 
     [Header("Stats")]
     public float MaxHealth = 30f;
