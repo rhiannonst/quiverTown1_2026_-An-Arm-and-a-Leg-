@@ -23,6 +23,16 @@ public class DamagePopup : MonoBehaviour
         AddTotals(result.TotalDamage, result.TotalBlock, result.TotalHeal);
     }
 
+    public void SetResult(TurnResult result)
+    {
+        totalDamage = Mathf.RoundToInt(result.TotalDamage);
+        totalBlock = Mathf.RoundToInt(result.TotalBlock);
+        totalHeal = Mathf.RoundToInt(result.TotalHeal);
+        transform.localScale = baseScale + Vector3.one * scaleIncrement;
+        gameObject.SetActive(true);
+        Refresh();
+    }
+
     private void AddTotals(float damage, float block, float heal)
     {
         gameObject.SetActive(true);

@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class TileRewardManager : MonoBehaviour
 {
     public Board board;
-    public EnemyGenerator enemyGenerator;
     public string overlaySceneName = "PickTileOverlay";
     public GameObject[] rewardTilePrefabs;
+    public Relic[] rewardRelics;
     [Min(1)]
     public int choiceCount = 3;
     [Min(1)]
@@ -17,11 +17,13 @@ public class TileRewardManager : MonoBehaviour
 
     // DEBUG ONLY: temporary Play Mode hotkey for testing tile rewards.
     [Header("Debug")]
-    public bool enableDebugHotkey = true;
+    public bool enableDebugHotkey = false;
     public KeyCode debugRewardKey = KeyCode.T;
 
     private bool isOfferingReward;
     private Action onRewardComplete;
+    private Relic pendingBonusRelic;
+    private int currentDefeatedEnemyNumber = 1;
 
     void Awake()
     {
@@ -30,10 +32,6 @@ public class TileRewardManager : MonoBehaviour
             board = FindAnyObjectByType<Board>();
         }
 
-        if (enemyGenerator == null)
-        {
-            enemyGenerator = FindAnyObjectByType<EnemyGenerator>();
-        }
     }
 
     void Update()
@@ -46,10 +44,15 @@ public class TileRewardManager : MonoBehaviour
 
     public void OfferTileReward()
     {
-        OfferTileReward(null);
+        OfferTileReward(null, currentDefeatedEnemyNumber);
     }
 
     public bool OfferTileReward(Action rewardCompleteCallback)
+    {
+        return OfferTileReward(rewardCompleteCallback, currentDefeatedEnemyNumber);
+    }
+
+    public bool OfferTileReward(Action rewardCompleteCallback, int defeatedEnemyNumber)
     {
         if (isOfferingReward) return false;
 
@@ -66,7 +69,9 @@ public class TileRewardManager : MonoBehaviour
             return false;
         }
 
+        currentDefeatedEnemyNumber = Mathf.Max(1, defeatedEnemyNumber);
         onRewardComplete = rewardCompleteCallback;
+        pendingBonusRelic = ChooseBonusRelic();
         StartCoroutine(OfferTileRewardCo(choices));
         return true;
     }
@@ -76,13 +81,14 @@ public class TileRewardManager : MonoBehaviour
         isOfferingReward = true;
         board.ClearTilesForReward();
 
-        TileRewardSession.Begin(choices, OnTilePicked);
+        TileRewardSession.Begin(choices, pendingBonusRelic, OnTilePicked);
 
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(overlaySceneName, LoadSceneMode.Additive);
         if (loadOperation == null)
         {
             UnityEngine.Debug.LogWarning($"Tile reward overlay scene '{overlaySceneName}' could not be loaded.", this);
             TileRewardSession.Clear();
+            pendingBonusRelic = null;
             board.RedrawFromCurrentDeckAvoidingMatches();
             isOfferingReward = false;
             CompleteReward();
@@ -102,6 +108,11 @@ public class TileRewardManager : MonoBehaviour
             board.AddTilesToBag(selectedTilePrefab, 1);
         }
 
+        if (pendingBonusRelic != null && board != null && board.player != null)
+        {
+            AddRelicToPlayer(board.player, pendingBonusRelic);
+        }
+
         StartCoroutine(CloseRewardCo());
     }
 
@@ -115,6 +126,7 @@ public class TileRewardManager : MonoBehaviour
 
         board.RedrawFromCurrentDeckAvoidingMatches();
         TileRewardSession.Clear();
+        pendingBonusRelic = null;
         isOfferingReward = false;
         CompleteReward();
     }
@@ -155,11 +167,71 @@ public class TileRewardManager : MonoBehaviour
         return choices.ToArray();
     }
 
+    private Relic ChooseBonusRelic()
+    {
+        if (board == null || board.player == null)
+        {
+            return null;
+        }
+
+        if (currentDefeatedEnemyNumber != 1 && currentDefeatedEnemyNumber % 3 != 0)
+        {
+            return null;
+        }
+
+        return GetRandomAvailableRelic(board.player);
+    }
+
+    private Relic GetRandomAvailableRelic(Player player)
+    {
+        if (player == null || rewardRelics == null || rewardRelics.Length == 0)
+        {
+            return null;
+        }
+
+        if (player.RelicList == null)
+        {
+            player.RelicList = new List<Relic>();
+        }
+
+        List<Relic> availableRelics = new List<Relic>();
+        foreach (Relic relic in rewardRelics)
+        {
+            if (relic != null && !player.RelicList.Contains(relic))
+            {
+                availableRelics.Add(relic);
+            }
+        }
+
+        if (availableRelics.Count == 0)
+        {
+            return null;
+        }
+
+        return availableRelics[UnityEngine.Random.Range(0, availableRelics.Count)];
+    }
+
+    private void AddRelicToPlayer(Player player, Relic relic)
+    {
+        if (player.RelicList == null)
+        {
+            player.RelicList = new List<Relic>();
+        }
+
+        if (player.RelicList.Contains(relic))
+        {
+            return;
+        }
+
+        player.RelicList.Add(relic);
+        UnityEngine.Debug.Log($"[TileRewardManager] Added relic: {relic.Name}");
+    }
+
     private int GetCurrentRewardPoolSize()
     {
         if (rewardTilePrefabs == null) return 0;
 
-        if (enemyGenerator != null && enemyGenerator.Stage < fullRewardPoolStartsAtStage)
+        if (currentDefeatedEnemyNumber < fullRewardPoolStartsAtStage)
         {
             return Mathf.Max(1, rewardTilePrefabs.Length / 2);
         }

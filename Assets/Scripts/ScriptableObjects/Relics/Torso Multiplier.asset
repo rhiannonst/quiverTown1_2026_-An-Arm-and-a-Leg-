@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Torso Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::Relic
   Name: Torso Multiplier
-  description: Increase torso block multiplier by 0.5x.
+  description: Increase torso block output by 0.5x.
   icon: {fileID: 21300000, guid: 95dc82ebd8bd15f4993e11c95cf527b8, type: 3}
   associatedTileType: 3
   multiplier: 0.5

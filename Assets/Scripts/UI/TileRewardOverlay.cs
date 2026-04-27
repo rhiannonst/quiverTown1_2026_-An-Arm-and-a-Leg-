@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class TileRewardOverlay : MonoBehaviour
 {
+    public GameObject bonusCard;
+    public TMP_Text bonusNameLabel;
+    public TMP_Text bonusDescriptionLabel;
     public TileRewardCard[] cards = new TileRewardCard[3];
 
     void Awake()
@@ -19,6 +23,8 @@ public class TileRewardOverlay : MonoBehaviour
             return;
         }
 
+        SetBonusRelic(TileRewardSession.BonusRelic);
+
         for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i] == null) continue;
@@ -31,6 +37,25 @@ public class TileRewardOverlay : MonoBehaviour
             {
                 cards[i].gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void SetBonusRelic(Relic relic)
+    {
+        bool hasRelic = relic != null;
+        if (bonusCard != null)
+        {
+            bonusCard.SetActive(hasRelic);
+        }
+
+        if (bonusNameLabel != null)
+        {
+            bonusNameLabel.text = hasRelic ? $"Bonus: {relic.Name}" : string.Empty;
+        }
+
+        if (bonusDescriptionLabel != null)
+        {
+            bonusDescriptionLabel.text = hasRelic ? relic.description : string.Empty;
         }
     }
 
