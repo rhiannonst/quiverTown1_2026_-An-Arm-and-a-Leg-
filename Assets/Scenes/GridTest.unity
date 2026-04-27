@@ -176,7 +176,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 'Cast Nuke Spell
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -203,8 +205,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1164,7 +1166,7 @@ RectTransform:
   m_GameObject: {fileID: 659523522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.2816, y: 2.2816, z: 2.2816}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 76042085}
@@ -1172,7 +1174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -752.4, y: -3.1}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659523524
@@ -1414,6 +1416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileRewardManager
   board: {fileID: 2128798147}
+  enemyGenerator: {fileID: 0}
   overlaySceneName: PickTileOverlay
   rewardTilePrefabs:
   - {fileID: 538679292038326795, guid: 8474e28d047137340a3f4cf85aaf4935, type: 3}
@@ -1429,6 +1432,7 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
   - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
   choiceCount: 3
+  fullRewardPoolStartsAtStage: 3
   enableDebugHotkey: 1
   debugRewardKey: 116
 --- !u!4 &735286891
@@ -2795,7 +2799,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Shuffle Board
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3949,6 +3953,7 @@ GameObject:
   - component: {fileID: 2066445904}
   - component: {fileID: 2066445903}
   - component: {fileID: 2066445902}
+  - component: {fileID: 2066445905}
   m_Layer: 5
   m_Name: Shuffle Board
   m_TagString: Untagged
@@ -3965,7 +3970,7 @@ RectTransform:
   m_GameObject: {fileID: 2066445900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1049, y: 2.1049, z: 2.1049}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1443764152}
@@ -3973,7 +3978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -766, y: 101}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066445902
@@ -4019,7 +4024,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2066445903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2066445905}
+        m_TargetAssemblyTypeName: ShuffleButton, Assembly-CSharp
+        m_MethodName: OnShufflePressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2066445903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4058,6 +4075,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066445900}
   m_CullTransparentMesh: 1
+--- !u!114 &2066445905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066445900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290c6a9f592c7c447b3ac7af27357aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShuffleButton
+  board: {fileID: 2128798147}
+  battleScheduler: {fileID: 1849751033}
+  button: {fileID: 2066445902}
+  cooldownTurns: 5
 --- !u!1 &2115350402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,6 +4187,8 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
   - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
+  tileBag:
+    startingCopiesPerTile: 5
   sequenceSpeed: 0.8
   chainSpeedIncrement: 1
   currentTile: {fileID: 0}

@@ -18,6 +18,7 @@ public class BattleScheduler : MonoBehaviour
     [SerializeField] public EventReference PlayerDie_sfx;
 
     public int EnemyTurn { get; private set; } = 1;
+    public int TotalTurns { get; private set; } = 0;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
 
@@ -62,6 +63,7 @@ public class BattleScheduler : MonoBehaviour
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
         EnemyTurn++;
+        TotalTurns++;
         RefreshTurnLabel();
 
         if (damagePopup != null) damagePopup.Clear();
