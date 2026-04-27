@@ -64,7 +64,7 @@ public class RelicHandler : MonoBehaviour
         return true;
     }
 
-    public (float multiplier, float flatAdd) GetRelicOutputMod(IEnumerable<Relic> relics, TileType tileType)
+    public static (float multiplier, float flatAdd) GetRelicOutputMod(IEnumerable<Relic> relics, TileType tileType)
     {
         float multiplier = 1f;
         float flatAdd = 0f;
@@ -86,7 +86,7 @@ public class RelicHandler : MonoBehaviour
         return (multiplier, flatAdd);
     }
 
-    private bool CanModifyOutput(Relic relic, TileType tileType)
+    private static bool CanModifyOutput(Relic relic, TileType tileType)
     {
         return relic != null
             && (relic.associatedTileType == TileType.Any

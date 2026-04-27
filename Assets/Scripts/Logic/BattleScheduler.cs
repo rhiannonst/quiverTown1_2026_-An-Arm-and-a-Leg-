@@ -131,12 +131,12 @@ public class BattleScheduler : MonoBehaviour
 
     private float ApplyRelicsToOutput(float baseValue, TileType tileType)
     {
-        if (baseValue <= 0 || relicHandler == null || board == null || board.player == null)
+        if (baseValue <= 0 || board == null || board.player == null)
         {
             return baseValue;
         }
 
-        var relicMod = relicHandler.GetRelicOutputMod(board.player.RelicList, tileType);
+        var relicMod = RelicHandler.GetRelicOutputMod(board.player.RelicList, tileType);
         return Mathf.Round((baseValue * relicMod.multiplier) + relicMod.flatAdd);
     }
 
