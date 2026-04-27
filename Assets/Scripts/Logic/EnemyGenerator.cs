@@ -23,6 +23,12 @@ public class EnemyGenerator : MonoBehaviour
 
     public void SpawnNext()
     {
+        RagdollCurrentEnemy();
+        SpawnNewEnemy();
+    }
+
+    public void RagdollCurrentEnemy()
+    {
         if (currentEnemyInstance != null)
         {
             Rigidbody rb = currentEnemyInstance.GetComponent<Rigidbody>();
@@ -32,8 +38,13 @@ public class EnemyGenerator : MonoBehaviour
                 rb.mass = .1f;
                 rb.constraints = RigidbodyConstraints.None;
             }
-        }
 
+            currentEnemyInstance = null;
+        }
+    }
+
+    private void SpawnNewEnemy()
+    {
         NPC npc = enemyPool[Random.Range(0, enemyPool.Length)];
         CurrentEnemy = new BattleNPC(npc);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");

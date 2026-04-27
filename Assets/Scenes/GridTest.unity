@@ -1131,6 +1131,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &735286889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 735286891}
+  - component: {fileID: 735286890}
+  m_Layer: 0
+  m_Name: TileRewardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &735286890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735286889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993fb63eb5ea97e40ad0cf88ab50cdcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileRewardManager
+  board: {fileID: 2128798147}
+  overlaySceneName: PickTileOverlay
+  rewardTilePrefabs:
+  - {fileID: 538679292038326795, guid: 8474e28d047137340a3f4cf85aaf4935, type: 3}
+  - {fileID: 538679292038326795, guid: ef20e09afd39bc942ae80426481a1159, type: 3}
+  - {fileID: 538679292038326795, guid: cfdad33055c874a40988eb5665547cb1, type: 3}
+  - {fileID: 538679292038326795, guid: 621703aa0e083704fbbd295dcea052cc, type: 3}
+  - {fileID: 538679292038326795, guid: 77b65436ffb10c24badc4de3c5ab5b24, type: 3}
+  - {fileID: 538679292038326795, guid: 133b0d71c18ace44cb290ba0ec7a61ba, type: 3}
+  - {fileID: 538679292038326795, guid: 8498e7a2d81681542beffa6d78a721b4, type: 3}
+  - {fileID: 538679292038326795, guid: 0ebcac964a4fa3d4a95fd3f209054634, type: 3}
+  - {fileID: 538679292038326795, guid: 036fa1b933f62de45b9e410632126460, type: 3}
+  - {fileID: 538679292038326795, guid: 26feb71391a4ef641bf4be4673ce4abf, type: 3}
+  - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
+  - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
+  choiceCount: 3
+  enableDebugHotkey: 1
+  debugRewardKey: 116
+--- !u!4 &735286891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735286889}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1028.0029, y: 471.15833, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &736980853
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,6 +3136,8 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   levelHandler: {fileID: 744677830}
   damagePopup: {fileID: 821097697}
+  relicHandler: {fileID: 0}
+  tileRewardManager: {fileID: 0}
   turnLabel: {fileID: 263041238}
   EnemyDie_sfx:
     Guid:
@@ -3591,13 +3655,6 @@ MonoBehaviour:
       Data3: -213517689
       Data4: 240022854
     Path: event:/MatchSuccess_sfx
-  SwapSound:
-    Guid:
-      Data1: 390234120
-      Data2: 1190304573
-      Data3: -1273439320
-      Data4: 1919447464
-    Path: event:/Swap_sfx
   BoardFillSound:
     Guid:
       Data1: 805454858
@@ -4079,3 +4136,6 @@ SceneRoots:
   - {fileID: 200284576}
   - {fileID: 1522144166}
   - {fileID: 1809923778}
+  - {fileID: 841502854}
+  - {fileID: 1017110617}
+  - {fileID: 735286891}
