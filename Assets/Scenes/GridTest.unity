@@ -1151,6 +1151,7 @@ GameObject:
   - component: {fileID: 659523525}
   - component: {fileID: 659523524}
   - component: {fileID: 659523527}
+  - component: {fileID: 659523528}
   m_Layer: 5
   m_Name: Nuke Button
   m_TagString: Untagged
@@ -1234,6 +1235,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 659523528}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &659523525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,6 +1303,37 @@ MonoBehaviour:
   label: {fileID: 76042086}
   buttonText: Nuke
   cooldownTurns: 10
+--- !u!114 &659523528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659523522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -876858481
+      Data2: 1324897656
+      Data3: 2044600993
+      Data4: 826851329
+    Path: event:/Nuke
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &712478708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,7 +1491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileRewardManager
   board: {fileID: 2128798147}
-  enemyGenerator: {fileID: 0}
   overlaySceneName: PickTileOverlay
   rewardTilePrefabs:
   - {fileID: 538679292038326795, guid: 8474e28d047137340a3f4cf85aaf4935, type: 3}
@@ -2061,6 +2104,13 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4885546523299587100, guid: 7a5f84755e4f15f46bbc9752c27ca2de, type: 3}
   intentLabel: {fileID: 581600647}
   stageLabel: {fileID: 822282654}
+  spawnSFX:
+    Guid:
+      Data1: -1323383852
+      Data2: 1299826795
+      Data3: -244281460
+      Data4: -418355177
+    Path: event:/Spawn
   zipSpeed: 60
   deadEnemyKickForce: 30
 --- !u!1 &841502852
@@ -2134,6 +2184,13 @@ MonoBehaviour:
   player: {fileID: 2115350403}
   enemyGenerator: {fileID: 825852521}
   relicList: []
+  openBagSFX:
+    Guid:
+      Data1: 2004463435
+      Data2: 1299166724
+      Data3: 1661290383
+      Data4: -382328925
+    Path: event:/Bag
 --- !u!1 &896558056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3596,6 +3653,41 @@ MonoBehaviour:
       Data3: 646496650
       Data4: -270167330
     Path: event:/PlayerDie_sfx
+  PlayerAttack_sfx:
+    Guid:
+      Data1: -612260796
+      Data2: 1097536290
+      Data3: -62896745
+      Data4: 108363348
+    Path: event:/Attack_sfx
+  PlayerHeal_sfx:
+    Guid:
+      Data1: -1816170048
+      Data2: 1167028937
+      Data3: -2007401321
+      Data4: -1594981147
+    Path: event:/Heal_sfx
+  PlayerArmored_sfx:
+    Guid:
+      Data1: -1652437622
+      Data2: 1283541771
+      Data3: 982984625
+      Data4: -1493819809
+    Path: event:/ArmorUp_sfx
+  DamageBlocked_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  PlayerHit_sfx:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -4001,6 +4093,7 @@ GameObject:
   - component: {fileID: 2066445903}
   - component: {fileID: 2066445902}
   - component: {fileID: 2066445905}
+  - component: {fileID: 2066445906}
   m_Layer: 5
   m_Name: Shuffle Board
   m_TagString: Untagged
@@ -4084,6 +4177,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2066445906}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2066445903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4140,6 +4245,37 @@ MonoBehaviour:
   label: {fileID: 0}
   buttonText: Shuffle
   cooldownTurns: 5
+--- !u!114 &2066445906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066445900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 805454858
+      Data2: 1112756942
+      Data3: 65345673
+      Data4: -1298125986
+    Path: event:/BoardRefill_sfx
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &2115350402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,6 +4312,20 @@ MonoBehaviour:
   RelicList: []
   LevelHandler: {fileID: 744677830}
   chainMatches: []
+  PlayerHit_sfx:
+    Guid:
+      Data1: 406958918
+      Data2: 1149003980
+      Data3: 2132388771
+      Data4: 1836282064
+    Path: event:/PlayerTakeDamage_sfx
+  LoseShield_sfx:
+    Guid:
+      Data1: 1472910732
+      Data2: 1209546564
+      Data3: 1472610484
+      Data4: -17399791
+    Path: event:/LoseArmor_sfx
 --- !u!4 &2115350404
 Transform:
   m_ObjectHideFlags: 0

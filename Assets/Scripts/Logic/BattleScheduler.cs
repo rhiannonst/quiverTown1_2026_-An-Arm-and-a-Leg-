@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using FMOD;
 using FMODUnity;
 
 public class BattleScheduler : MonoBehaviour
@@ -16,6 +15,11 @@ public class BattleScheduler : MonoBehaviour
 
     [SerializeField] public EventReference EnemyDie_sfx;
     [SerializeField] public EventReference PlayerDie_sfx;
+    [SerializeField] public EventReference PlayerAttack_sfx;
+    [SerializeField] public EventReference PlayerHeal_sfx;
+    [SerializeField] public EventReference PlayerArmored_sfx;
+    [SerializeField] public EventReference DamageBlocked_sfx;
+    [SerializeField] public EventReference PlayerHit_sfx;
 
     public int EnemyTurn { get; private set; } = 1;
     public int TotalTurns { get; private set; } = 0;
@@ -141,12 +145,24 @@ public class BattleScheduler : MonoBehaviour
         UnityEngine.Debug.Log($"[BattleScheduler] Turn result — Dmg:{result.TotalDamage} Blk:{result.TotalBlock} Heal:{result.TotalHeal}");
 
         if (result.TotalBlock > 0)
+        {
+            RuntimeManager.PlayOneShot(PlayerArmored_sfx);
             board.player.AddBlock(result.TotalBlock);
+        }
+            
 
         if (result.TotalDamage > 0)
+        {
+            RuntimeManager.PlayOneShot(PlayerAttack_sfx);
             Enemy.TakeDamage(result.TotalDamage);
+        }
+            
 
         if (result.TotalHeal > 0)
+        {
+            RuntimeManager.PlayOneShot(PlayerHeal_sfx);
             board.player.handleHeal(result.TotalHeal);
+        }
+            
     }
 }

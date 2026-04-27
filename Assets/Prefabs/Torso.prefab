@@ -57,6 +57,13 @@ MonoBehaviour:
   isMatched: 0
   dragResist: 1
   hitboxScale: 1.3
+  SwapSound:
+    Guid:
+      Data1: 390234120
+      Data2: 1190304573
+      Data3: -1273439320
+      Data4: 1919447464
+    Path: event:/Swap_sfx
 --- !u!212 &6335445531428072986
 SpriteRenderer:
   serializedVersion: 2
