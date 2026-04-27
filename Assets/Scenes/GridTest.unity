@@ -1431,6 +1431,21 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 26feb71391a4ef641bf4be4673ce4abf, type: 3}
   - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
   - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
+  rewardRelics:
+  - {fileID: 11400000, guid: 7c4e078a9541b714aa089915f76ee120, type: 2}
+  - {fileID: 11400000, guid: 2489a4dbe8d05494c8665527f23686ea, type: 2}
+  - {fileID: 11400000, guid: 547c27866e268ce4d8d9969d3cba02f7, type: 2}
+  - {fileID: 11400000, guid: a23592a4593601e4da177ed3c72f2182, type: 2}
+  - {fileID: 11400000, guid: 2818df75970d2864f9b5ff994d6949d8, type: 2}
+  - {fileID: 11400000, guid: 5c6053fe551b5ca4fa04480b1ad25101, type: 2}
+  - {fileID: 11400000, guid: c20ca221d5bc271439b6a2e61e311151, type: 2}
+  - {fileID: 11400000, guid: 1a8dc6600c0e4e942b71b892ece41d89, type: 2}
+  - {fileID: 11400000, guid: 5ed32439e7d0f5c4a8df0940346d5671, type: 2}
+  - {fileID: 11400000, guid: 36f0861fb423f5c4b97246ddb0c106d0, type: 2}
+  - {fileID: 11400000, guid: 76a0b9b85a9fea44698b1705add678b0, type: 2}
+  - {fileID: 11400000, guid: 27dd18a04ccdbbf43aea3c343d892aab, type: 2}
+  - {fileID: 11400000, guid: 21264d32cad2fcf4dad06bc9b5a1ac4b, type: 2}
+  - {fileID: 11400000, guid: 585eb18aa054456418e514d17cceaf5c, type: 2}
   choiceCount: 3
   fullRewardPoolStartsAtStage: 3
   enableDebugHotkey: 1
@@ -2087,6 +2102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleUI
   player: {fileID: 2115350403}
   enemyGenerator: {fileID: 825852521}
+  relicList: []
 --- !u!1 &896558056
 GameObject:
   m_ObjectHideFlags: 0

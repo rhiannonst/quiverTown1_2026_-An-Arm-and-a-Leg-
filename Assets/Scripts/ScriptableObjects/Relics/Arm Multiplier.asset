@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arm Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::Relic
   Name: Arm Multiplier
-  description: Increase outgoing arm damage by 0.5x.
+  description: Increase arm output by 0.5x.
   icon: {fileID: 21300000, guid: 83680fc9a9651a04586b2f75480fd551, type: 3}
   associatedTileType: 1
   multiplier: 0.5
