@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a7e51ae078440dcb839d11f7675747, type: 3}
+  m_Name: Gold Spine
+  m_EditorClassIdentifier: Assembly-CSharp::Tile
+  Name: Gold Spine
+  Type: 4
+  Status: 0
+  _Sprite: {fileID: 2114726649, guid: 5446f60be06730940ba4f491731d0156, type: 3}
+  Damage: 2
+  Heal: 0
+  Block: 8
