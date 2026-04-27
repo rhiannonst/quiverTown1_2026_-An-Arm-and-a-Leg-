@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using FMODUnity;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject enemyPrefab;
     public TMP_Text intentLabel;
     public TMP_Text stageLabel;
+    public EventReference spawnSFX;
 
     [Tooltip("Speed of the zip animation (higher = faster).")]
     public float zipSpeed = 8f;
@@ -28,6 +30,7 @@ public class EnemyGenerator : MonoBehaviour
 
     public void SpawnNext()
     {
+        RuntimeManager.PlayOneShot(spawnSFX);
         // Release the dead enemy — kick it off screen
         RagdollCurrentEnemy();
         SpawnNewEnemy();
