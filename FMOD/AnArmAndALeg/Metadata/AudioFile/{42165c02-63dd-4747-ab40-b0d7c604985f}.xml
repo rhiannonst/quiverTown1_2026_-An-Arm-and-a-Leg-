@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{42165c02-63dd-4747-ab40-b0d7c604985f}">
+		<property name="assetPath">
+			<value>Doors, Dungeon, Wooden Gate, Temple, Close, Big, Dark, Low SND46052 1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>192</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>6.6780520833333332</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d65d8232-60fe-459c-9697-d15945726e34}</destination>
+		</relationship>
+	</object>
+</objects>

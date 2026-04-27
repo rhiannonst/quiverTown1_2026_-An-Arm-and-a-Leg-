@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using FMODUnity;
 
 public class BattleUI : MonoBehaviour
 {
@@ -34,7 +35,8 @@ public class BattleUI : MonoBehaviour
     
     public VisualElement container;
 
-    
+    public EventReference openBagSFX;
+
     public void UpdateHealthBar(Player player, BattleNPC npc)
     {
         float playerhealthPercentage = player.CurrentHealth / player.MaxHealth * 100;
@@ -120,7 +122,8 @@ public class BattleUI : MonoBehaviour
     
     public void handleBagButtonClick()
     {
-        if(relicInventoryContainer.style.display == DisplayStyle.Flex)
+        RuntimeManager.PlayOneShot(openBagSFX);
+        if (relicInventoryContainer.style.display == DisplayStyle.Flex)
         {
             relicInventoryContainer.style.display = DisplayStyle.None;
         }

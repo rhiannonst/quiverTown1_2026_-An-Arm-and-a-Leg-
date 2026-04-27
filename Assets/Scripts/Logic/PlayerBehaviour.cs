@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using FMODUnity;
 
 public class Player : MonoBehaviour
 {
@@ -12,14 +13,18 @@ public class Player : MonoBehaviour
 
     public List<MatchResult> chainMatches = new List<MatchResult>();
 
+    public EventReference PlayerHit_sfx;
+    public EventReference LoseShield_sfx;
     public void TakeDamage(float damage)
     {
         if (CurrentBlock >= damage)
         {
+            RuntimeManager.PlayOneShot(LoseShield_sfx);
             CurrentBlock -= damage;
         }
         else
         {
+            RuntimeManager.PlayOneShot(PlayerHit_sfx);
             damage -= CurrentBlock;
             CurrentBlock = 0;
             CurrentHealth -= damage;
