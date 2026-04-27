@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject[] tilePrefabs;
+    public GameObject destroyParticle;
     public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
@@ -274,6 +275,14 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
+            if (destroyParticle != null)
+            {
+                Vector3 tilePos = allTileInstances[column, row].transform.position;
+                Vector3 toCamera = (Camera.main.transform.position - tilePos).normalized;
+                Vector3 spawnPos = tilePos + toCamera * 0.5f;
+                GameObject particle = Instantiate(destroyParticle, spawnPos, Quaternion.identity);
+                Destroy(particle, .5f);
+            }
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
         }
@@ -356,6 +365,48 @@ public class Board : MonoBehaviour
                     tileInstance.transform.parent = this.transform;
                     allTileInstances[i, j] = tileInstance;
                 }
+            }
+        }
+    }
+
+    public void NukeBoard()
+    {
+        // Destroy all existing tiles
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allTileInstances[i, j] != null)
+                {
+                    Destroy(allTileInstances[i, j]);
+                    allTileInstances[i, j] = null;
+                }
+            }
+        }
+
+        // Pick 2 random distinct tile types
+        GameObject[] pool = tilePrefabs;
+        int firstIdx  = Random.Range(0, pool.Length);
+        int secondIdx = Random.Range(0, pool.Length - 1);
+        if (secondIdx >= firstIdx) secondIdx++;
+        GameObject[] nukedPrefabs = { pool[firstIdx], pool[secondIdx] };
+
+        // Fill board using only those 2 types
+        Vector2 cell   = CellSize;
+        Vector3 origin = GridOrigin;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3 pos = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+                GameObject prefabToUse = nukedPrefabs[Random.Range(0, nukedPrefabs.Length)];
+                GameObject tileInstance = Instantiate(prefabToUse, pos, Quaternion.identity);
+                Vector3 prefabScale = tileInstance.transform.localScale;
+                tileInstance.transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, prefabScale.z);
+                tileInstance.GetComponent<TileInstance>().row    = j;
+                tileInstance.GetComponent<TileInstance>().column = i;
+                tileInstance.transform.parent = this.transform;
+                allTileInstances[i, j] = tileInstance;
             }
         }
     }
