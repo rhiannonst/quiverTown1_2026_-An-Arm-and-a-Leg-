@@ -8,7 +8,14 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("GridTest");
     }
-
+    public void GoTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+    public void GoMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public void QuitGame()
     {
         Application.Quit();
