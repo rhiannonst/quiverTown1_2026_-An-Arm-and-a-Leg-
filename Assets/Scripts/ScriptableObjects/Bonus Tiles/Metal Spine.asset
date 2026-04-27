@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7a7e51ae078440dcb839d11f7675747, type: 3}
-  m_Name: Strong Leg
+  m_Name: Metal Spine
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Name: Strong Leg
-  Type: 2
+  Name: Metal Spine
+  Type: 4
   Status: 0
-  _Sprite: {fileID: 21300000, guid: cf7af5b0e44366a4dae3066542c5c1ce, type: 3}
-  Damage: 5
+  _Sprite: {fileID: 1283832895, guid: 4c157a286f00a5a4bb7fb9b367b72f69, type: 3}
+  Damage: 0
   Heal: 0
-  Block: 0
+  Block: 5

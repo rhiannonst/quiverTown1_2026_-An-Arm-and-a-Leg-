@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1731714172561042534}
   - component: {fileID: 2914778402284776547}
   m_Layer: 0
-  m_Name: StrongHead
+  m_Name: MetalTorso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
+  m_Sprite: {fileID: 829348424, guid: 4c157a286f00a5a4bb7fb9b367b72f69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -154,7 +154,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 2.36, y: 2.36}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

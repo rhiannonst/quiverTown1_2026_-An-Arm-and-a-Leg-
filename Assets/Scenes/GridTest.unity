@@ -1168,6 +1168,13 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: cfdad33055c874a40988eb5665547cb1, type: 3}
   - {fileID: 538679292038326795, guid: 621703aa0e083704fbbd295dcea052cc, type: 3}
   - {fileID: 538679292038326795, guid: 77b65436ffb10c24badc4de3c5ab5b24, type: 3}
+  - {fileID: 538679292038326795, guid: 133b0d71c18ace44cb290ba0ec7a61ba, type: 3}
+  - {fileID: 538679292038326795, guid: 8498e7a2d81681542beffa6d78a721b4, type: 3}
+  - {fileID: 538679292038326795, guid: 0ebcac964a4fa3d4a95fd3f209054634, type: 3}
+  - {fileID: 538679292038326795, guid: 036fa1b933f62de45b9e410632126460, type: 3}
+  - {fileID: 538679292038326795, guid: 26feb71391a4ef641bf4be4673ce4abf, type: 3}
+  - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
+  - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
   choiceCount: 3
   enableDebugHotkey: 1
   debugRewardKey: 116

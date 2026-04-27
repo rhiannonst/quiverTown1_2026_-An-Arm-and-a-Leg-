@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7a7e51ae078440dcb839d11f7675747, type: 3}
-  m_Name: Strong Torso
+  m_Name: Gold Torso
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  Name: Strong Arm
-  Type: 1
+  Name: Gold Torso
+  Type: 3
   Status: 0
-  _Sprite: {fileID: 21300000, guid: 508cefe741874224ab04250e51102374, type: 3}
+  _Sprite: {fileID: -860682298, guid: 5446f60be06730940ba4f491731d0156, type: 3}
   Damage: 0
   Heal: 0
-  Block: 5
+  Block: 10

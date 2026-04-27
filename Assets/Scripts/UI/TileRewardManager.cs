@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class TileRewardManager : MonoBehaviour
 {
     public Board board;
+    public EnemyGenerator enemyGenerator;
     public string overlaySceneName = "PickTileOverlay";
     public GameObject[] rewardTilePrefabs;
     [Min(1)]
     public int choiceCount = 3;
+    [Min(1)]
+    public int fullRewardPoolStartsAtStage = 3;
 
     // DEBUG ONLY: temporary Play Mode hotkey for testing tile rewards.
     [Header("Debug")]
@@ -25,6 +28,11 @@ public class TileRewardManager : MonoBehaviour
         if (board == null)
         {
             board = FindAnyObjectByType<Board>();
+        }
+
+        if (enemyGenerator == null)
+        {
+            enemyGenerator = FindAnyObjectByType<EnemyGenerator>();
         }
     }
 
@@ -123,8 +131,10 @@ public class TileRewardManager : MonoBehaviour
         List<GameObject> availableTiles = new List<GameObject>();
         if (rewardTilePrefabs != null)
         {
-            foreach (GameObject rewardTilePrefab in rewardTilePrefabs)
+            int rewardPoolSize = GetCurrentRewardPoolSize();
+            for (int i = 0; i < rewardPoolSize; i++)
             {
+                GameObject rewardTilePrefab = rewardTilePrefabs[i];
                 if (rewardTilePrefab != null && !availableTiles.Contains(rewardTilePrefab))
                 {
                     availableTiles.Add(rewardTilePrefab);
@@ -143,5 +153,17 @@ public class TileRewardManager : MonoBehaviour
         }
 
         return choices.ToArray();
+    }
+
+    private int GetCurrentRewardPoolSize()
+    {
+        if (rewardTilePrefabs == null) return 0;
+
+        if (enemyGenerator != null && enemyGenerator.Stage < fullRewardPoolStartsAtStage)
+        {
+            return Mathf.Max(1, rewardTilePrefabs.Length / 2);
+        }
+
+        return rewardTilePrefabs.Length;
     }
 }
