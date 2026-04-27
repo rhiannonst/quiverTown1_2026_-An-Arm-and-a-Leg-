@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2134170711761569500
+--- !u!114 &-8593667459837512488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,14 +10,68 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/MatchSuccess_sfx
+  m_Name: event:/Nuke
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/MatchSuccess_sfx
+  Path: event:/Nuke
   Guid:
-    Data1: 390234120
-    Data2: 1190304573
-    Data3: -1273439320
-    Data4: 1919447464
+    Data1: -876858481
+    Data2: 1324897656
+    Data3: 2044600993
+    Data4: 826851329
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-8403235724536904046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EnemyShield_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/EnemyShield_sfx
+  Guid:
+    Data1: 1965054753
+    Data2: 1192882427
+    Data3: -705955143
+    Data4: -1324943424
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7770470971218220962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Heal_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Heal_sfx
+  Guid:
+    Data1: -1816170048
+    Data2: 1167028937
+    Data3: -2007401321
+    Data4: -1594981147
   Banks:
   - {fileID: 4366945149442671104}
   IsStream: 0
@@ -81,6 +135,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2134170711761569500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MatchSuccess_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MatchSuccess_sfx
+  Guid:
+    Data1: -1206382717
+    Data2: 1109992021
+    Data3: -213517689
+    Data4: 240022854
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1870875750760717722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,10 +201,10 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639128164955422066
+  lastModified: 639128218959382763
   FileSizes:
   - Name: Desktop
-    Value: 1374
+    Value: 1838
   Exists: 1
 --- !u!114 &-1025636989488562757
 MonoBehaviour:
@@ -143,6 +224,33 @@ MonoBehaviour:
     Data2: 1190304573
     Data3: -1273439320
     Data4: 1919447464
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-66373081335240196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/StartGame
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/StartGame
+  Guid:
+    Data1: -1671625438
+    Data2: 1118649691
+    Data3: -1851698253
+    Data4: -2080889905
   Banks:
   - {fileID: 4366945149442671104}
   IsStream: 0
@@ -176,6 +284,16 @@ MonoBehaviour:
   - {fileID: 1098976065893469541}
   - {fileID: 8344038830346003063}
   - {fileID: -2134170711761569500}
+  - {fileID: -8403235724536904046}
+  - {fileID: -66373081335240196}
+  - {fileID: 3178780478304191543}
+  - {fileID: 2239353504908999167}
+  - {fileID: 4459877876470940678}
+  - {fileID: 5522232287957397493}
+  - {fileID: 7556655017863986430}
+  - {fileID: -7770470971218220962}
+  - {fileID: 5130265963571914301}
+  - {fileID: -8593667459837512488}
   EditorParameters:
   - {fileID: 3424271901022941936}
   - {fileID: 5606421898451999818}
@@ -186,7 +304,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -1464031517485322421}
   cacheVersion: 131859
-  cacheTime: 639128164955422066
+  cacheTime: 639128218959382763
   SerializableEventsDict:
   - key: event:/New Event
     index: 0
@@ -204,6 +322,26 @@ MonoBehaviour:
     index: 6
   - key: event:/MatchSuccess_sfx
     index: 7
+  - key: event:/EnemyShield_sfx
+    index: 8
+  - key: event:/StartGame
+    index: 9
+  - key: event:/Attack_sfx
+    index: 10
+  - key: event:/EnemyHeal_sfx
+    index: 11
+  - key: event:/PickUpgrade
+    index: 12
+  - key: event:/ArmorUp_sfx
+    index: 13
+  - key: event:/LoseArmor_sfx
+    index: 14
+  - key: event:/Heal_sfx
+    index: 15
+  - key: event:/Bag
+    index: 16
+  - key: event:/Nuke
+    index: 17
 --- !u!114 &24996990581693334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +424,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &2239353504908999167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EnemyHeal_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/EnemyHeal_sfx
+  Guid:
+    Data1: 1390594911
+    Data2: 1229542726
+    Data3: -430574916
+    Data4: 1733634991
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &3066917910571540714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +469,33 @@ MonoBehaviour:
     Data2: 1112756942
     Data3: 65345673
     Data4: -1298125986
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3178780478304191543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Attack_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Attack_sfx
+  Guid:
+    Data1: -612260796
+    Data2: 1097536290
+    Data3: -62896745
+    Data4: 108363348
   Banks:
   - {fileID: 4366945149442671104}
   IsStream: 0
@@ -384,11 +576,38 @@ MonoBehaviour:
   Path: FMOD/AnArmAndALeg/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639128164955375700
+  lastModified: 639128218959362068
   FileSizes:
   - Name: Desktop
-    Value: 1214560
+    Value: 1671584
   Exists: 1
+--- !u!114 &4459877876470940678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/PickUpgrade
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/PickUpgrade
+  Guid:
+    Data1: 706403944
+    Data2: 1125402177
+    Data3: 1782111399
+    Data4: -612792219
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &4920300492114024434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,6 +632,33 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &5130265963571914301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Bag
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Bag
+  Guid:
+    Data1: 2004463435
+    Data2: 1299166724
+    Data3: 1661290383
+    Data4: -382328925
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5403328967087633512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +688,33 @@ MonoBehaviour:
   - Win
   - DeathLose
   Exists: 1
+--- !u!114 &5522232287957397493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ArmorUp_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/ArmorUp_sfx
+  Guid:
+    Data1: -1652437622
+    Data2: 1283541771
+    Data3: 982984625
+    Data4: -1493819809
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5606421898451999818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +763,33 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &7556655017863986430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LoseArmor_sfx
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/LoseArmor_sfx
+  Guid:
+    Data1: 1472910732
+    Data2: 1209546564
+    Data3: 1472610484
+    Data4: -17399791
+  Banks:
+  - {fileID: 4366945149442671104}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8344038830346003063
 MonoBehaviour:
   m_ObjectHideFlags: 0
