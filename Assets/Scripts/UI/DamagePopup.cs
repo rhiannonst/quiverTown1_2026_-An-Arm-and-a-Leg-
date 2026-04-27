@@ -46,6 +46,10 @@ public class DamagePopup : MonoBehaviour
     public void Clear()
     {
         StopAllCoroutines();
+        totalDamage = 0;
+        totalBlock = 0;
+        totalHeal = 0;
+        transform.localScale = baseScale;
         StartCoroutine(FadeOut());
     }
 
@@ -61,10 +65,6 @@ public class DamagePopup : MonoBehaviour
             yield return null;
         }
 
-        totalDamage = 0;
-        totalBlock = 0;
-        totalHeal = 0;
-        transform.localScale = baseScale;
         if (label != null) label.alpha = 0f;
         this.gameObject.SetActive(false);
     }

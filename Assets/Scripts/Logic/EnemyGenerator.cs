@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -5,11 +6,15 @@ public class EnemyGenerator : MonoBehaviour
 {
     public NPC[] enemyPool;
     public GameObject enemyPrefab;
-    public Transform spawnPoint;
     public TMP_Text intentLabel;
     public TMP_Text stageLabel;
 
-    public float angleRange = 7f;
+    [Tooltip("Speed of the zip animation (higher = faster).")]
+    public float zipSpeed = 8f;
+    [Tooltip("Impulse force applied to the dead enemy when a new one arrives.")]
+    public float deadEnemyKickForce = 12f;
+
+    private static readonly Vector3 BattleSpot = new Vector3(0f, 0f, -4f);
 
     public BattleNPC CurrentEnemy { get; private set; }
     public int Stage { get; private set; } = 1;
@@ -23,6 +28,7 @@ public class EnemyGenerator : MonoBehaviour
 
     public void SpawnNext()
     {
+        // Release the dead enemy — kick it off screen
         RagdollCurrentEnemy();
         SpawnNewEnemy();
     }
@@ -35,8 +41,10 @@ public class EnemyGenerator : MonoBehaviour
             if (rb != null)
             {
                 rb.isKinematic = false;
-                rb.mass = .1f;
+                rb.mass = 0.1f;
                 rb.constraints = RigidbodyConstraints.None;
+                Vector3 kickDir = Vector3.back + Vector3.up * 0.5f;
+                rb.AddForce(kickDir * deadEnemyKickForce, ForceMode.Impulse);
             }
 
             currentEnemyInstance = null;
@@ -49,24 +57,52 @@ public class EnemyGenerator : MonoBehaviour
         CurrentEnemy = new BattleNPC(npc);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");
 
-        if (enemyPrefab != null)
+        GameObject prefabToSpawn = npc.Prefab != null ? npc.Prefab : enemyPrefab;
+        if (prefabToSpawn != null)
         {
-            Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
-            Quaternion baseRot = spawnPoint != null ? spawnPoint.rotation : Quaternion.identity;
-            Quaternion tilt = Quaternion.Euler(
-                Random.Range(-angleRange, angleRange),
-                Random.Range(-angleRange, angleRange),
-                Random.Range(-angleRange, angleRange)
-            );
-            currentEnemyInstance = Instantiate(enemyPrefab, pos, baseRot * tilt);
+            // Spawn at the prefab's own saved position/rotation
+            currentEnemyInstance = Instantiate(prefabToSpawn, prefabToSpawn.transform.position, prefabToSpawn.transform.rotation);
 
             Rigidbody newRb = currentEnemyInstance.GetComponent<Rigidbody>();
             if (newRb != null)
-                newRb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            {
+                newRb.isKinematic = true; // kinematic during zip so nothing disrupts it
+                newRb.constraints = RigidbodyConstraints.FreezeAll;
+            }
+
+            StartCoroutine(ZipToBattleSpot(currentEnemyInstance));
         }
 
         RefreshIntentLabel();
         RefreshStageLabel();
+    }
+
+    private IEnumerator ZipToBattleSpot(GameObject instance)
+    {
+        Vector3 start = instance.transform.position;
+
+        while (instance != null)
+        {
+            instance.transform.position = Vector3.MoveTowards(
+                instance.transform.position, BattleSpot, zipSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(instance.transform.position, BattleSpot) < 0.01f)
+                break;
+
+            yield return null;
+        }
+
+        if (instance == null) yield break;
+
+        instance.transform.position = BattleSpot;
+
+        // Settled — unfreeze physics but lock rotation and position so it stays stable
+        Rigidbody rb = instance.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 
     public void AdvanceStage()
