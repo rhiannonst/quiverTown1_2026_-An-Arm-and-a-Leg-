@@ -11,6 +11,7 @@ public class BattleScheduler : MonoBehaviour
     public LevelHandler levelHandler;
     public DamagePopup damagePopup;
     public RelicHandler relicHandler;
+    public TileRewardManager tileRewardManager;
     public TMP_Text turnLabel;
 
     [SerializeField] public EventReference EnemyDie_sfx;
@@ -25,6 +26,11 @@ public class BattleScheduler : MonoBehaviour
         if (relicHandler == null)
         {
             relicHandler = FindAnyObjectByType<RelicHandler>();
+        }
+
+        if (tileRewardManager == null)
+        {
+            tileRewardManager = FindAnyObjectByType<TileRewardManager>();
         }
     }
 
@@ -41,13 +47,7 @@ public class BattleScheduler : MonoBehaviour
 
             if (Enemy.IsDead())
             {
-                RuntimeManager.PlayOneShot(EnemyDie_sfx);
-                UnityEngine.Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
-                enemyGenerator.AdvanceStage();
-                EnemyTurn = 1;
-                RefreshTurnLabel();
-                board.player.chainMatches.Clear();
-                if (damagePopup != null) damagePopup.Clear();
+                HandleEnemyDefeated();
                 return;
             }
         }
@@ -72,6 +72,30 @@ public class BattleScheduler : MonoBehaviour
     private void RefreshTurnLabel()
     {
         if (turnLabel != null) turnLabel.text = $"Turn {EnemyTurn}";
+    }
+
+    private void HandleEnemyDefeated()
+    {
+        RuntimeManager.PlayOneShot(EnemyDie_sfx);
+        UnityEngine.Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
+        enemyGenerator.RagdollCurrentEnemy();
+
+        board.player.chainMatches.Clear();
+        if (damagePopup != null) damagePopup.Clear();
+
+        if (tileRewardManager != null && tileRewardManager.OfferTileReward(AdvanceAfterReward))
+        {
+            return;
+        }
+
+        AdvanceAfterReward();
+    }
+
+    private void AdvanceAfterReward()
+    {
+        enemyGenerator.AdvanceStage();
+        EnemyTurn = 1;
+        RefreshTurnLabel();
     }
 
     private void CheckDeaths()

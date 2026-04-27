@@ -16,4 +16,10 @@
             <ui:Label text="0" name="enemyBlockText" style="font-size: 46px; position: absolute; top: 39px; left: 48px; height: 76px; width: 92px; color: rgb(253, 245, 230);"/>
         </ui:Image>
     </ui:VisualElement>
+    <ui:Button text="&#10;" name="bagButton" style="position: absolute; width: 69px; height: 60px; top: 967px; left: 667px; background-image: url(&quot;project://database/Assets/Sprites/premium-flat-icon-of-game-bag-vector-removebg-preview.png?fileID=2800000&amp;guid=fc784797671004027a89a4ca224b8db1&amp;type=3#premium-flat-icon-of-game-bag-vector-removebg-preview&quot;); background-color: rgb(0, 0, 139);"/>
+    <ui:VisualElement name="relicInventoryContainer" style="flex-grow: 1; width: 1026px; height: 600px; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 100%; background-color: rgb(102, 102, 102); display: none;">
+        <ui:VisualElement name="container" style="flex-grow: 1;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="helperContainer" style="flex-grow: 1; position: absolute; width: 1689px; height: 893px; top: 60px; left: 114px; background-image: url(&quot;project://database/Assets/Sprites/Tutorial_UI.png?fileID=2800000&amp;guid=f7441fafb05f14594b68d2c19b3c16fd&amp;type=3#Tutorial_UI&quot;); display: none;"/>
+    <ui:Button text="&#10;" name="helperButton" style="width: 66px; height: 54px; position: absolute; top: 972px; left: 756px; background-color: rgb(188, 188, 47); background-image: url(&quot;project://database/Assets/Sprites/question.jpg?fileID=2800000&amp;guid=2d436054100794d04982d116a2496b00&amp;type=3#question&quot;);"/>
 </ui:UXML>
