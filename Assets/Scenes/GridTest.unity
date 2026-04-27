@@ -1431,6 +1431,21 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 26feb71391a4ef641bf4be4673ce4abf, type: 3}
   - {fileID: 538679292038326795, guid: b0cf8513c1f93af47af1d5af7acb8c9f, type: 3}
   - {fileID: 538679292038326795, guid: 10d98146f600ff54587e468a8a937dbc, type: 3}
+  rewardRelics:
+  - {fileID: 11400000, guid: 7c4e078a9541b714aa089915f76ee120, type: 2}
+  - {fileID: 11400000, guid: 2489a4dbe8d05494c8665527f23686ea, type: 2}
+  - {fileID: 11400000, guid: 547c27866e268ce4d8d9969d3cba02f7, type: 2}
+  - {fileID: 11400000, guid: a23592a4593601e4da177ed3c72f2182, type: 2}
+  - {fileID: 11400000, guid: 2818df75970d2864f9b5ff994d6949d8, type: 2}
+  - {fileID: 11400000, guid: 5c6053fe551b5ca4fa04480b1ad25101, type: 2}
+  - {fileID: 11400000, guid: c20ca221d5bc271439b6a2e61e311151, type: 2}
+  - {fileID: 11400000, guid: 1a8dc6600c0e4e942b71b892ece41d89, type: 2}
+  - {fileID: 11400000, guid: 5ed32439e7d0f5c4a8df0940346d5671, type: 2}
+  - {fileID: 11400000, guid: 36f0861fb423f5c4b97246ddb0c106d0, type: 2}
+  - {fileID: 11400000, guid: 76a0b9b85a9fea44698b1705add678b0, type: 2}
+  - {fileID: 11400000, guid: 27dd18a04ccdbbf43aea3c343d892aab, type: 2}
+  - {fileID: 11400000, guid: 21264d32cad2fcf4dad06bc9b5a1ac4b, type: 2}
+  - {fileID: 11400000, guid: 585eb18aa054456418e514d17cceaf5c, type: 2}
   choiceCount: 3
   fullRewardPoolStartsAtStage: 3
   enableDebugHotkey: 1
@@ -2088,13 +2103,6 @@ MonoBehaviour:
   player: {fileID: 2115350403}
   enemyGenerator: {fileID: 825852521}
   relicList: []
-  openBagSFX:
-    Guid:
-      Data1: 2004463435
-      Data2: 1299166724
-      Data3: 1661290383
-      Data4: -382328925
-    Path: event:/Bag
 --- !u!1 &896558056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,41 +3565,6 @@ MonoBehaviour:
       Data3: 646496650
       Data4: -270167330
     Path: event:/PlayerDie_sfx
-  PlayerAttack_sfx:
-    Guid:
-      Data1: -612260796
-      Data2: 1097536290
-      Data3: -62896745
-      Data4: 108363348
-    Path: event:/Attack_sfx
-  PlayerHeal_sfx:
-    Guid:
-      Data1: -1816170048
-      Data2: 1167028937
-      Data3: -2007401321
-      Data4: -1594981147
-    Path: event:/Heal_sfx
-  PlayerArmored_sfx:
-    Guid:
-      Data1: -1652437622
-      Data2: 1283541771
-      Data3: 982984625
-      Data4: -1493819809
-    Path: event:/ArmorUp_sfx
-  DamageBlocked_sfx:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  PlayerHit_sfx:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -4133,8 +4106,6 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   battleScheduler: {fileID: 1849751033}
   button: {fileID: 2066445902}
-  label: {fileID: 0}
-  buttonText: Shuffle
   cooldownTurns: 5
 --- !u!1 &2115350402
 GameObject:
@@ -4172,20 +4143,6 @@ MonoBehaviour:
   RelicList: []
   LevelHandler: {fileID: 744677830}
   chainMatches: []
-  PlayerHit_sfx:
-    Guid:
-      Data1: 406958918
-      Data2: 1149003980
-      Data3: 2132388771
-      Data4: 1836282064
-    Path: event:/PlayerTakeDamage_sfx
-  LoseShield_sfx:
-    Guid:
-      Data1: 1472910732
-      Data2: 1209546564
-      Data3: 1472610484
-      Data4: -17399791
-    Path: event:/LoseArmor_sfx
 --- !u!4 &2115350404
 Transform:
   m_ObjectHideFlags: 0

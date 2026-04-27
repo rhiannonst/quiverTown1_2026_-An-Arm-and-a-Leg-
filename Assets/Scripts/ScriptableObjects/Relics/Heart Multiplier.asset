@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heart Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::Relic
   Name: Heart Multiplier
-  description: Increase heart damage multiplier by 0.5x.
+  description: Increase heart output by 0.5x.
   icon: {fileID: 21300000, guid: cede22e1db7b4a64ab3bd86990715c18, type: 3}
   associatedTileType: 5
   multiplier: 0.5

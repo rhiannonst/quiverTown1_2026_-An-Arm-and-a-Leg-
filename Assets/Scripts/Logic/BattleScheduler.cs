@@ -42,21 +42,24 @@ public class BattleScheduler : MonoBehaviour
     public void ResolveTurn()
     {
         List<Player.MatchResult> chainMatches = board.player.chainMatches;
+        TurnResult finalPopupResult = new TurnResult();
 
         foreach (Player.MatchResult match in chainMatches)
         {
             UnityEngine.Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
             TurnResult matchResult = ResolveMatch(match);
+            finalPopupResult.Add(matchResult);
             ApplyTurnResult(matchResult);
-            damagePopup?.AddResult(matchResult);
 
             if (Enemy.IsDead())
             {
+                damagePopup?.SetResult(finalPopupResult);
                 HandleEnemyDefeated();
                 return;
             }
         }
 
+        damagePopup?.SetResult(finalPopupResult);
         board.player.chainMatches.Clear();
 
         Enemy.ExecuteIntent(board.player);
@@ -89,7 +92,7 @@ public class BattleScheduler : MonoBehaviour
         board.player.chainMatches.Clear();
         if (damagePopup != null) damagePopup.Clear();
 
-        if (tileRewardManager != null && tileRewardManager.OfferTileReward(AdvanceAfterReward))
+        if (tileRewardManager != null && tileRewardManager.OfferTileReward(AdvanceAfterReward, enemyGenerator.Stage))
         {
             return;
         }
@@ -115,7 +118,7 @@ public class BattleScheduler : MonoBehaviour
         }
     }
 
-    private TurnResult ResolveMatch(Player.MatchResult match)
+    public TurnResult ResolveMatch(Player.MatchResult match)
     {
         return new TurnResult
         {

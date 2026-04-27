@@ -91,14 +91,14 @@ public class Board : MonoBehaviour
 
     private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
     {
-        if (damagePopup == null) return;
-        var turnResult = new TurnResult();
-        foreach (var r in results)
+        if (damagePopup == null || battleScheduler == null) return;
+
+        TurnResult turnResult = new TurnResult();
+        foreach (Player.MatchResult result in results)
         {
-            turnResult.TotalDamage += r.totalDamage;
-            turnResult.TotalBlock  += r.totalBlock;
-            turnResult.TotalHeal   += r.totalHeal;
+            turnResult.Add(battleScheduler.ResolveMatch(result));
         }
+
         damagePopup.AddResult(turnResult);
     }
 

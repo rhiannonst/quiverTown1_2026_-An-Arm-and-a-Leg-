@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heart Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
   Name: Heart Adder
-  description: Increase heart healing by 2.
+  description: Increase heart output by 2.
   icon: {fileID: 21300000, guid: 49bf8c5e281a05b45ab39700836caa6f, type: 3}
   associatedTileType: 6
   multiplier: 0

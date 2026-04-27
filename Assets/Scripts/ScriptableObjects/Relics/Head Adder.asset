@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Head Adder
   m_EditorClassIdentifier: Assembly-CSharp::Relic
   Name: Head Adder
-  description: Increase head damage by 2.
+  description: Increase head output by 2.
   icon: {fileID: 21300000, guid: a6e419ac0c7800a408ab88d6e10969ee, type: 3}
   associatedTileType: 0
   multiplier: 0
