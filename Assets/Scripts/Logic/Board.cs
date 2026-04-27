@@ -39,6 +39,7 @@ public class Board : MonoBehaviour
 
     public TurnResult turnResult;
     [SerializeField] private EventReference MatchSuccessSound;
+    [SerializeField] private EventReference RefillSound;
 
     public Player player;
 
@@ -173,7 +174,7 @@ public class Board : MonoBehaviour
                 GetTileType(allTileInstances[column, row - 2]) == tileType)
                 return true;
         }
-
+        
         return false;
     }
 
@@ -261,6 +262,7 @@ public class Board : MonoBehaviour
                     tileInstance.GetComponent<TileInstance>().column = i;
                     tileInstance.transform.parent = this.transform;
                     allTileInstances[i, j] = tileInstance;
+                    RuntimeManager.PlayOneShot(RefillSound);
                 }
             }
         }

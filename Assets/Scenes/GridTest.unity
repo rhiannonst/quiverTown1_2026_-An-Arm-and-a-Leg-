@@ -3074,6 +3074,7 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   levelHandler: {fileID: 744677830}
   damagePopup: {fileID: 821097697}
+  relicHandler: {fileID: 0}
   turnLabel: {fileID: 263041238}
   EnemyDie_sfx:
     Guid:
@@ -3089,6 +3090,41 @@ MonoBehaviour:
       Data3: 646496650
       Data4: -270167330
     Path: event:/PlayerDie_sfx
+  PlayerAttack_sfx:
+    Guid:
+      Data1: -612260796
+      Data2: 1097536290
+      Data3: -62896745
+      Data4: 108363348
+    Path: event:/Attack_sfx
+  PlayerHeal_sfx:
+    Guid:
+      Data1: -1816170048
+      Data2: 1167028937
+      Data3: -2007401321
+      Data4: -1594981147
+    Path: event:/Heal_sfx
+  PlayerArmored_sfx:
+    Guid:
+      Data1: -1652437622
+      Data2: 1283541771
+      Data3: 982984625
+      Data4: -1493819809
+    Path: event:/ArmorUp_sfx
+  DamageBlocked_sfx:
+    Guid:
+      Data1: 1472910732
+      Data2: 1209546564
+      Data3: 1472610484
+      Data4: -17399791
+    Path: event:/LoseArmor_sfx
+  PlayerHit_sfx:
+    Guid:
+      Data1: 406958918
+      Data2: 1149003980
+      Data3: 2132388771
+      Data4: 1836282064
+    Path: event:/PlayerTakeDamage_sfx
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -3517,6 +3553,20 @@ MonoBehaviour:
   RelicList: []
   LevelHandler: {fileID: 744677830}
   chainMatches: []
+  PlayerHit_sfx:
+    Guid:
+      Data1: 406958918
+      Data2: 1149003980
+      Data3: 2132388771
+      Data4: 1836282064
+    Path: event:/PlayerTakeDamage_sfx
+  LoseShield_sfx:
+    Guid:
+      Data1: 1472910732
+      Data2: 1209546564
+      Data3: 1472610484
+      Data4: -17399791
+    Path: event:/LoseArmor_sfx
 --- !u!4 &2115350404
 Transform:
   m_ObjectHideFlags: 0
@@ -3577,8 +3627,6 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
-  tileBag:
-    startingCopiesPerTile: 5
   sequenceSpeed: 1
   chainSpeedIncrement: 0.5
   currentTile: {fileID: 0}
@@ -3591,14 +3639,7 @@ MonoBehaviour:
       Data3: -213517689
       Data4: 240022854
     Path: event:/MatchSuccess_sfx
-  SwapSound:
-    Guid:
-      Data1: 390234120
-      Data2: 1190304573
-      Data3: -1273439320
-      Data4: 1919447464
-    Path: event:/Swap_sfx
-  BoardFillSound:
+  RefillSound:
     Guid:
       Data1: 805454858
       Data2: 1112756942
@@ -4079,3 +4120,5 @@ SceneRoots:
   - {fileID: 200284576}
   - {fileID: 1522144166}
   - {fileID: 1809923778}
+  - {fileID: 841502854}
+  - {fileID: 1017110617}

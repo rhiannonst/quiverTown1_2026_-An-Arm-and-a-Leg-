@@ -1,5 +1,7 @@
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
+using FMODUnity;
 
 public class TileInstance : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class TileInstance : MonoBehaviour
     private Vector2 finalClickPosition;
     private Vector3 tempPosition;
     private float dragAngle = 0;
+
+    [SerializeField] private EventReference SwapSound;
 
     void Start()
     {
@@ -120,6 +124,7 @@ public class TileInstance : MonoBehaviour
 
     bool MovePieces()
     {
+        RuntimeManager.PlayOneShot(SwapSound);
         previousRow = row;
         previousColumn = column;
         otherTile = null;
@@ -166,7 +171,7 @@ public class TileInstance : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.5f / board.sequenceSpeed);
-
+        
         // Run match detection after tiles have settled
         findMatches.FindAllMatches();
         yield return new WaitForSeconds(.3f / board.sequenceSpeed);

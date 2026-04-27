@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{d70c05d5-1042-409a-9edb-23f43706f271}">
+		<property name="assetPath">
+			<value>EnemyShield-001.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.85566893424036283</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d65d8232-60fe-459c-9697-d15945726e34}</destination>
+		</relationship>
+	</object>
+</objects>
