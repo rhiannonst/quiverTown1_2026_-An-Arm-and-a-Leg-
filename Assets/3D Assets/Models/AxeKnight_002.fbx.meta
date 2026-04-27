@@ -3,7 +3,42 @@ guid: 92b4c207aca4a6540bc96548692a147d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Axe
+    second: {fileID: 2100000, guid: 0f32c8a4bc8774de7821408592924fc4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Helmet
+    second: {fileID: 2100000, guid: 0f32c8a4bc8774de7821408592924fc4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Horns
+    second: {fileID: 2100000, guid: 0d2fe1cde80684af48156150f4dc5f6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Shirt
+    second: {fileID: 2100000, guid: 96498fe87fe5546f2a98c07246669470, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Shoes
+    second: {fileID: 2100000, guid: f029b43ba37e04a7591d22d14f32fae7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants
+    second: {fileID: 2100000, guid: f029b43ba37e04a7591d22d14f32fae7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShoulderPads
+    second: {fileID: 2100000, guid: 0f32c8a4bc8774de7821408592924fc4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

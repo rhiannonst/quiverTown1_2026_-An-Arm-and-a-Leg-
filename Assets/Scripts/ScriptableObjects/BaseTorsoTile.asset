@@ -18,4 +18,4 @@ MonoBehaviour:
   _Sprite: {fileID: -8651642, guid: 0d19e34ed82b5bf48a0d97cff8f8f5c2, type: 3}
   Damage: 0
   Heal: 0
-  Block: 2
+  Block: 1
