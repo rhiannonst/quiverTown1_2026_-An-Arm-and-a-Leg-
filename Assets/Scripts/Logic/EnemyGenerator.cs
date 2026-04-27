@@ -29,6 +29,12 @@ public class EnemyGenerator : MonoBehaviour
     public void SpawnNext()
     {
         // Release the dead enemy — kick it off screen
+        RagdollCurrentEnemy();
+        SpawnNewEnemy();
+    }
+
+    public void RagdollCurrentEnemy()
+    {
         if (currentEnemyInstance != null)
         {
             Rigidbody rb = currentEnemyInstance.GetComponent<Rigidbody>();
@@ -40,8 +46,13 @@ public class EnemyGenerator : MonoBehaviour
                 Vector3 kickDir = Vector3.back + Vector3.up * 0.5f;
                 rb.AddForce(kickDir * deadEnemyKickForce, ForceMode.Impulse);
             }
-        }
 
+            currentEnemyInstance = null;
+        }
+    }
+
+    private void SpawnNewEnemy()
+    {
         NPC npc = enemyPool[Random.Range(0, enemyPool.Length)];
         CurrentEnemy = new BattleNPC(npc);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");

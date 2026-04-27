@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a7e51ae078440dcb839d11f7675747, type: 3}
+  m_Name: Metal Arm
+  m_EditorClassIdentifier: Assembly-CSharp::Tile
+  Name: Metal Arm
+  Type: 1
+  Status: 0
+  _Sprite: {fileID: -1193356153, guid: 4c157a286f00a5a4bb7fb9b367b72f69, type: 3}
+  Damage: 5
+  Heal: 0
+  Block: 0
