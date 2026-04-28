@@ -54,10 +54,25 @@ public class EnemyGenerator : MonoBehaviour
         }
     }
 
+    public void handleDifficultyMod(BattleNPC npc)
+    {   
+        int difficultyMod = 2;
+        
+        npc.MaxHealth = npc.MaxHealth + difficultyMod;
+
+        npc.maxAttack = npc.maxAttack + difficultyMod;
+        npc.minAttack = npc.minAttack + difficultyMod;
+
+        npc.maxHeal = npc.maxHeal + difficultyMod;
+        npc.minHeal = npc.minHeal + difficultyMod;
+    }
+    
     private void SpawnNewEnemy()
     {
+        // currently randomly spawns an enemy
         NPC npc = enemyPool[Random.Range(0, enemyPool.Length)];
         CurrentEnemy = new BattleNPC(npc);
+        handleDifficultyMod(CurrentEnemy);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");
 
         GameObject prefabToSpawn = npc.Prefab != null ? npc.Prefab : enemyPrefab;

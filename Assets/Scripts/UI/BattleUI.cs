@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using FMODUnity;
+using System.Collections;
 
 public class BattleUI : MonoBehaviour
 {
@@ -144,6 +145,55 @@ public class BattleUI : MonoBehaviour
         {
             helperContainer.style.display = DisplayStyle.Flex;
         }
+    }
+
+    public float fadeDuration = 1f;
+    public float elapsed = 0f;
+
+    public IEnumerator FadeOut(Label target, float duration)
+    {
+        Color color = target.style.color.value;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            target.style.color = new StyleColor(new Color(color.r, color.g, color.b, alpha));
+            yield return null; // wait one frame
+        }
+
+        target.style.color = new StyleColor(new Color(color.r, color.g, color.b, 0f)); // ensure fully invisible
+    }
+
+    IEnumerator FadeIn(Label target, float duration)
+    {
+        Color color = target.style.color.value;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            target.style.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        target.style.color = new Color(color.r, color.g, color.b, 1f);
+    }
+
+    public IEnumerator blockNumberTransition(Board board, BattleNPC enemy)
+    {
+        //handle fadeOut
+        StartCoroutine(FadeOut(playerBlockText,fadeDuration));
+        StartCoroutine(FadeOut(enemyBlockText,fadeDuration));
+        yield return new WaitForSeconds(fadeDuration);
+        board.player.ResetBlock();
+        enemy.ResetBlock();
+        yield return null;
+        StartCoroutine(FadeIn(playerBlockText,fadeDuration));
+        StartCoroutine(FadeIn(enemyBlockText,fadeDuration));
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

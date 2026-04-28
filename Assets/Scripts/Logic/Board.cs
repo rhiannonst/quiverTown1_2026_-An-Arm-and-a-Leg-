@@ -97,7 +97,7 @@ public class Board : MonoBehaviour
         TurnResult turnResult = new TurnResult();
         foreach (Player.MatchResult result in results)
         {
-            turnResult.Add(battleScheduler.ResolveMatch(result));
+            turnResult.Add(battleScheduler.ResolveMatchAndApplyRelics(result));
         }
 
         damagePopup.AddResult(turnResult);
@@ -473,7 +473,7 @@ public class Board : MonoBehaviour
         sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
-        battleScheduler?.ResolveTurn();
+        StartCoroutine(battleScheduler.handleTurnSequence());
         yield return new WaitForSeconds(.25f / sequenceSpeed);
         currentState = GameState.move;
     }

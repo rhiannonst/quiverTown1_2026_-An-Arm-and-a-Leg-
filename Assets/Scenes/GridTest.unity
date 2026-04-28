@@ -2191,6 +2191,8 @@ MonoBehaviour:
       Data3: 1661290383
       Data4: -382328925
     Path: event:/Bag
+  fadeDuration: 1
+  elapsed: 0
 --- !u!1 &896558056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3637,8 +3639,9 @@ MonoBehaviour:
   levelHandler: {fileID: 744677830}
   damagePopup: {fileID: 821097697}
   relicHandler: {fileID: 0}
-  tileRewardManager: {fileID: 0}
+  tileRewardManager: {fileID: 735286890}
   turnLabel: {fileID: 263041238}
+  battleUI: {fileID: 841502855}
   EnemyDie_sfx:
     Guid:
       Data1: 1419616823

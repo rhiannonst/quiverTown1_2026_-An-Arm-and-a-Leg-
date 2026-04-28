@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using FMODUnity;
+using System.Collections;
 
 public class BattleScheduler : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BattleScheduler : MonoBehaviour
     public RelicHandler relicHandler;
     public TileRewardManager tileRewardManager;
     public TMP_Text turnLabel;
+
+    public BattleUI battleUI = new BattleUI();
 
     [SerializeField] public EventReference EnemyDie_sfx;
     [SerializeField] public EventReference PlayerDie_sfx;
@@ -39,34 +42,48 @@ public class BattleScheduler : MonoBehaviour
         }
     }
 
-    public void ResolveTurn()
+    void Start()
+    {
+        
+    }
+    
+    // To-do: we need to implement some simple implemnations during the yield return to play.
+    public IEnumerator handleTurnSequence()
     {
         List<Player.MatchResult> chainMatches = board.player.chainMatches;
         TurnResult finalPopupResult = new TurnResult();
 
+        // block value for both player and enemy fade in and out
+
         foreach (Player.MatchResult match in chainMatches)
         {
-            UnityEngine.Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
-            TurnResult matchResult = ResolveMatch(match);
+            // UnityEngine.Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
+            TurnResult matchResult = ResolveMatchAndApplyRelics(match);
             finalPopupResult.Add(matchResult);
             ApplyTurnResult(matchResult);
+            yield return new WaitForSeconds(1.5f);
 
             if (Enemy.IsDead())
             {
                 damagePopup?.SetResult(finalPopupResult);
                 HandleEnemyDefeated();
-                return;
+                yield break;
             }
         }
 
-        damagePopup?.SetResult(finalPopupResult);
-        board.player.chainMatches.Clear();
+        yield return StartCoroutine(handleEnemyTurnAndClean(chainMatches, finalPopupResult));
 
+    }
+
+    // handles clean up after a turn sequence finishes
+    public IEnumerator handleEnemyTurnAndClean(List<Player.MatchResult> chainMatches,TurnResult turnResult)
+    {
+        damagePopup?.SetResult(turnResult);
+        chainMatches.Clear();
+        yield return new WaitForSeconds(1.5f);
         Enemy.ExecuteIntent(board.player);
-
-        board.player.ResetBlock();
-        Enemy.ResetBlock();
-
+        yield return StartCoroutine(battleUI.blockNumberTransition(board,Enemy));
+        
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
         EnemyTurn++;
@@ -118,7 +135,7 @@ public class BattleScheduler : MonoBehaviour
         }
     }
 
-    public TurnResult ResolveMatch(Player.MatchResult match)
+    public TurnResult ResolveMatchAndApplyRelics(Player.MatchResult match)
     {
         return new TurnResult
         {
