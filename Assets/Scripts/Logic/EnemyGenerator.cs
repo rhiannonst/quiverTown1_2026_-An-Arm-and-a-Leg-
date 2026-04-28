@@ -59,6 +59,7 @@ public class EnemyGenerator : MonoBehaviour
         int difficultyMod = 2;
         
         npc.MaxHealth = npc.MaxHealth + difficultyMod;
+        npc.CurrentHealth = npc.CurrentHealth + difficultyMod;
 
         npc.maxAttack = npc.maxAttack + difficultyMod;
         npc.minAttack = npc.minAttack + difficultyMod;

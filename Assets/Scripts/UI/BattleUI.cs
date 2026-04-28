@@ -7,35 +7,22 @@ using System.Collections;
 public class BattleUI : MonoBehaviour
 {
     UIDocument uiDoc;
-    
     VisualElement root;
-    
     VisualElement playerHealthBar;
-
     VisualElement enemyHealthBar;
-
     Label playerBlockText;
-
     Label enemyBlockText;
-
     Button bagButton;
-
     Button helperButton;
+    VisualElement escapeMenuContainer;
 
     public Player player;
-
     public BattleNPC npc;
-
     public EnemyGenerator enemyGenerator;
-
     public List<Relic> relicList;
-
     public VisualElement relicInventoryContainer;
-
     public VisualElement helperContainer;
-    
     public VisualElement container;
-
     public EventReference openBagSFX;
 
     public void UpdateHealthBar(Player player, BattleNPC npc)
@@ -210,6 +197,7 @@ public class BattleUI : MonoBehaviour
         container = root.Q<VisualElement>("container");
         helperButton = root.Q<Button>("helperButton");
         helperContainer = root.Q<VisualElement>("helperContainer");
+        escapeMenuContainer = root.Q<VisualElement>("escapeMenuContainer"); 
 
         relicList = player.RelicList;
         bagButton.clicked += handleBagButtonClick;
@@ -239,7 +227,7 @@ public class BattleUI : MonoBehaviour
         }
 
         //handle helper display
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if(helperContainer.style.display == DisplayStyle.Flex)
             {
@@ -248,9 +236,22 @@ public class BattleUI : MonoBehaviour
             else
             {
                 helperContainer.style.display = DisplayStyle.Flex;
-                PopulateRelics();
             }
         }
+
+        // escape menu display
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(escapeMenuContainer.style.display == DisplayStyle.Flex)
+            {
+                escapeMenuContainer.style.display = DisplayStyle.None;
+            }
+            else
+            {
+                escapeMenuContainer.style.display = DisplayStyle.Flex;
+            }
+        }
+
 
     }
 }
