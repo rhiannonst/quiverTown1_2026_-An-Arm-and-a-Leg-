@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -35,7 +35,7 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 200284576}
   - component: {fileID: 200284575}
   - component: {fileID: 200284574}
+  - component: {fileID: 200284577}
   m_Layer: 0
   m_Name: Point Light_001 (8)
   m_TagString: Untagged
@@ -370,7 +371,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -433,12 +434,33 @@ Transform:
   m_GameObject: {fileID: 200284573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 2.81, z: -5.2499995}
+  m_LocalPosition: {x: 5.38, y: 3.24, z: -5.2499995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &200284577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200284573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &263041236
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +884,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 387198038933954864, guid: 60d8537138e2b3b4ea657585800db079, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d96285d06726a493287b176b09af48ba, type: 2}
     - target: {fileID: 919132149155446097, guid: 60d8537138e2b3b4ea657585800db079, type: 3}
       propertyPath: m_Name
       value: Background_FullSize
@@ -885,6 +911,7 @@ GameObject:
   - component: {fileID: 542811669}
   - component: {fileID: 542811668}
   - component: {fileID: 542811667}
+  - component: {fileID: 542811670}
   m_Layer: 0
   m_Name: Point Light_001 (2)
   m_TagString: Untagged
@@ -932,7 +959,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -995,12 +1022,33 @@ Transform:
   m_GameObject: {fileID: 542811666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.301, y: 2.79, z: 0.87}
+  m_LocalPosition: {x: -5.301, y: 3.22, z: 0.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &542811670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542811666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &581600646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,6 +1393,7 @@ GameObject:
   - component: {fileID: 712478711}
   - component: {fileID: 712478710}
   - component: {fileID: 712478709}
+  - component: {fileID: 712478712}
   m_Layer: 0
   m_Name: Point Light_001 (7)
   m_TagString: Untagged
@@ -1392,7 +1441,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1455,12 +1504,33 @@ Transform:
   m_GameObject: {fileID: 712478708}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 2.81, z: 0.89000046}
+  m_LocalPosition: {x: 5.38, y: 3.24, z: 0.89000046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &712478712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712478708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &735286889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,6 +1620,7 @@ GameObject:
   - component: {fileID: 736980856}
   - component: {fileID: 736980855}
   - component: {fileID: 736980854}
+  - component: {fileID: 736980857}
   m_Layer: 0
   m_Name: Point Light_001 (6)
   m_TagString: Untagged
@@ -1597,7 +1668,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1660,12 +1731,33 @@ Transform:
   m_GameObject: {fileID: 736980853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 2.81, z: 6.9400005}
+  m_LocalPosition: {x: 5.38, y: 3.24, z: 6.9400005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &736980857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736980853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &744677828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2422,7 @@ Transform:
   m_GameObject: {fileID: 929100284}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.301, y: -6.2, z: -21.4}
+  m_LocalPosition: {x: 1.301, y: -6.14, z: -21.4}
   m_LocalScale: {x: 28.637, y: 8.7045, z: 165.67357}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2482,7 +2574,7 @@ Camera:
   m_GameObject: {fileID: 1213444652}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -2595,6 +2687,7 @@ GameObject:
   - component: {fileID: 1216431264}
   - component: {fileID: 1216431263}
   - component: {fileID: 1216431262}
+  - component: {fileID: 1216431265}
   m_Layer: 0
   m_Name: Point Light_001 (3)
   m_TagString: Untagged
@@ -2642,7 +2735,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2705,12 +2798,33 @@ Transform:
   m_GameObject: {fileID: 1216431261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.301, y: 2.79, z: -5.27}
+  m_LocalPosition: {x: -5.301, y: 3.22, z: -5.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1216431265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216431261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &1327770662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,6 +3110,7 @@ GameObject:
   - component: {fileID: 1522144166}
   - component: {fileID: 1522144165}
   - component: {fileID: 1522144164}
+  - component: {fileID: 1522144167}
   m_Layer: 0
   m_Name: Point Light_001 (4)
   m_TagString: Untagged
@@ -3043,7 +3158,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3106,12 +3221,33 @@ Transform:
   m_GameObject: {fileID: 1522144163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.301, y: 2.79, z: -11.42}
+  m_LocalPosition: {x: -5.301, y: 3.22, z: -11.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522144167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522144163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &1587205131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3235,6 +3371,7 @@ GameObject:
   - component: {fileID: 1639124161}
   - component: {fileID: 1639124160}
   - component: {fileID: 1639124159}
+  - component: {fileID: 1639124162}
   m_Layer: 0
   m_Name: Point Light_001
   m_TagString: Untagged
@@ -3282,7 +3419,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3345,12 +3482,33 @@ Transform:
   m_GameObject: {fileID: 1639124158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.301, y: 2.79, z: 13.03}
+  m_LocalPosition: {x: -5.301, y: 3.22, z: 13.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1639124162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639124158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &1770681145
 GameObject:
   m_ObjectHideFlags: 0
@@ -3362,6 +3520,7 @@ GameObject:
   - component: {fileID: 1770681148}
   - component: {fileID: 1770681147}
   - component: {fileID: 1770681146}
+  - component: {fileID: 1770681149}
   m_Layer: 0
   m_Name: Point Light_001 (1)
   m_TagString: Untagged
@@ -3409,7 +3568,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3472,12 +3631,33 @@ Transform:
   m_GameObject: {fileID: 1770681145}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.301, y: 2.79, z: 6.92}
+  m_LocalPosition: {x: -5.301, y: 3.22, z: 6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1770681149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770681145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1 &1809923775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,7 +3716,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 1
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3599,7 +3779,7 @@ Transform:
   m_GameObject: {fileID: 1809923775}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 2.81, z: -11.4}
+  m_LocalPosition: {x: -0.18, y: 7.84, z: -4.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4511,6 +4691,7 @@ GameObject:
   - component: {fileID: 2132040150}
   - component: {fileID: 2132040149}
   - component: {fileID: 2132040148}
+  - component: {fileID: 2132040151}
   m_Layer: 0
   m_Name: Point Light_001 (5)
   m_TagString: Untagged
@@ -4558,7 +4739,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 0.86971724, b: 0.7688679, a: 1}
-  m_Intensity: 4
+  m_Intensity: 5
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4621,12 +4802,33 @@ Transform:
   m_GameObject: {fileID: 2132040147}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 2.81, z: 13.05}
+  m_LocalPosition: {x: 5.38, y: 3.24, z: 13.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2132040151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132040147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafad02464604c7fae779e598d70ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::torchFlicker
+  minIntensity: 4
+  maxIntensity: 6
+  minChange: -0.1
+  maxChange: 0.1
+  change: 0.05
+  flickerCount: 0
+  flickerSpeed: 10
+  intense: 5
+  light: {fileID: 0}
 --- !u!1001 &3061357615824703619
 PrefabInstance:
   m_ObjectHideFlags: 0
