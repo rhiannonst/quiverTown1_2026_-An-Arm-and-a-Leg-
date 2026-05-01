@@ -279,7 +279,8 @@ public class Board : MonoBehaviour
             {
                 Vector3 tilePos = allTileInstances[column, row].transform.position;
                 ParticleSystem particle = Instantiate(onMatchParticle, tilePos, Quaternion.identity);
-                Destroy(particle, .5f);
+                particle.Play();
+                Destroy(particle.gameObject, particle.main.duration);
             }
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
