@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
     public void handleDeath()
     {
-        Debug.Log("Player has died.");
+        //Debug.Log("Player has died.");
         LevelHandler.GameOver();
     }
 

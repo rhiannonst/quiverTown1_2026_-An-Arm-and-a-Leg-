@@ -131,7 +131,7 @@ public class BattleScheduler : MonoBehaviour
             UnityEngine.Debug.Log("[BattleScheduler] Player has died.");
             RuntimeManager.PlayOneShot(PlayerDie_sfx);
             board.player.handleDeath();
-            if (levelHandler != null) levelHandler.GameOver();
+            //if (levelHandler != null) levelHandler.GameOver(); //redundant call
         }
     }
 

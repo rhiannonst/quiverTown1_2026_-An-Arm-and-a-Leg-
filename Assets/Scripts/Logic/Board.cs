@@ -20,9 +20,9 @@ public class Board : MonoBehaviour
     [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
     public float gemScale = 1f;
 
-    public GameObject tilePrefab;
+    public GameObject bgTilePrefab;
     public GameObject[] tilePrefabs;
-    public GameObject destroyParticle;
+    public ParticleSystem onMatchParticle;
     public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
@@ -135,7 +135,7 @@ public class Board : MonoBehaviour
                 Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
 
                 // Background tile
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                GameObject backgroundTile = Instantiate(bgTilePrefab, tempPosition, Quaternion.identity);
                 backgroundTile.transform.localScale = new Vector3(cell.x, cell.y, backgroundTile.transform.localScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
@@ -275,12 +275,10 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
-            if (destroyParticle != null)
+            if (onMatchParticle != null)
             {
                 Vector3 tilePos = allTileInstances[column, row].transform.position;
-                Vector3 toCamera = (Camera.main.transform.position - tilePos).normalized;
-                Vector3 spawnPos = tilePos + toCamera * 0.5f;
-                GameObject particle = Instantiate(destroyParticle, spawnPos, Quaternion.identity);
+                ParticleSystem particle = Instantiate(onMatchParticle, tilePos, Quaternion.identity);
                 Destroy(particle, .5f);
             }
             Destroy(allTileInstances[column, row]);

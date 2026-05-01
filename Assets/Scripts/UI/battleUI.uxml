@@ -1,8 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="escapeMenuContainer" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.78); aspect-ratio: auto; position: absolute; display: none;">
+    <ui:VisualElement name="victoryMenuContainer" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.78); aspect-ratio: auto; position: absolute; display: none;">
         <ui:Button text="Main Menu" name="mainMenuButton" style="position: absolute; top: 439px; left: 783px; height: 48px; width: 310px; font-size: 24px;"/>
         <ui:Button text="Quit Game" name="exitGameButton" style="position: absolute; top: 547px; left: 783px; height: 48px; width: 310px; font-size: 24px;"/>
-        <ui:Image name="titleCard" source="project://database/Assets/Sprites/anarmandaleg-title-removebg-preview.png?fileID=2800000&amp;guid=0e343a9b0dd6d95468c04a475e8f2dc7&amp;type=3#anarmandaleg-title-removebg-preview" style="width: 555px; height: 201px; position: absolute; top: 177px; left: 673px;"/>
     </ui:VisualElement>
     <ui:VisualElement name="PlayerHealthBarContainer" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/Sprites/HPbackdrop.png?fileID=2800000&amp;guid=d00d9111c668d40598c00521c7fb9bb2&amp;type=3#HPbackdrop&quot;); height: 73px; width: 422px; top: 962px; left: 231px;">
         <ui:VisualElement name="playerHealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/HPFill.png?fileID=2800000&amp;guid=a8fb463db78154bfab37cb4ddb29307c&amp;type=3#HPFill&quot;); background-size: 90% 60%;"/>

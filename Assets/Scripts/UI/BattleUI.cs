@@ -6,6 +6,7 @@ using System.Collections;
 
 public class BattleUI : MonoBehaviour
 {
+    // element ref list
     UIDocument uiDoc;
     VisualElement root;
     VisualElement playerHealthBar;
@@ -14,8 +15,8 @@ public class BattleUI : MonoBehaviour
     Label enemyBlockText;
     Button bagButton;
     Button helperButton;
-    VisualElement escapeMenuContainer;
 
+    
     public Player player;
     public BattleNPC npc;
     public EnemyGenerator enemyGenerator;
@@ -185,7 +186,7 @@ public class BattleUI : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
         uiDoc = GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
         playerHealthBar = root.Q<VisualElement>("playerHealthBar");
@@ -197,12 +198,9 @@ public class BattleUI : MonoBehaviour
         container = root.Q<VisualElement>("container");
         helperButton = root.Q<Button>("helperButton");
         helperContainer = root.Q<VisualElement>("helperContainer");
-        escapeMenuContainer = root.Q<VisualElement>("escapeMenuContainer"); 
-
         relicList = player.RelicList;
         bagButton.clicked += handleBagButtonClick;
         helperButton.clicked += handleHelperButtonClick;
-
     }
 
     // Update is called once per frame
@@ -238,20 +236,5 @@ public class BattleUI : MonoBehaviour
                 helperContainer.style.display = DisplayStyle.Flex;
             }
         }
-
-        // escape menu display
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(escapeMenuContainer.style.display == DisplayStyle.Flex)
-            {
-                escapeMenuContainer.style.display = DisplayStyle.None;
-            }
-            else
-            {
-                escapeMenuContainer.style.display = DisplayStyle.Flex;
-            }
-        }
-
-
     }
 }
