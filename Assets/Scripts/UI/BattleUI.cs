@@ -15,7 +15,6 @@ public class BattleUI : MonoBehaviour
     Label enemyBlockText;
     Button bagButton;
     Button helperButton;
-
     
     public Player player;
     public BattleNPC npc;

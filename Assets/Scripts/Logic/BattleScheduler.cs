@@ -26,6 +26,10 @@ public class BattleScheduler : MonoBehaviour
 
     public int EnemyTurn { get; private set; } = 1;
     public int TotalTurns { get; private set; } = 0;
+    public int EnemiesDefeated { get; private set; } = 0;
+
+    [Tooltip("Number of enemies to defeat to trigger victory.")]
+    public int enemiesToWin = 10;
 
     private BattleNPC Enemy => enemyGenerator.CurrentEnemy;
 
@@ -106,8 +110,16 @@ public class BattleScheduler : MonoBehaviour
         UnityEngine.Debug.Log($"[BattleScheduler] {Enemy.Name} has died.");
         enemyGenerator.RagdollCurrentEnemy();
 
+        EnemiesDefeated++;
+
         board.player.chainMatches.Clear();
         if (damagePopup != null) damagePopup.Clear();
+
+        if (EnemiesDefeated >= enemiesToWin)
+        {
+            if (levelHandler != null) levelHandler.Victory();
+            return;
+        }
 
         if (tileRewardManager != null && tileRewardManager.OfferTileReward(AdvanceAfterReward, enemyGenerator.Stage))
         {

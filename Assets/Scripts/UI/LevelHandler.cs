@@ -19,4 +19,9 @@ public class LevelHandler : MonoBehaviour
 
         SceneManager.LoadScene("GameOver");
     }
+
+    public void Victory()
+    {
+        SceneManager.LoadScene("Victory");
+    }
 }
