@@ -472,8 +472,7 @@ public class Board : MonoBehaviour
         sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
-        StartCoroutine(battleScheduler.handleTurnSequence());
-        yield return new WaitForSeconds(.25f / sequenceSpeed);
+        yield return StartCoroutine(battleScheduler.handleTurnSequence());
         currentState = GameState.move;
     }
 }

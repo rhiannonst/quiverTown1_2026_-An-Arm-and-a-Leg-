@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PickTileOverlay.unity
     guid: b4f94bf1b752d6743a97e1003396bf51
+  - enabled: 1
+    path: Assets/Scenes/Victory.unity
+    guid: e21bf317c9db4164fb3fa6d83a01fb0a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

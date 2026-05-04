@@ -11,10 +11,11 @@ public class ShuffleButton : MonoBehaviour
     public string buttonText = "Shuffle";
     public int cooldownTurns = 5;
 
-    private int lastUsedTurn = int.MinValue;
+    private int lastUsedTurn = -9999;
 
     void Update()
     {
+        if (board == null || battleScheduler == null) return;
         int remaining = TurnsRemaining();
         bool ready = remaining <= 0 && board.currentState == GameState.move;
 

@@ -2163,6 +2163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab88076cae1b214bb8c8094ab616057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerator
+  difficultyMod: 1
+  difficultyMultiplier: 2
   enemyPool:
   - {fileID: 11400000, guid: f2e20209a964bcd48b548060bbfd17b6, type: 2}
   - {fileID: 11400000, guid: 987b09f28ca4d224ea276b58781f7929, type: 2}
@@ -3000,8 +3002,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3759,6 +3761,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  enemiesToWin: 10
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -4189,8 +4192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -766, y: 101}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -752.69366, y: 101}
+  m_SizeDelta: {x: 171.1109, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066445902
 MonoBehaviour:
@@ -4313,7 +4316,7 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   battleScheduler: {fileID: 1849751033}
   button: {fileID: 2066445902}
-  label: {fileID: 0}
+  label: {fileID: 1443764153}
   buttonText: Shuffle
   cooldownTurns: 5
 --- !u!114 &2066445906
@@ -4376,8 +4379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52589f6bfb1564541bd9f4a71169c2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
-  MaxHealth: 15
-  CurrentHealth: 15
+  MaxHealth: 20
+  CurrentHealth: 20
   CurrentBlock: 0
   Name: 
   RelicList: []

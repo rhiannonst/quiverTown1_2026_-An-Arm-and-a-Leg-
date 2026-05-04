@@ -17,11 +17,11 @@ public class LevelHandler : MonoBehaviour
         // if (gameOverOverlay != null)
         //     gameOverOverlay.SetActive(true);
 
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene(3);
     }
 
     public void Victory()
     {
-        SceneManager.LoadScene("Victory");
+        SceneManager.LoadScene(5);
     }
 }

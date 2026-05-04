@@ -57,15 +57,19 @@ public class BattleScheduler : MonoBehaviour
         List<Player.MatchResult> chainMatches = board.player.chainMatches;
         TurnResult finalPopupResult = new TurnResult();
 
-        // block value for both player and enemy fade in and out
+        bool enemyPreActed = Enemy.IntentAction == EnemyAction.Block;
+        if (enemyPreActed)
+        {
+            Enemy.ExecuteIntent(board.player);
+            yield return new WaitForSeconds(0.5f);
+        }
 
         foreach (Player.MatchResult match in chainMatches)
         {
-            // UnityEngine.Debug.Log($"[BattleScheduler] Player performs {match.tileType} x{match.count}");
             TurnResult matchResult = ResolveMatchAndApplyRelics(match);
             finalPopupResult.Add(matchResult);
             ApplyTurnResult(matchResult);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
 
             if (Enemy.IsDead())
             {
@@ -75,18 +79,19 @@ public class BattleScheduler : MonoBehaviour
             }
         }
 
-        yield return StartCoroutine(handleEnemyTurnAndClean(chainMatches, finalPopupResult));
-
+        yield return StartCoroutine(handleEnemyTurnAndClean(chainMatches, finalPopupResult, enemyPreActed));
     }
 
     // handles clean up after a turn sequence finishes
-    public IEnumerator handleEnemyTurnAndClean(List<Player.MatchResult> chainMatches,TurnResult turnResult)
+    public IEnumerator handleEnemyTurnAndClean(List<Player.MatchResult> chainMatches, TurnResult turnResult, bool enemyPreActed = false)
     {
         damagePopup?.SetResult(turnResult);
         chainMatches.Clear();
         yield return new WaitForSeconds(1.5f);
-        Enemy.ExecuteIntent(board.player);
-        yield return StartCoroutine(battleUI.blockNumberTransition(board,Enemy));
+        if (!enemyPreActed)
+            Enemy.ExecuteIntent(board.player);
+
+        yield return StartCoroutine(battleUI.blockNumberTransition(board, Enemy));
         
         Enemy.RollIntent();
         enemyGenerator.RefreshIntentLabel();
@@ -111,6 +116,7 @@ public class BattleScheduler : MonoBehaviour
         enemyGenerator.RagdollCurrentEnemy();
 
         EnemiesDefeated++;
+        TotalTurns++;
 
         board.player.chainMatches.Clear();
         if (damagePopup != null) damagePopup.Clear();

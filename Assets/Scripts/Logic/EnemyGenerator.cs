@@ -5,6 +5,8 @@ using FMODUnity;
 
 public class EnemyGenerator : MonoBehaviour
 {
+    public float difficultyMod = 1f;
+    public float difficultyMultiplier = 2f;
     public NPC[] enemyPool;
     public GameObject enemyPrefab;
     public TMP_Text intentLabel;
@@ -56,16 +58,17 @@ public class EnemyGenerator : MonoBehaviour
 
     public void handleDifficultyMod(BattleNPC npc)
     {   
-        int difficultyMod = 2;
         
-        npc.MaxHealth = npc.MaxHealth + difficultyMod;
-        npc.CurrentHealth = npc.CurrentHealth + difficultyMod;
+        int intMod = Mathf.RoundToInt(difficultyMod);
 
-        npc.maxAttack = npc.maxAttack + difficultyMod;
-        npc.minAttack = npc.minAttack + difficultyMod;
+        npc.MaxHealth += difficultyMod;
+        npc.CurrentHealth += difficultyMod;
 
-        npc.maxHeal = npc.maxHeal + difficultyMod;
-        npc.minHeal = npc.minHeal + difficultyMod;
+        npc.maxAttack += intMod;
+        npc.minAttack += intMod;
+
+        npc.maxHeal += intMod;
+        npc.minHeal += intMod;
     }
     
     private void SpawnNewEnemy()
@@ -127,6 +130,7 @@ public class EnemyGenerator : MonoBehaviour
     public void AdvanceStage()
     {
         Stage++;
+        difficultyMod *= difficultyMultiplier;
         SpawnNext();
     }
 
