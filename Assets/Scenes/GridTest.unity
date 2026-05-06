@@ -176,9 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Cast Nuke Spell
-
-'
+  m_text: Cast Nuke
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -478,7 +476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &263041237
 RectTransform:
   m_ObjectHideFlags: 0
@@ -495,7 +493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 760, y: 374}
+  m_AnchoredPosition: {x: -276, y: 486}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263041238
@@ -545,8 +543,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -659,7 +657,7 @@ GameObject:
   - component: {fileID: 433195265}
   - component: {fileID: 433195264}
   - component: {fileID: 433195267}
-  m_Layer: 5
+  m_Layer: 4
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -900,6 +898,74 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 97461029}
   m_SourcePrefab: {fileID: 100100000, guid: 60d8537138e2b3b4ea657585800db079, type: 3}
+--- !u!1 &530764655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 530764658}
+  - component: {fileID: 530764657}
+  - component: {fileID: 530764656}
+  m_Layer: 5
+  m_Name: menuUIDocument
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &530764656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530764655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 705b37bbb827d9745aefac2f337650d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuUI
+--- !u!114 &530764657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530764655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 447cabb1257f34e9fb09d73de37bbf0d, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 3096297567f63db4fbd935c052f15a2f, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &530764658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530764655}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542811666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,8 +1162,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1224,8 +1290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -752.4, y: -3.1}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -509.13, y: -464}
+  m_SizeDelta: {x: 116.7, y: 27.4885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659523524
 MonoBehaviour:
@@ -1816,7 +1882,7 @@ GameObject:
   - component: {fileID: 761930506}
   - component: {fileID: 761930505}
   m_Layer: 5
-  m_Name: enemyName-enemyHP
+  m_Name: enemyName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1838,7 +1904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -608, y: 448}
+  m_AnchoredPosition: {x: -608, y: 436}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &761930505
@@ -1875,7 +1941,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemy Name: Enemy HP'
+  m_text: Enemy Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1884,8 +1950,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2040,7 +2106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 760, y: 456}
+  m_AnchoredPosition: {x: -527, y: 486}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &822282654
@@ -2072,8 +2138,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2090,8 +2156,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2187,6 +2253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab88076cae1b214bb8c8094ab616057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerator
+  difficultyMod: 1
+  difficultyMultiplier: 2
   enemyPool:
   - {fileID: 11400000, guid: f2e20209a964bcd48b548060bbfd17b6, type: 2}
   - {fileID: 11400000, guid: 987b09f28ca4d224ea276b58781f7929, type: 2}
@@ -2217,7 +2285,7 @@ GameObject:
   - component: {fileID: 841502853}
   - component: {fileID: 841502855}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: BattleUIDocument
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2295,7 +2363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896558057}
   m_Layer: 0
-  m_Name: DestroyParticle
+  m_Name: bgTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2836,7 +2904,7 @@ GameObject:
   - component: {fileID: 1327770663}
   - component: {fileID: 1327770665}
   - component: {fileID: 1327770664}
-  m_Layer: 5
+  m_Layer: 4
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3046,8 +3114,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3871,6 +3939,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  enemiesToWin: 10
 --- !u!4 &1849751034
 Transform:
   m_ObjectHideFlags: 0
@@ -3897,7 +3966,7 @@ GameObject:
   - component: {fileID: 1859417437}
   - component: {fileID: 1859417439}
   - component: {fileID: 1859417438}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Death Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3945,7 +4014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d1e81390437f9245a23c9a3860217bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3986,7 +4055,7 @@ GameObject:
   - component: {fileID: 1947048051}
   - component: {fileID: 1947048050}
   - component: {fileID: 1947048049}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Player HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4009,8 +4078,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -527, y: -405}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 710, y: -465.41}
+  m_SizeDelta: {x: 98.7731, y: 27.1825}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1947048049
 MonoBehaviour:
@@ -4046,7 +4115,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player HP
+  m_text: HP/HP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4055,8 +4124,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4073,8 +4142,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21
-  m_fontSizeBase: 21
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4137,7 +4206,7 @@ GameObject:
   - component: {fileID: 1991221172}
   - component: {fileID: 1991221174}
   - component: {fileID: 1991221173}
-  m_Layer: 5
+  m_Layer: 4
   m_Name: LevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4301,8 +4370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -766, y: 101}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -801, y: -464}
+  m_SizeDelta: {x: 132.0936, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066445902
 MonoBehaviour:
@@ -4425,7 +4494,7 @@ MonoBehaviour:
   board: {fileID: 2128798147}
   battleScheduler: {fileID: 1849751033}
   button: {fileID: 2066445902}
-  label: {fileID: 0}
+  label: {fileID: 1443764153}
   buttonText: Shuffle
   cooldownTurns: 5
 --- !u!114 &2066445906
@@ -4488,8 +4557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52589f6bfb1564541bd9f4a71169c2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
-  MaxHealth: 15
-  CurrentHealth: 15
+  MaxHealth: 20
+  CurrentHealth: 20
   CurrentBlock: 0
   Name: 
   RelicList: []
@@ -4556,12 +4625,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
   currentState: 1
-  width: 8
-  height: 8
+  width: 7
+  height: 7
   offSet: 0
-  boardSize: {x: 1, y: 1}
+  boardSize: {x: 0.9, y: 0.9}
   gemScale: 0.4
-  tilePrefab: {fileID: 896558056}
+  bgTilePrefab: {fileID: 896558056}
   tilePrefabs:
   - {fileID: 6515215803095509999, guid: 431d1fbbf251b1a4fa6a86ec7692cb53, type: 3}
   - {fileID: 1304892045067851634, guid: 13f6c4ed256e645669d934fc730f8edd, type: 3}
@@ -4569,7 +4638,7 @@ MonoBehaviour:
   - {fileID: 538679292038326795, guid: 31188fc84f9f44e9e874ed9388574661, type: 3}
   - {fileID: 6515215803095509999, guid: 1c542d8589ceb430a9e718621009f533, type: 3}
   - {fileID: 1304892045067851634, guid: 89d576a6985e68d4a8d2d0ac36ff2cc7, type: 3}
-  destroyParticle: {fileID: 8509290199903026129, guid: 06bb40b1ddd04419899b47211194bb3a, type: 3}
+  onMatchParticle: {fileID: 2544686274291577140, guid: 1f2b041281e8f294e86753c60a0a1a16, type: 3}
   tileBag:
     startingCopiesPerTile: 5
   sequenceSpeed: 0.8
@@ -4601,7 +4670,7 @@ Transform:
   m_GameObject: {fileID: 2128798146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.026176924, z: 0, w: 0.99965733}
-  m_LocalPosition: {x: 0.42401123, y: -0.013977051, z: 0.99999976}
+  m_LocalPosition: {x: 0.42401123, y: 0.07, z: 0.99999976}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5090,3 +5159,4 @@ SceneRoots:
   - {fileID: 841502854}
   - {fileID: 1017110617}
   - {fileID: 735286891}
+  - {fileID: 530764658}

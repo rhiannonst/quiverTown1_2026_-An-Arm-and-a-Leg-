@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Chud Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
   Prefab: {fileID: 4885546523299587100, guid: d1a7ed11574d942d484d021c495ef0de, type: 3}
-  MaxHealth: 25
-  Block: 5
-  actionPool: 00000000010000000200000003000000
+  MaxHealth: 30
+  Block: 0
+  actionPool: 000000000100000003000000
   MinAttack: 6
-  MaxAttack: 1
-  MinHeal: 1
-  MaxHeal: 3
+  MaxAttack: 10
+  MinHeal: 3
+  MaxHeal: 0

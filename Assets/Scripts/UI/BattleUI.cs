@@ -6,36 +6,24 @@ using System.Collections;
 
 public class BattleUI : MonoBehaviour
 {
+    // element ref list
     UIDocument uiDoc;
-    
     VisualElement root;
-    
     VisualElement playerHealthBar;
-
     VisualElement enemyHealthBar;
-
     Label playerBlockText;
-
     Label enemyBlockText;
-
+    Label enemyHealthText;
     Button bagButton;
-
     Button helperButton;
-
-    public Player player;
-
-    public BattleNPC npc;
-
-    public EnemyGenerator enemyGenerator;
-
-    public List<Relic> relicList;
-
-    public VisualElement relicInventoryContainer;
-
-    public VisualElement helperContainer;
     
+    public Player player;
+    public BattleNPC npc;
+    public EnemyGenerator enemyGenerator;
+    public List<Relic> relicList;
+    public VisualElement relicInventoryContainer;
+    public VisualElement helperContainer;
     public VisualElement container;
-
     public EventReference openBagSFX;
 
     public void UpdateHealthBar(Player player, BattleNPC npc)
@@ -45,6 +33,9 @@ public class BattleUI : MonoBehaviour
 
         float npcHealthPercentage = npc.CurrentHealth/ npc.MaxHealth * 100;
         enemyHealthBar.style.width = Length.Percent(npcHealthPercentage);
+
+        if (enemyHealthText != null)
+            enemyHealthText.text = $"{npc.CurrentHealth}/{npc.MaxHealth}";
     }
 
     public void UpdateBlockText(Player player, BattleNPC npc)
@@ -198,11 +189,12 @@ public class BattleUI : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
         uiDoc = GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
         playerHealthBar = root.Q<VisualElement>("playerHealthBar");
         enemyHealthBar = root.Q<VisualElement>("enemyHealthBar");
+        enemyHealthText = root.Q<Label>("EnemyHealthText");
         playerBlockText = root.Q<Label>("playerBlockText");
         enemyBlockText = root.Q<Label>("enemyBlockText");
         bagButton = root.Q<Button>("bagButton");
@@ -210,11 +202,9 @@ public class BattleUI : MonoBehaviour
         container = root.Q<VisualElement>("container");
         helperButton = root.Q<Button>("helperButton");
         helperContainer = root.Q<VisualElement>("helperContainer");
-
         relicList = player.RelicList;
         bagButton.clicked += handleBagButtonClick;
         helperButton.clicked += handleHelperButtonClick;
-
     }
 
     // Update is called once per frame
@@ -239,7 +229,7 @@ public class BattleUI : MonoBehaviour
         }
 
         //handle helper display
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if(helperContainer.style.display == DisplayStyle.Flex)
             {
@@ -248,9 +238,7 @@ public class BattleUI : MonoBehaviour
             else
             {
                 helperContainer.style.display = DisplayStyle.Flex;
-                PopulateRelics();
             }
         }
-
     }
 }

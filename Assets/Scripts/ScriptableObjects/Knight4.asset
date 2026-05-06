@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Block Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
   Prefab: {fileID: 4885546523299587100, guid: f3ea5ffb2bf56464981d7b0ac29eca53, type: 3}
-  MaxHealth: 12
+  MaxHealth: 15
   Block: 99
-  actionPool: 000000000100000003000000
-  MinAttack: 4
-  MaxAttack: 2
+  actionPool: 0000000001000000
+  MinAttack: 6
+  MaxAttack: 8
   MinHeal: 1
   MaxHeal: 3

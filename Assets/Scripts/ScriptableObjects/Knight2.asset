@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Annoying Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
   Prefab: {fileID: 4885546523299587100, guid: 3d93fb00b2397432f8dae9f47ddae5bf, type: 3}
-  MaxHealth: 7
-  Block: 3
-  actionPool: 020000000100000000000000
-  MinAttack: 4
-  MaxAttack: 1
-  MinHeal: 1
-  MaxHeal: 3
+  MaxHealth: 10
+  Block: 0
+  actionPool: 0200000000000000
+  MinAttack: 5
+  MaxAttack: 7
+  MinHeal: 10
+  MaxHeal: 10
