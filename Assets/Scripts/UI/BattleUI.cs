@@ -13,6 +13,7 @@ public class BattleUI : MonoBehaviour
     VisualElement enemyHealthBar;
     Label playerBlockText;
     Label enemyBlockText;
+    Label enemyHealthText;
     Button bagButton;
     Button helperButton;
     
@@ -32,6 +33,9 @@ public class BattleUI : MonoBehaviour
 
         float npcHealthPercentage = npc.CurrentHealth/ npc.MaxHealth * 100;
         enemyHealthBar.style.width = Length.Percent(npcHealthPercentage);
+
+        if (enemyHealthText != null)
+            enemyHealthText.text = $"{npc.CurrentHealth}/{npc.MaxHealth}";
     }
 
     public void UpdateBlockText(Player player, BattleNPC npc)
@@ -190,6 +194,7 @@ public class BattleUI : MonoBehaviour
         root = uiDoc.rootVisualElement;
         playerHealthBar = root.Q<VisualElement>("playerHealthBar");
         enemyHealthBar = root.Q<VisualElement>("enemyHealthBar");
+        enemyHealthText = root.Q<Label>("EnemyHealthText");
         playerBlockText = root.Q<Label>("playerBlockText");
         enemyBlockText = root.Q<Label>("enemyBlockText");
         bagButton = root.Q<Button>("bagButton");

@@ -15,7 +15,7 @@ public class Board : MonoBehaviour
     public GameState currentState = GameState.move;
     public int width;
     public int height;
-    public int offSet;
+    public float offSet;
     public Vector2 boardSize = new Vector2(7f, 7f);
     [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
     public float gemScale = 1f;
@@ -88,6 +88,37 @@ public class Board : MonoBehaviour
     void OnDestroy()
     {
         StopAllCoroutines();
+    }
+
+    //allows for dynamic editting in the editor
+    private void OnValidate()
+    {
+        if (backgroundTiles == null || allTileInstances == null) return;
+        if (backgroundTiles.GetLength(0) != width || backgroundTiles.GetLength(1) != height) return;
+
+        Vector2 cell = CellSize;
+        Vector3 origin = GridOrigin;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3 pos = new(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+
+                if (backgroundTiles[i, j] != null)
+                {
+                    backgroundTiles[i, j].transform.position = pos;
+                    backgroundTiles[i, j].transform.localScale = new Vector3(cell.x, cell.y, backgroundTiles[i, j].transform.localScale.z);
+                }
+
+                if (allTileInstances[i, j] != null)
+                {
+                    allTileInstances[i, j].transform.position = pos;
+                    Vector3 s = allTileInstances[i, j].transform.localScale;
+                    allTileInstances[i, j].transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, s.z);
+                }
+            }
+        }
     }
 
     private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
@@ -397,7 +428,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector3 pos = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+                Vector3 pos = new(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
                 GameObject prefabToUse = nukedPrefabs[Random.Range(0, nukedPrefabs.Length)];
                 GameObject tileInstance = Instantiate(prefabToUse, pos, Quaternion.identity);
                 Vector3 prefabScale = tileInstance.transform.localScale;
