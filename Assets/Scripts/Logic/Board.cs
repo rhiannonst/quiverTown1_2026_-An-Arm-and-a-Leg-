@@ -44,6 +44,7 @@ public class Board : MonoBehaviour
     [SerializeField] private EventReference BoardFillSound;
 
     public Player player;
+    public GameObject hitPlane;
 
     public Vector2 CellSize => new Vector2(boardSize.x / width, boardSize.y / height);
 
@@ -51,6 +52,7 @@ public class Board : MonoBehaviour
         transform.position.x - boardSize.x / 2f + CellSize.x / 2f,
         transform.position.y - boardSize.y / 2f + CellSize.y / 2f,
         transform.position.z
+
     );
 
     // call this before destroying
@@ -71,7 +73,7 @@ public class Board : MonoBehaviour
         return result;
     }
 
-    
+
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
@@ -271,7 +273,7 @@ public class Board : MonoBehaviour
             }
             row.Append(']');
             sb.AppendLine(row.ToString());
-        }      
+        }
     }
 
     private bool MatchesAt(int column, int row, GameObject tilePrefabToCheck)

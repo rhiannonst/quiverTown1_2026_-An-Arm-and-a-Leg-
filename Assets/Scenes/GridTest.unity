@@ -4665,6 +4665,7 @@ MonoBehaviour:
       Data4: -1298125986
     Path: event:/BoardRefill_sfx
   player: {fileID: 2115350403}
+  hitPlane: {fileID: 6158595846525298720, guid: fe1529c9596e64b81b009258742a7d3b, type: 3}
 --- !u!4 &2128798149
 Transform:
   m_ObjectHideFlags: 0

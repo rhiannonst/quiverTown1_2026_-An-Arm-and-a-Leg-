@@ -1,5 +1,4 @@
 using UnityEngine;
-//using Random;
 
 
 public class torchFlicker : MonoBehaviour
