@@ -2,39 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using FMODUnity;
+using System.Collections;
 
 public class BattleUI : MonoBehaviour
 {
+    // element ref list
     UIDocument uiDoc;
-    
     VisualElement root;
-    
     VisualElement playerHealthBar;
-
     VisualElement enemyHealthBar;
-
     Label playerBlockText;
-
     Label enemyBlockText;
-
+    Label enemyHealthText;
     Button bagButton;
-
     Button helperButton;
-
-    public Player player;
-
-    public BattleNPC npc;
-
-    public EnemyGenerator enemyGenerator;
-
-    public List<Relic> relicList;
-
-    public VisualElement relicInventoryContainer;
-
-    public VisualElement helperContainer;
     
+    public Player player;
+    public BattleNPC npc;
+    public EnemyGenerator enemyGenerator;
+    public List<Relic> relicList;
+    public VisualElement relicInventoryContainer;
+    public VisualElement helperContainer;
     public VisualElement container;
-
     public EventReference openBagSFX;
 
     public void UpdateHealthBar(Player player, BattleNPC npc)
@@ -44,6 +33,9 @@ public class BattleUI : MonoBehaviour
 
         float npcHealthPercentage = npc.CurrentHealth/ npc.MaxHealth * 100;
         enemyHealthBar.style.width = Length.Percent(npcHealthPercentage);
+
+        if (enemyHealthText != null)
+            enemyHealthText.text = $"{npc.CurrentHealth}/{npc.MaxHealth}";
     }
 
     public void UpdateBlockText(Player player, BattleNPC npc)
@@ -146,13 +138,63 @@ public class BattleUI : MonoBehaviour
         }
     }
 
+    public float fadeDuration = 1f;
+    public float elapsed = 0f;
+
+    public IEnumerator FadeOut(Label target, float duration)
+    {
+        Color color = target.style.color.value;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            target.style.color = new StyleColor(new Color(color.r, color.g, color.b, alpha));
+            yield return null; // wait one frame
+        }
+
+        target.style.color = new StyleColor(new Color(color.r, color.g, color.b, 0f)); // ensure fully invisible
+    }
+
+    IEnumerator FadeIn(Label target, float duration)
+    {
+        Color color = target.style.color.value;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            target.style.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        target.style.color = new Color(color.r, color.g, color.b, 1f);
+    }
+
+    public IEnumerator blockNumberTransition(Board board, BattleNPC enemy)
+    {
+        //handle fadeOut
+        StartCoroutine(FadeOut(playerBlockText,fadeDuration));
+        StartCoroutine(FadeOut(enemyBlockText,fadeDuration));
+        yield return new WaitForSeconds(fadeDuration);
+        board.player.ResetBlock();
+        enemy.ResetBlock();
+        yield return null;
+        StartCoroutine(FadeIn(playerBlockText,fadeDuration));
+        StartCoroutine(FadeIn(enemyBlockText,fadeDuration));
+
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
         uiDoc = GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
         playerHealthBar = root.Q<VisualElement>("playerHealthBar");
         enemyHealthBar = root.Q<VisualElement>("enemyHealthBar");
+        enemyHealthText = root.Q<Label>("EnemyHealthText");
         playerBlockText = root.Q<Label>("playerBlockText");
         enemyBlockText = root.Q<Label>("enemyBlockText");
         bagButton = root.Q<Button>("bagButton");
@@ -160,11 +202,9 @@ public class BattleUI : MonoBehaviour
         container = root.Q<VisualElement>("container");
         helperButton = root.Q<Button>("helperButton");
         helperContainer = root.Q<VisualElement>("helperContainer");
-
         relicList = player.RelicList;
         bagButton.clicked += handleBagButtonClick;
         helperButton.clicked += handleHelperButtonClick;
-
     }
 
     // Update is called once per frame
@@ -189,7 +229,7 @@ public class BattleUI : MonoBehaviour
         }
 
         //handle helper display
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if(helperContainer.style.display == DisplayStyle.Flex)
             {
@@ -198,9 +238,7 @@ public class BattleUI : MonoBehaviour
             else
             {
                 helperContainer.style.display = DisplayStyle.Flex;
-                PopulateRelics();
             }
         }
-
     }
 }

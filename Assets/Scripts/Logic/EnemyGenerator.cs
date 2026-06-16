@@ -5,6 +5,8 @@ using FMODUnity;
 
 public class EnemyGenerator : MonoBehaviour
 {
+    public float difficultyMod = 1f;
+    public float difficultyMultiplier = 2f;
     public NPC[] enemyPool;
     public GameObject enemyPrefab;
     public TMP_Text intentLabel;
@@ -16,7 +18,7 @@ public class EnemyGenerator : MonoBehaviour
     [Tooltip("Impulse force applied to the dead enemy when a new one arrives.")]
     public float deadEnemyKickForce = 12f;
 
-    private static readonly Vector3 BattleSpot = new Vector3(0f, 0f, -4f);
+    private static readonly Vector3 BattleSpot = new Vector3(-1f, 0f, -4f);
 
     public BattleNPC CurrentEnemy { get; private set; }
     public int Stage { get; private set; } = 1;
@@ -54,10 +56,27 @@ public class EnemyGenerator : MonoBehaviour
         }
     }
 
+    public void handleDifficultyMod(BattleNPC npc)
+    {
+
+        int intMod = Mathf.RoundToInt(difficultyMod);
+
+        npc.MaxHealth += difficultyMod;
+        npc.CurrentHealth += difficultyMod;
+
+        npc.maxAttack += intMod;
+        npc.minAttack += intMod;
+
+        npc.maxHeal += intMod;
+        npc.minHeal += intMod;
+    }
+
     private void SpawnNewEnemy()
     {
+        // currently randomly spawns an enemy
         NPC npc = enemyPool[Random.Range(0, enemyPool.Length)];
         CurrentEnemy = new BattleNPC(npc);
+        handleDifficultyMod(CurrentEnemy);
         Debug.Log($"[EnemyGenerator] Spawned: {CurrentEnemy.Name} (Stage {Stage})");
 
         GameObject prefabToSpawn = npc.Prefab != null ? npc.Prefab : enemyPrefab;
@@ -111,6 +130,7 @@ public class EnemyGenerator : MonoBehaviour
     public void AdvanceStage()
     {
         Stage++;
+        difficultyMod *= difficultyMultiplier;
         SpawnNext();
     }
 

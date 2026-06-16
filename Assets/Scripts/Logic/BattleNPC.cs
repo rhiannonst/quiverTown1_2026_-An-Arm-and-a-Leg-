@@ -7,12 +7,11 @@ public class BattleNPC
     public float CurrentHealth;
     public float CurrentBlock;
 
-    private readonly int minAttack;
-    private readonly int maxAttack;
-    private readonly int minHeal;
-    private readonly int maxHeal;
-    private readonly EnemyAction[] actionPool;
-
+    public int minAttack;
+    public int maxAttack;
+    public int minHeal;
+    public int maxHeal;
+    public EnemyAction[] actionPool{get;private set;}
     public EnemyAction IntentAction { get; private set; }
     public int IntentValue { get; private set; }
 

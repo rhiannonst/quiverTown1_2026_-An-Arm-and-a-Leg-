@@ -17,6 +17,6 @@ public class EnemyHPDisplay : MonoBehaviour
             return;
         }
 
-        label.text = $"{enemy.Name}: {enemy.CurrentHealth}/{enemy.MaxHealth}";
+        label.text = enemy.Name;
     }
 }

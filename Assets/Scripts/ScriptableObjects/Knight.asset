@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Axe Knight
   Portrait: {fileID: 21300000, guid: 5f223c8acaa18de4eaed291950899dfc, type: 3}
   Prefab: {fileID: 4885546523299587100, guid: 7a5f84755e4f15f46bbc9752c27ca2de, type: 3}
-  MaxHealth: 12
+  MaxHealth: 20
   Block: 0
   actionPool: 0000000001000000
-  MinAttack: 3
-  MaxAttack: 3
+  MinAttack: 5
+  MaxAttack: 8
   MinHeal: 1
   MaxHeal: 3

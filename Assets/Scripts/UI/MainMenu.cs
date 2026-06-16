@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject credits;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void PlayGame()
     {
@@ -20,5 +21,12 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-
+    public void CreditsOpen()
+    {
+        credits.SetActive(true);
+    }
+    public void CreditsClose()
+    {
+      credits.SetActive(false);
+    }
 }

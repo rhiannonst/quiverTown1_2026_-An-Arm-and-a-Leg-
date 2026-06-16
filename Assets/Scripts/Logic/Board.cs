@@ -15,14 +15,14 @@ public class Board : MonoBehaviour
     public GameState currentState = GameState.move;
     public int width;
     public int height;
-    public int offSet;
+    public float offSet;
     public Vector2 boardSize = new Vector2(7f, 7f);
     [Tooltip("0–1 fill factor. 1 = tiles touch edge-to-edge, <1 = gap between tiles.")]
     public float gemScale = 1f;
 
-    public GameObject tilePrefab;
+    public GameObject bgTilePrefab;
     public GameObject[] tilePrefabs;
-    public GameObject destroyParticle;
+    public ParticleSystem onMatchParticle;
     public TileBag tileBag = new TileBag();
 
     [Tooltip("Base speed multiplier for all sequence delays. 1 = normal, 2 = twice as fast.")]
@@ -44,6 +44,7 @@ public class Board : MonoBehaviour
     [SerializeField] private EventReference BoardFillSound;
 
     public Player player;
+    public GameObject hitPlane;
 
     public Vector2 CellSize => new Vector2(boardSize.x / width, boardSize.y / height);
 
@@ -51,6 +52,7 @@ public class Board : MonoBehaviour
         transform.position.x - boardSize.x / 2f + CellSize.x / 2f,
         transform.position.y - boardSize.y / 2f + CellSize.y / 2f,
         transform.position.z
+
     );
 
     // call this before destroying
@@ -71,7 +73,7 @@ public class Board : MonoBehaviour
         return result;
     }
 
-    
+
     void Start()
     {
         findMatches = FindAnyObjectByType<FindMatches>();
@@ -90,6 +92,37 @@ public class Board : MonoBehaviour
         StopAllCoroutines();
     }
 
+    //allows for dynamic editting in the editor
+    private void OnValidate()
+    {
+        if (backgroundTiles == null || allTileInstances == null) return;
+        if (backgroundTiles.GetLength(0) != width || backgroundTiles.GetLength(1) != height) return;
+
+        Vector2 cell = CellSize;
+        Vector3 origin = GridOrigin;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3 pos = new(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+
+                if (backgroundTiles[i, j] != null)
+                {
+                    backgroundTiles[i, j].transform.position = pos;
+                    backgroundTiles[i, j].transform.localScale = new Vector3(cell.x, cell.y, backgroundTiles[i, j].transform.localScale.z);
+                }
+
+                if (allTileInstances[i, j] != null)
+                {
+                    allTileInstances[i, j].transform.position = pos;
+                    Vector3 s = allTileInstances[i, j].transform.localScale;
+                    allTileInstances[i, j].transform.localScale = new Vector3(cell.x * gemScale, cell.y * gemScale, s.z);
+                }
+            }
+        }
+    }
+
     private void SpawnPopups(System.Collections.Generic.List<Player.MatchResult> results)
     {
         if (damagePopup == null || battleScheduler == null) return;
@@ -97,7 +130,7 @@ public class Board : MonoBehaviour
         TurnResult turnResult = new TurnResult();
         foreach (Player.MatchResult result in results)
         {
-            turnResult.Add(battleScheduler.ResolveMatch(result));
+            turnResult.Add(battleScheduler.ResolveMatchAndApplyRelics(result));
         }
 
         damagePopup.AddResult(turnResult);
@@ -135,7 +168,7 @@ public class Board : MonoBehaviour
                 Vector3 tempPosition = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
 
                 // Background tile
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                GameObject backgroundTile = Instantiate(bgTilePrefab, tempPosition, Quaternion.identity);
                 backgroundTile.transform.localScale = new Vector3(cell.x, cell.y, backgroundTile.transform.localScale.z);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + i + ", " + j + ")";
@@ -240,7 +273,7 @@ public class Board : MonoBehaviour
             }
             row.Append(']');
             sb.AppendLine(row.ToString());
-        }      
+        }
     }
 
     private bool MatchesAt(int column, int row, GameObject tilePrefabToCheck)
@@ -275,13 +308,12 @@ public class Board : MonoBehaviour
     {
         if (allTileInstances[column, row].GetComponent<TileInstance>().isMatched)
         {
-            if (destroyParticle != null)
+            if (onMatchParticle != null)
             {
                 Vector3 tilePos = allTileInstances[column, row].transform.position;
-                Vector3 toCamera = (Camera.main.transform.position - tilePos).normalized;
-                Vector3 spawnPos = tilePos + toCamera * 0.5f;
-                GameObject particle = Instantiate(destroyParticle, spawnPos, Quaternion.identity);
-                Destroy(particle, .5f);
+                ParticleSystem particle = Instantiate(onMatchParticle, tilePos, Quaternion.identity);
+                particle.Play();
+                Destroy(particle.gameObject, particle.main.duration);
             }
             Destroy(allTileInstances[column, row]);
             allTileInstances[column, row] = null;
@@ -398,7 +430,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector3 pos = new Vector3(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
+                Vector3 pos = new(origin.x + i * cell.x, origin.y + j * cell.y + offSet, origin.z);
                 GameObject prefabToUse = nukedPrefabs[Random.Range(0, nukedPrefabs.Length)];
                 GameObject tileInstance = Instantiate(prefabToUse, pos, Quaternion.identity);
                 Vector3 prefabScale = tileInstance.transform.localScale;
@@ -473,8 +505,7 @@ public class Board : MonoBehaviour
         sequenceSpeed = startSpeed;
         findMatches.currentMatches.Clear();
         currentTile = null;
-        battleScheduler?.ResolveTurn();
-        yield return new WaitForSeconds(.25f / sequenceSpeed);
+        yield return StartCoroutine(battleScheduler.handleTurnSequence());
         currentState = GameState.move;
     }
 }

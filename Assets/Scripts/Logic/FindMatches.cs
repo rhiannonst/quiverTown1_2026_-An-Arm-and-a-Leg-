@@ -21,7 +21,15 @@ public class FindMatches : MonoBehaviour
             StartCoroutine(FindAllMatchesCo());
         }
     }
+    private IEnumerator HitAnimation(){
+        GameObject hitInstance = Instantiate(board.hitPlane);
+        Transform hitAnimation = hitInstance.transform.GetChild(0);
+        hitAnimation.Translate(Random.Range(-0.5f, 2.5f), Random.Range((float)-2.5, 0), 0);
+        hitAnimation.Rotate(0, 0, Random.Range((float)-180, (float)180));
 
+        yield return new WaitForSeconds(0.5f);
+        Destroy(hitInstance);
+    }
     private IEnumerator FindAllMatchesCo()
     {
         isFinding = true;
@@ -100,6 +108,9 @@ public class FindMatches : MonoBehaviour
             result.totalDamage += tileData.Damage;
             result.totalBlock += tileData.Block;
             result.totalHeal += tileData.Heal;
+            if(result.totalDamage > 2){
+              StartCoroutine(HitAnimation());
+            }
         }
 
         foreach (var kvp in typeResults)

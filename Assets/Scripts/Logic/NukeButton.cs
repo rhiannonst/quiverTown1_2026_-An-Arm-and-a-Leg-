@@ -11,10 +11,11 @@ public class NukeButton : MonoBehaviour
     public string buttonText = "Nuke";
     public int cooldownTurns = 10;
 
-    private int lastUsedTurn = int.MinValue;
+    private int lastUsedTurn = -9999;
 
     void Update()
     {
+        if (board == null || battleScheduler == null) return;
         int remaining = TurnsRemaining();
         bool ready = remaining <= 0 && board.currentState == GameState.move;
 
